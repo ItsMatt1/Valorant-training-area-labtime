@@ -2,6 +2,7 @@
 
 
 #include "CPP_MainPlayerCharacter.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ACPP_MainPlayerCharacter::ACPP_MainPlayerCharacter()
@@ -30,5 +31,19 @@ void ACPP_MainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ACPP_MainPlayerCharacter::MoveForward);
+	PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &ACPP_MainPlayerCharacter::MoveRight);
 }
+
+void ACPP_MainPlayerCharacter::MoveForward(float AxisValue)
+{
+	FVector Forward = UKismetMathLibrary::GetForwardVector(FRotator(0, GetControlRotation().Yaw, 0));
+	AddMovementInput(Forward, AxisValue);
+}
+
+void ACPP_MainPlayerCharacter::MoveRight(float AxisValue)
+{
+	AddMovementInput(GetActorRightVector(), AxisValue);
+}
+
 
