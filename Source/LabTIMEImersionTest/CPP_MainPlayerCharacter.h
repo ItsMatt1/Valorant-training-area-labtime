@@ -26,10 +26,24 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-private:
 
+private:
+	// Movement Inputs
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
 
+	//Mouse Inputs
+	void Turn(float AxisValue);
+	void LookUp(float AxisValue);
 
+	//Gamepad Look Inputs
+	void TurnRate(float AxisValue);
+	void LookUpRate(float AxisValue);
+
+	UPROPERTY(EditAnywhere)
+		float BaseTurnRate = 45.f;
+
+	UPROPERTY(EditAnywhere)
+		float BaseLookUpRate = 45.f;
 };
+ 
