@@ -3,27 +3,30 @@
 
 #include "CPP_MainPlayerCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ACPP_MainPlayerCharacter::ACPP_MainPlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	SprintSpeed = 1000.f;
+	WalkingSpeed = 600.f;
+	CrouchingSpeed = WalkingSpeed / 2;
 
+	WeaponSelected = 1;
 }
 
 // Called when the game starts or when spawned
 void ACPP_MainPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void ACPP_MainPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -50,6 +53,22 @@ void ACPP_MainPlayerCharacter::SetupPlayerInputComponent(UInputComponent*
 		this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Released,
 		this, &ACharacter::StopJumping);
+
+	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Pressed,
+		this, &ACPP_MainPlayerCharacter::Sprint);
+	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Released,
+		this, &ACPP_MainPlayerCharacter::StopSprinting);
+
+	PlayerInputComponent->BindAction(TEXT("SelectPrimaryWeapon"), EInputEvent::IE_Pressed,
+		this, &ACPP_MainPlayerCharacter::SelectPrimaryWeapon);
+	PlayerInputComponent->BindAction(TEXT("SelectSecondaryWeapon"), EInputEvent::IE_Pressed,
+		this, &ACPP_MainPlayerCharacter::SelectSecondaryWeapon);
+
+	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Pressed,
+		this, &ACPP_MainPlayerCharacter::Crouch);
+	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Released,
+		this, &ACPP_MainPlayerCharacter::StopCrouching);
+
 }
                                                                                
 /**
@@ -118,6 +137,51 @@ void ACPP_MainPlayerCharacter::LookUpRate(float AxisValue)
 {
 	float frameDeltaTime = GetWorld()->GetDeltaSeconds();
 	AddControllerYawInput(AxisValue * BaseLookUpRate * frameDeltaTime);
+}
+
+void ACPP_MainPlayerCharacter::SelectPrimaryWeapon()
+{
+	WeaponSelected = 1;
+
+}
+
+void ACPP_MainPlayerCharacter::SelectSecondaryWeapon()
+{
+	WeaponSelected = 2;
+}
+
+void ACPP_MainPlayerCharacter::Sprint()
+{
+	isSprinting = true;
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+}
+
+void ACPP_MainPlayerCharacter::StopSprinting()
+{
+	isSprinting = false;
+	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
+}
+
+void ACPP_MainPlayerCharacter::Crouch()
+{
+	if (isSprinting)
+		isSprinting = false;
+
+	isCrouching = true;
+
+	GetCharacterMovement()->MaxWalkSpeed = CrouchingSpeed;
+
+	ACharacter::Crouch();
+
+}
+
+void ACPP_MainPlayerCharacter::StopCrouching()
+{
+	isCrouching = false;
+
+	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
+
+	UnCrouch();
 }
 
 
