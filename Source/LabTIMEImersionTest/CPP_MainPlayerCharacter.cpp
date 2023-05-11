@@ -54,20 +54,22 @@ void ACPP_MainPlayerCharacter::SetupPlayerInputComponent(UInputComponent*
 	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Released,
 		this, &ACPP_MainPlayerCharacter::StopSprinting);
 
-	PlayerInputComponent->BindAction(TEXT("SelectPrimaryWeapon"), EInputEvent::IE_Pressed,
-		this, &ACPP_MainPlayerCharacter::SelectPrimaryWeapon);
-	PlayerInputComponent->BindAction(TEXT("SelectSecondaryWeapon"), EInputEvent::IE_Pressed,
-		this, &ACPP_MainPlayerCharacter::SelectSecondaryWeapon);
+	PlayerInputComponent->BindAction(TEXT("SelectPrimaryWeapon"), 
+		EInputEvent::IE_Pressed, this, 
+		&ACPP_MainPlayerCharacter::SelectPrimaryWeapon);
+	PlayerInputComponent->BindAction(TEXT("SelectSecondaryWeapon"), 
+		EInputEvent::IE_Pressed, this, 
+		&ACPP_MainPlayerCharacter::SelectSecondaryWeapon);
 
 	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Pressed,
 		this, &ACPP_MainPlayerCharacter::Crouch);
 	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Released,
 		this, &ACPP_MainPlayerCharacter::StopCrouching);
 
-	PlayerInputComponent->BindAction(TEXT("AimDownSight"), EInputEvent::IE_Pressed,
-		this, &ACPP_MainPlayerCharacter::AimDownSight);
-	PlayerInputComponent->BindAction(TEXT("AimDownSight"), EInputEvent::IE_Released,
-		this, &ACPP_MainPlayerCharacter::StopAiming);
+	PlayerInputComponent->BindAction(TEXT("AimDownSight"), 
+		EInputEvent::IE_Pressed, this,&ACPP_MainPlayerCharacter::AimDownSight);
+	PlayerInputComponent->BindAction(TEXT("AimDownSight"), 
+		EInputEvent::IE_Released, this, &ACPP_MainPlayerCharacter::StopAiming);
 
 	PlayerInputComponent->BindAction(TEXT("Reload"), EInputEvent::IE_Pressed,
 		this, &ACPP_MainPlayerCharacter::Reload);
@@ -181,6 +183,13 @@ void ACPP_MainPlayerCharacter::AimDownSight()
 */
 void ACPP_MainPlayerCharacter::DeactivateAds()
 {
+	//Deactives ADSCamera
+	//Activate ADSCamera
+
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+	bIsAiming = false;
+
+	SetActorEnableCollision(false);
 }
 
 /**

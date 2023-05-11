@@ -28,15 +28,15 @@ public:
 
 	//Defining The speed of the Walking
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Character Movement: Walking");
-		const float WalkingSpeed = 1000.f;
+		float WalkingSpeed = 1000.f;
 
 	//Defining The speed of the Sprint
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Character Movement: Sprinting");
-		const float SprintSpeed = 600.f;
+		float SprintSpeed = 600.f;
 
 	//Defining The speed of the Crouching
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Character Movement: Crouching");
-		const float CrouchingSpeed = WalkingSpeed / 2;
+		float CrouchingSpeed = WalkingSpeed / 2;
 
 	int WeaponSelected = 0;
 
@@ -51,8 +51,6 @@ public:
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Character Action: Firing");
 		bool bIsFiring = false;
-	
-
 
 
 	//Reload Variables
