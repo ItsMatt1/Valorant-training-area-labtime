@@ -28,32 +28,55 @@ public:
 
 	//Defining The speed of the Walking
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Character Movement: Walking");
-		float WalkingSpeed = 0.f;
+		const float WalkingSpeed = 1000.f;
 
 	//Defining The speed of the Sprint
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Character Movement: Walking");
-		float SprintSpeed = 0.f;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Character Movement: Sprinting");
+		const float SprintSpeed = 600.f;
 
 	//Defining The speed of the Crouching
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Character Movement: Walking");
-	float CrouchingSpeed = 0.f;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Character Movement: Crouching");
+		const float CrouchingSpeed = WalkingSpeed / 2;
 
 	int WeaponSelected = 0;
 
-	bool isSprinting = false;
-	bool isAiming = false;
-	bool isCrouching = false;
-	bool isFiring = false;
-	bool isReloading = false;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Character Movement: Crouching");
+		bool bIsCrouching = false;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Character Movement: Sprinting");
+		bool bIsSprinting = false;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Character Movement: Aiming");
+		bool bIsAiming = false;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Character Action: Firing");
+		bool bIsFiring = false;
+	
+
+
+
+	//Reload Variables
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Character Action: Reloading");
+		bool bIsReloading = false;
 
 private:
+
+	UPROPERTY(EditAnywhere)
+		float BaseTurnRate = 45.f;
+
+	UPROPERTY(EditAnywhere)
+		float BaseLookUpRate = 45.f;
+
 	// Movement Inputs
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
+
+	//Player Actions
 	void Sprint();
 	void StopSprinting();
 	void Crouch();
 	void StopCrouching();
+	void Reload();
 
 	//Mouse Inputs
 	void Turn(float AxisValue);
@@ -67,12 +90,10 @@ private:
 	void SelectPrimaryWeapon();
 	void SelectSecondaryWeapon();
 
-	UPROPERTY(EditAnywhere)
-		float BaseTurnRate = 45.f;
-
-	UPROPERTY(EditAnywhere)
-		float BaseLookUpRate = 45.f;
-
+	//Camera Manipulation
+	void AimDownSight();
+	void DeactivateAds();
+	void StopAiming();
 
 };
  

@@ -10,11 +10,6 @@ ACPP_MainPlayerCharacter::ACPP_MainPlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	SprintSpeed = 1000.f;
-	WalkingSpeed = 600.f;
-	CrouchingSpeed = WalkingSpeed / 2;
-
-	WeaponSelected = 1;
 }
 
 // Called when the game starts or when spawned
@@ -68,6 +63,14 @@ void ACPP_MainPlayerCharacter::SetupPlayerInputComponent(UInputComponent*
 		this, &ACPP_MainPlayerCharacter::Crouch);
 	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Released,
 		this, &ACPP_MainPlayerCharacter::StopCrouching);
+
+	PlayerInputComponent->BindAction(TEXT("AimDownSight"), EInputEvent::IE_Pressed,
+		this, &ACPP_MainPlayerCharacter::AimDownSight);
+	PlayerInputComponent->BindAction(TEXT("AimDownSight"), EInputEvent::IE_Released,
+		this, &ACPP_MainPlayerCharacter::StopAiming);
+
+	PlayerInputComponent->BindAction(TEXT("Reload"), EInputEvent::IE_Pressed,
+		this, &ACPP_MainPlayerCharacter::Reload);
 
 }
                                                                                
@@ -139,49 +142,114 @@ void ACPP_MainPlayerCharacter::LookUpRate(float AxisValue)
 	AddControllerYawInput(AxisValue * BaseLookUpRate * frameDeltaTime);
 }
 
+/**
+* This fuction is called when player selects primary weapon
+*/
 void ACPP_MainPlayerCharacter::SelectPrimaryWeapon()
 {
 	WeaponSelected = 1;
 
 }
 
+/**
+* This fuction is called when player selects secondary weapon
+*/
 void ACPP_MainPlayerCharacter::SelectSecondaryWeapon()
 {
 	WeaponSelected = 2;
 }
 
+/**
+* This fuction is called when player aims
+*/
+void ACPP_MainPlayerCharacter::AimDownSight()
+{
+	if (bIsReloading)
+		return;
+
+	if (bIsSprinting)
+	{
+		bIsSprinting = false;
+		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+	}
+	
+	
+}
+
+/**
+* This fuction disables the AimDownSight camera
+*/
+void ACPP_MainPlayerCharacter::DeactivateAds()
+{
+}
+
+/**
+* This fuction is called when player stops aiming
+*/
+void ACPP_MainPlayerCharacter::StopAiming()
+{
+}
+
+/**
+* This fuction is called when player starts sprinting
+*/
 void ACPP_MainPlayerCharacter::Sprint()
 {
-	isSprinting = true;
+	if (bIsAiming)
+		DeactivateAds();
+
+	if (bIsCrouching)
+	{
+		bIsCrouching = false;
+		UnCrouch();
+	}
+
+	bIsSprinting = true;
+
 	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 }
 
+/**
+* This fuction is called when player stops sprinting
+*/
 void ACPP_MainPlayerCharacter::StopSprinting()
 {
-	isSprinting = false;
+	bIsSprinting = false;
 	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 }
 
+/**
+* This fuction is called when player starts crouching
+*/
 void ACPP_MainPlayerCharacter::Crouch()
 {
-	if (isSprinting)
-		isSprinting = false;
+	if (bIsSprinting)
+		bIsSprinting = false;
 
-	isCrouching = true;
+	bIsCrouching = true;
 
 	GetCharacterMovement()->MaxWalkSpeed = CrouchingSpeed;
 
 	ACharacter::Crouch();
-
 }
 
+/**
+* This fuction is called when player stops crouching
+*/
 void ACPP_MainPlayerCharacter::StopCrouching()
 {
-	isCrouching = false;
+	bIsCrouching = false;
 
 	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 
 	UnCrouch();
+}
+
+/**
+* This fuction is called when player start reloading
+*/
+void ACPP_MainPlayerCharacter::Reload()
+{
 }
 
 
