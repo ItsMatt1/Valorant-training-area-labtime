@@ -8,8 +8,13 @@
 // Sets default values
 ACPP_MainPlayerCharacter::ACPP_MainPlayerCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this character to call Tick() every frame. You can turn this off to
+	//improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+}
+
+ACPP_MainPlayerCharacter::~ACPP_MainPlayerCharacter()
+{
 }
 
 // Called when the game starts or when spawned
@@ -76,10 +81,6 @@ void ACPP_MainPlayerCharacter::SetupPlayerInputComponent(UInputComponent*
 
 }
                                                                                
-/**
-* This fuction makes the player move on Z axis
-* @param AxisValue
-*/
 void ACPP_MainPlayerCharacter::MoveForward(float AxisValue)
 {
 	//Get Rotation and Axis of the Player
@@ -91,10 +92,6 @@ void ACPP_MainPlayerCharacter::MoveForward(float AxisValue)
 	AddMovementInput(Forward, AxisValue);
 }
 
-/**
-* This fuction makes the player move on Y axis
-* @param AxisValue
-*/
 void ACPP_MainPlayerCharacter::MoveRight(float AxisValue)
 {	
 	//Get Rotation and Axis of the Player
@@ -105,69 +102,46 @@ void ACPP_MainPlayerCharacter::MoveRight(float AxisValue)
 	AddMovementInput(Right, AxisValue); 
 }
 
-/**
-* This fuction makes the player move the camera on X
-* @param AxisValue
-*/
 void ACPP_MainPlayerCharacter::Turn(float AxisValue)
 {
 	AddControllerYawInput(AxisValue);
 }
 
-/**
-* This fuction makes the player move the camera on Y 
-* @param AxisValue
-*/
 void ACPP_MainPlayerCharacter::LookUp(float AxisValue)
 {
 	AddControllerPitchInput(AxisValue);
 }
 
-
-/**
-* This fuction sooths the camera movement on Y given the fps
-* @param AxisValue
-*/
 void ACPP_MainPlayerCharacter::TurnRate(float AxisValue)
 {
 	float frameDeltaTime = GetWorld()->GetDeltaSeconds();
 	AddControllerYawInput(AxisValue * BaseTurnRate * frameDeltaTime);
 }
 
-/**
-* This fuction sooths the camera movement on X given the fps
-* @param AxisValue
-*/
 void ACPP_MainPlayerCharacter::LookUpRate(float AxisValue)
 {
 	float frameDeltaTime = GetWorld()->GetDeltaSeconds();
 	AddControllerYawInput(AxisValue * BaseLookUpRate * frameDeltaTime);
 }
 
-/**
-* This fuction is called when player selects primary weapon
-*/
 void ACPP_MainPlayerCharacter::SelectPrimaryWeapon()
 {
 	WeaponSelected = 1;
-
 }
 
-/**
-* This fuction is called when player selects secondary weapon
-*/
+
 void ACPP_MainPlayerCharacter::SelectSecondaryWeapon()
 {
 	WeaponSelected = 2;
 }
 
-/**
-* This fuction is called when player aims
-*/
 void ACPP_MainPlayerCharacter::AimDownSight()
 {
 	if (bIsReloading)
+	{
 		return;
+	}
+	
 
 	if (bIsSprinting)
 	{
@@ -175,12 +149,8 @@ void ACPP_MainPlayerCharacter::AimDownSight()
 		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 	}
 	
-	
 }
 
-/**
-* This fuction disables the AimDownSight camera
-*/
 void ACPP_MainPlayerCharacter::DeactivateAds()
 {
 	//Deactives ADSCamera
@@ -189,23 +159,19 @@ void ACPP_MainPlayerCharacter::DeactivateAds()
 	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 	bIsAiming = false;
 
-	SetActorEnableCollision(false);
+
 }
 
-/**
-* This fuction is called when player stops aiming
-*/
 void ACPP_MainPlayerCharacter::StopAiming()
 {
 }
 
-/**
-* This fuction is called when player starts sprinting
-*/
 void ACPP_MainPlayerCharacter::Sprint()
 {
 	if (bIsAiming)
+	{ 
 		DeactivateAds();
+	}
 
 	if (bIsCrouching)
 	{
@@ -218,22 +184,18 @@ void ACPP_MainPlayerCharacter::Sprint()
 	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 }
 
-/**
-* This fuction is called when player stops sprinting
-*/
 void ACPP_MainPlayerCharacter::StopSprinting()
 {
 	bIsSprinting = false;
 	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 }
 
-/**
-* This fuction is called when player starts crouching
-*/
 void ACPP_MainPlayerCharacter::Crouch()
 {
 	if (bIsSprinting)
+	{ 
 		bIsSprinting = false;
+	}
 
 	bIsCrouching = true;
 
@@ -242,9 +204,6 @@ void ACPP_MainPlayerCharacter::Crouch()
 	ACharacter::Crouch();
 }
 
-/**
-* This fuction is called when player stops crouching
-*/
 void ACPP_MainPlayerCharacter::StopCrouching()
 {
 	bIsCrouching = false;
@@ -254,9 +213,7 @@ void ACPP_MainPlayerCharacter::StopCrouching()
 	UnCrouch();
 }
 
-/**
-* This fuction is called when player start reloading
-*/
+
 void ACPP_MainPlayerCharacter::Reload()
 {
 }
