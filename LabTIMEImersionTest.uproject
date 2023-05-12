@@ -12,7 +12,9 @@
 				"Engine",
 				"AIModule",
 				"UMG",
-				"WidgetModule"
+				"WidgetModule",
+				"Slate",
+				"SlateCore"
 			]
 		}
 	],
