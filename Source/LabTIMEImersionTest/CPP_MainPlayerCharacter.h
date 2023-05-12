@@ -29,6 +29,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "DeactivateADS2"))
 		void DeactivateADS2();
 
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "ActivateADS2"))
+		void ActivateADS2();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -131,12 +134,12 @@ public:
 	//Defining The speed of the Walking
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
 		Category = "Character Movement: Walking");
-		float WalkingSpeed = 1000.f;
+		float WalkingSpeed = 600.f;
 
 	//Defining The speed of the Sprint
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
 		Category = "Character Movement: Sprinting");
-		float SprintSpeed = 600.f;
+		float SprintSpeed = 1000.f;
 
 	//Defining The speed of the Crouching
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,

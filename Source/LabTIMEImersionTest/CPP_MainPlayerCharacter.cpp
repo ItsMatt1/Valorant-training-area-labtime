@@ -142,35 +142,26 @@ void ACPP_MainPlayerCharacter::AimDownSight()
 		return;
 	}
 	
-
 	if (bIsSprinting)
 	{
 		bIsSprinting = false;
-		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+		GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 	}
 	
-}
-
-void ACPP_MainPlayerCharacter::DeactivateAds()
-{
-	//Deactives ADSCamera
-	//Activate ADSCamera
-
-	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
-	bIsAiming = false;
-
-
+	ActivateADS2();
+	bIsAiming = true;
 }
 
 void ACPP_MainPlayerCharacter::StopAiming()
 {
+	DeactivateADS2();
 }
 
 void ACPP_MainPlayerCharacter::Sprint()
 {
 	if (bIsAiming)
 	{ 
-		DeactivateAds();
+		DeactivateADS2();
 	}
 
 	if (bIsCrouching)
