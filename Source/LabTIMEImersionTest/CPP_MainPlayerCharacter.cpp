@@ -127,12 +127,16 @@ void ACPP_MainPlayerCharacter::LookUpRate(float AxisValue)
 void ACPP_MainPlayerCharacter::SelectPrimaryWeapon()
 {
 	WeaponSelected = 1;
+
+	ShowAK_Cpp();
 }
 
 
 void ACPP_MainPlayerCharacter::SelectSecondaryWeapon()
 {
 	WeaponSelected = 2;
+
+	ShowGlock_Cpp();
 }
 
 void ACPP_MainPlayerCharacter::AimDownSight()
@@ -148,20 +152,20 @@ void ACPP_MainPlayerCharacter::AimDownSight()
 		GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 	}
 	
-	ActivateADS2();
+	ActivateAds_Cpp();
 	bIsAiming = true;
 }
 
 void ACPP_MainPlayerCharacter::StopAiming()
 {
-	DeactivateADS2();
+	DeactivateAds_Cpp();
 }
 
 void ACPP_MainPlayerCharacter::Sprint()
 {
 	if (bIsAiming)
 	{ 
-		DeactivateADS2();
+		DeactivateAds_Cpp();
 	}
 
 	if (bIsCrouching)
@@ -207,6 +211,114 @@ void ACPP_MainPlayerCharacter::StopCrouching()
 
 void ACPP_MainPlayerCharacter::Reload()
 {
+	if (bIsAiming)
+	{
+		return;
+	}
+
+	switch (WeaponSelected)
+	{
+		case 1: 
+			ReloadLogic(1);
+			break;
+		case 2:
+			ReloadLogic(2);
+			break;
+		default:
+			break;
+	}
+}
+
+void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
+{
+	if (CurrentWeapon == 1) 
+	{
+		if (MaxAmmoAK <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("maxAmmo <= 0"));
+			//No more Bullets
+			return;
+		}
+
+		if (AmmoAK < ClipSizeAK)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("ammo < clipSize"));
+			if (MaxAmmoAK > (ClipSizeAK - AmmoAK))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("maxAmmo > (clipSize - ammo)"));
+				AmmoDiffAk = ClipSizeAK - AmmoAK;
+				AmmoAK += AmmoDiffAk;
+				MaxAmmoAK -= AmmoDiffAk;
+				//Play sound
+
+				bIsReloading = true;
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("maxAmmo > (clipSize - ammo) ELSE"));
+				AmmoDiffAk = ClipSizeAK - AmmoAK;
+				AmmoAK += MaxAmmoAK;
+				MaxAmmoAK = 0;
+				//Play sound
+
+				bIsReloading = true;
+			}
+			GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this, &ACPP_MainPlayerCharacter::DisableReloadAnim, 2.4f, true);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Full ammo already!"));
+			//Full ammo already!
+			return;
+		}
+	}
+	else if (CurrentWeapon == 2)
+	{
+		if (MaxAmmoGlock <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("maxAmmo <= 0"));
+			//No more Bullets
+			return;
+		}
+
+		if (AmmoGlock < ClipSizeGlock)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("ammo < clipSize"));
+			if (MaxAmmoGlock > (ClipSizeGlock - AmmoGlock))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("maxAmmo > (clipSize - ammo)"));
+				AmmoDiffGlock = ClipSizeGlock - AmmoGlock;
+				AmmoGlock += AmmoDiffGlock;
+				MaxAmmoGlock -= AmmoDiffGlock;
+				//Play sound
+
+				bIsReloading = true;
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("maxAmmo > (clipSize - ammo) ELSE"));
+				AmmoDiffGlock = ClipSizeGlock - AmmoGlock;
+				AmmoGlock += MaxAmmoGlock;
+				MaxAmmoGlock = 0;
+				//Play sound
+
+				bIsReloading = true;
+			}
+			GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this, &ACPP_MainPlayerCharacter::DisableReloadAnim, 2.4f, true);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Full ammo already!"));
+			//Full ammo already!
+			return;
+		}
+	}
+	
+}
+
+void ACPP_MainPlayerCharacter::DisableReloadAnim()
+{
+	bIsReloading = false;
 }
 
 
