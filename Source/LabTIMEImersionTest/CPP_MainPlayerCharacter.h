@@ -47,6 +47,18 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "ShowGlock"))
 	void ShowGlock_Cpp();
 
+	/**
+	* This fuction hides AK-47 and shows Glock on player.
+	*/
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
+	void FireAK_CPP();
+
+	/**
+	* This fuction hides AK-47 and shows Glock on player.
+	*/
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
+	void FireGlock_CPP();
+
 protected:
 
 	// Called when the game starts or when spawned.
@@ -96,7 +108,7 @@ private:
 	void Reload();
 
 	/**
-	* This fuction is called to calculate the logic of the magazines given
+	* This fuction is called to calculate and update the magazines given
 	* the weapon.
 	*/
 	void ReloadLogic(int CurrentWeapon);
@@ -107,6 +119,9 @@ private:
 	*/
 	void DisableReloadAnim();
 
+	/**
+	* Its a simple FTimer Handle to distinguish timers
+	*/
 	FTimerHandle TriggerStopAnim;
 
 	//Mouse Inputs
@@ -157,6 +172,16 @@ private:
 	* This fuction is called when player stops aiming.
 	*/
 	void StopAiming();
+
+	/**
+	* This fuction is called when player shoots.
+	*/
+	void PrimaryFire();
+
+	/**
+	* This fuction is called when stop shooting.
+	*/
+	void StopFiring();
 
 
 public:

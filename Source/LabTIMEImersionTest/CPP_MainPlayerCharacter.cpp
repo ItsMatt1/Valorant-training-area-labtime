@@ -79,6 +79,13 @@ void ACPP_MainPlayerCharacter::SetupPlayerInputComponent(UInputComponent*
 	PlayerInputComponent->BindAction(TEXT("Reload"), EInputEvent::IE_Pressed,
 		this, &ACPP_MainPlayerCharacter::Reload);
 
+	PlayerInputComponent->BindAction(TEXT("PrimaryFire"),
+		EInputEvent::IE_Pressed, this,
+		&ACPP_MainPlayerCharacter::PrimaryFire);
+	PlayerInputComponent->BindAction(TEXT("PrimaryFire"),
+		EInputEvent::IE_Released, this,
+		&ACPP_MainPlayerCharacter::StopFiring);
+
 }
                                                                                
 void ACPP_MainPlayerCharacter::MoveForward(float AxisValue)
@@ -159,6 +166,40 @@ void ACPP_MainPlayerCharacter::AimDownSight()
 void ACPP_MainPlayerCharacter::StopAiming()
 {
 	DeactivateAds_Cpp();
+}
+
+void ACPP_MainPlayerCharacter::PrimaryFire()
+{
+
+	if (bIsSprinting || bIsReloading)
+	{
+		return;
+	}
+
+	switch (WeaponSelected)
+	{
+		case 1:
+			if (AmmoAK >= 1)
+			{
+				bIsFiring = true;
+				FireAK_CPP();
+			}
+			break;
+		case 2:
+			if (AmmoGlock >= 1)
+			{
+				bIsFiring = true;
+				FireGlock_CPP();
+			}
+			break;
+		default:
+			break;
+	}
+}
+
+void ACPP_MainPlayerCharacter::StopFiring()
+{
+	bIsFiring = false;
 }
 
 void ACPP_MainPlayerCharacter::Sprint()
