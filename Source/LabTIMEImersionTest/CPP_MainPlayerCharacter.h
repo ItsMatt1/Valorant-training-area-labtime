@@ -122,7 +122,7 @@ private:
 	void DisableReloadAnim();
 
 	/**
-	* Its a simple FTimer Handle to distinguish timers
+	* Its a simple FTimer Handle to distinguish timers and finish animation.
 	*/
 	FTimerHandle TriggerStopAnim;
 
@@ -187,6 +187,16 @@ private:
 
 
 public:
+
+	//Defining amount of Health
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,
+		Category = "Character Info: Health");
+	float Health = 1.f;
+
+	//Defining amount of Armor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,
+		Category = "Character Info: Armor");
+	float Armor = 1.f;
 
 	//Defining The speed of the Walking
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
