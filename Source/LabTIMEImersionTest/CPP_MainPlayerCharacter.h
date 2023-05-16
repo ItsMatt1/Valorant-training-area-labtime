@@ -48,14 +48,14 @@ public:
 	void ShowGlock_Cpp();
 
 	/**
-	* This fuction calls Fire Event on BP_MainPlayerCharacter.
+	* This fuction calls Fire Event of Weapon_Base on BP_MainPlayerCharacter.
 	* It throws a line tracing between the player and the middle of the screen. 
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
 	void FireAK_CPP();
 
 	/**
-	* This fuction calls Fire Event on BP_MainPlayerCharacter.
+	* This fuction calls Fire Event of Weapon_Glock on BP_MainPlayerCharacter.
 	* It throws a line tracing between the player and the middle of the screen.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
@@ -189,17 +189,17 @@ private:
 public:
 
 	//Defining The speed of the Walking
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Movement: Walking");
 	float WalkingSpeed = 600.f;
 
 	//Defining The speed of the Sprint
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Movement: Sprinting");
 	float SprintSpeed = 1000.f;
 
 	//Defining The speed of the Crouching
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Movement: Crouching");
 	float CrouchingSpeed = WalkingSpeed / 2;
 
@@ -230,39 +230,39 @@ public:
 	int WeaponSelected = 1;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon: Ammo");
+		Category = "Weapon AK: Ammo");
 	int AmmoAK = 30;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon: FireRate");
+		Category = "Weapon AK: FireRate");
 	float FireRateAK = 0.1;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon: MaxAmmo");
+		Category = "Weapon AK: MaxAmmo");
 	int MaxAmmoAK = 90;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon: ClipSize");
+		Category = "Weapon AK: ClipSize");
 	int ClipSizeAK = 30;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon: Ammo");
+		Category = "Weapon Glock: Ammo");
 	int AmmoGlock = 15;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon: MaxAmmo");
+		Category = "Weapon Glock: MaxAmmo");
 	int MaxAmmoGlock = 45;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon: ClipSize");
+		Category = "Weapon Glock: ClipSize");
 	int ClipSizeGlock = 15;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon: AmmoDiff");
+		Category = "Weapon AK: AmmoDiff");
 	int AmmoDiffAk = 0;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon: AmmoDiff");
+		Category = "Weapon Glock: AmmoDiff");
 	int AmmoDiffGlock = 0;
 
 private:

@@ -204,11 +204,15 @@ void ACPP_MainPlayerCharacter::StopFiring()
 
 void ACPP_MainPlayerCharacter::Sprint()
 {
+	//If the player is aiming the player cannot sprint, so this deactivates 
+	// the aim.
 	if (bIsAiming)
 	{ 
 		DeactivateAds_Cpp();
 	}
 
+	//If the player is crouching the player cannot sprint, so this deactivates 
+	// the crouch.
 	if (bIsCrouching)
 	{
 		bIsCrouching = false;
@@ -228,6 +232,8 @@ void ACPP_MainPlayerCharacter::StopSprinting()
 
 void ACPP_MainPlayerCharacter::Crouch()
 {
+	//If the player is sprinting the player cannot crouch, so this deactivates 
+	// the sprint.
 	if (bIsSprinting)
 	{ 
 		bIsSprinting = false;
