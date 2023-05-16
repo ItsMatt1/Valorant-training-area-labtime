@@ -48,13 +48,15 @@ public:
 	void ShowGlock_Cpp();
 
 	/**
-	* This fuction hides AK-47 and shows Glock on player.
+	* This fuction calls Fire Event on BP_MainPlayerCharacter.
+	* It throws a line tracing between the player and the middle of the screen. 
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
 	void FireAK_CPP();
 
 	/**
-	* This fuction hides AK-47 and shows Glock on player.
+	* This fuction calls Fire Event on BP_MainPlayerCharacter.
+	* It throws a line tracing between the player and the middle of the screen.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
 	void FireGlock_CPP();

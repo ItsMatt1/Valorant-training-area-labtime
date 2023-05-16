@@ -106,6 +106,7 @@ void ACPP_MainPlayerCharacter::MoveRight(float AxisValue)
 	const FVector Right = UKismetMathLibrary::GetRightVector(
 		GetPawnRotation);
 
+	// Add movement input along the given world direction vector
 	AddMovementInput(Right, AxisValue); 
 }
 
@@ -170,7 +171,6 @@ void ACPP_MainPlayerCharacter::StopAiming()
 
 void ACPP_MainPlayerCharacter::PrimaryFire()
 {
-
 	if (bIsSprinting || bIsReloading)
 	{
 		return;
