@@ -7,8 +7,8 @@
 #include "FPSHud.generated.h"
 
 /**
- * 
- */
+* This widget is used to show current health, armor, weapon and bullets.
+*/
 UCLASS()
 class LABTIMEIMERSIONTEST_API UFPSHud : public UUserWidgetBase
 {
