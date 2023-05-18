@@ -282,17 +282,14 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 	{
 		if (MaxAmmoAK <= 0)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("maxAmmo <= 0"));
 			//No more Bullets
 			return;
 		}
 
 		if (AmmoAK < ClipSizeAK)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("ammo < clipSize"));
 			if (MaxAmmoAK > (ClipSizeAK - AmmoAK))
 			{
-				UE_LOG(LogTemp, Warning, TEXT("maxAmmo > (clipSize - ammo)"));
 				AmmoDiffAk = ClipSizeAK - AmmoAK;
 				AmmoAK += AmmoDiffAk;
 				MaxAmmoAK -= AmmoDiffAk;
@@ -302,7 +299,6 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 			}
 			else
 			{
-				UE_LOG(LogTemp, Warning, TEXT("maxAmmo > (clipSize - ammo) ELSE"));
 				AmmoDiffAk = ClipSizeAK - AmmoAK;
 				AmmoAK += MaxAmmoAK;
 				MaxAmmoAK = 0;
@@ -314,7 +310,6 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Full ammo already!"));
 			//Full ammo already!
 			return;
 		}
@@ -323,17 +318,14 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 	{
 		if (MaxAmmoGlock <= 0)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("maxAmmo <= 0"));
 			//No more Bullets
 			return;
 		}
 
 		if (AmmoGlock < ClipSizeGlock)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("ammo < clipSize"));
 			if (MaxAmmoGlock > (ClipSizeGlock - AmmoGlock))
 			{
-				UE_LOG(LogTemp, Warning, TEXT("maxAmmo > (clipSize - ammo)"));
 				AmmoDiffGlock = ClipSizeGlock - AmmoGlock;
 				AmmoGlock += AmmoDiffGlock;
 				MaxAmmoGlock -= AmmoDiffGlock;
@@ -343,7 +335,6 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 			}
 			else
 			{
-				UE_LOG(LogTemp, Warning, TEXT("maxAmmo > (clipSize - ammo) ELSE"));
 				AmmoDiffGlock = ClipSizeGlock - AmmoGlock;
 				AmmoGlock += MaxAmmoGlock;
 				MaxAmmoGlock = 0;
@@ -355,7 +346,6 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Full ammo already!"));
 			//Full ammo already!
 			return;
 		}

@@ -106,12 +106,14 @@ private:
 	/**
 	* This fuction is called when player start reloading.
 	*/
-	//UFUNCTION(BlueprintCallable, meta = (DisplayName = "Reload"))
 	void Reload();
 
 	/**
 	* This fuction is called to calculate and update the magazines given
 	* the weapon.
+	* @param CurrentWeapon is a int which is always 1 or 2.
+	* 1 for AK-47.
+	* 2 for Glock.
 	*/
 	void ReloadLogic(int CurrentWeapon);
 
@@ -120,11 +122,6 @@ private:
 	* the current animation.
 	*/
 	void DisableReloadAnim();
-
-	/**
-	* Its a simple FTimer Handle to distinguish timers and finish animation.
-	*/
-	FTimerHandle TriggerStopAnim;
 
 	//Mouse Inputs
 
@@ -185,15 +182,14 @@ private:
 	*/
 	void StopFiring();
 
-
 public:
 
-	//Defining amount of Health
+	//Defining amount of Health, starts with 1 and go until 0
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Info: Health");
 	float Health = 1.f;
 
-	//Defining amount of Armor
+	//Defining amount of Armor, starts with 1 and go until 0
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Info: Armor");
 	float Armor = 1.f;
@@ -282,6 +278,11 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float BaseLookUpRate = 45.f;
+
+	/**
+	* Its a simple FTimer Handle to distinguish timers and finish animation.
+	*/
+	FTimerHandle TriggerStopAnim;
 
 };
  
