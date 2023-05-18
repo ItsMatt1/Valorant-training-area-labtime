@@ -24,4 +24,24 @@ public:
 	*/
 	UFUNCTION(BlueprintImplementableEvent)
 	bool ToggleScoreboardWidget(bool bActive);
+
+	/**
+	* Shows armor damage on Player.
+	*
+	* @note This method will actually be implemeted in the Blueprint
+	* @param bActive If true will show the widget. If false will hide it
+	* @return True if the operation was successful
+	*/
+	UFUNCTION(BlueprintImplementableEvent)
+	bool ToggleArmorDamageWidget(bool bActive);
+
+	/**
+	* Shows health damage on Player.
+	*
+	* @note This method will actually be implemeted in the Blueprint
+	* @param bActive If true will show the widget. If false will hide it
+	* @return True if the operation was successful
+	*/
+	UFUNCTION(BlueprintImplementableEvent)
+	bool ToggleDamageWidget(bool bActive);
 };

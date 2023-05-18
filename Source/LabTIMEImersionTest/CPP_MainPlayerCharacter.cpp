@@ -258,7 +258,7 @@ void ACPP_MainPlayerCharacter::StopCrouching()
 
 void ACPP_MainPlayerCharacter::Reload()
 {
-	if (bIsAiming)
+	if (bIsAiming || bIsFiring)
 	{
 		return;
 	}
@@ -288,6 +288,7 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 
 		if (AmmoAK < ClipSizeAK)
 		{
+			bIsReloading = true;
 			if (MaxAmmoAK > (ClipSizeAK - AmmoAK))
 			{
 				AmmoDiffAk = ClipSizeAK - AmmoAK;
@@ -295,7 +296,6 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 				MaxAmmoAK -= AmmoDiffAk;
 				//Play sound
 
-				bIsReloading = true;
 			}
 			else
 			{
@@ -304,7 +304,6 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 				MaxAmmoAK = 0;
 				//Play sound
 
-				bIsReloading = true;
 			}
 			GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this, &ACPP_MainPlayerCharacter::DisableReloadAnim, 2.4f, true);
 		}
