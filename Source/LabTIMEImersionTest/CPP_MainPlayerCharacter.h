@@ -70,14 +70,18 @@ private:
 
 	// Movement Inputs
 	/**
-	* This fuction makes the player move on Z axis.
-	* @param AxisValue
+	* Handles the forward movement of the character.
+	* This method should be binded on a axis input.
+	*
+	* @param AxisValue The axis value of the input
 	*/
 	void MoveForward(float AxisValue);
 
 	/**
-	* This fuction makes the player move on Y axis.
-	* @param AxisValue
+	* Handles the right movement of the character.
+	* This method should be binded on a axis input.
+	*
+	* @param AxisValue The axis value of the input
 	*/
 	void MoveRight(float AxisValue);
 
@@ -237,7 +241,7 @@ public:
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK: Ammo");
-	int AmmoAK = 30;
+	int32 AmmoAK = 30;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK: FireRate");
@@ -245,31 +249,31 @@ public:
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK: MaxAmmo");
-	int MaxAmmoAK = 90;
+	int32 MaxAmmoAK = 90;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK: ClipSize");
-	int ClipSizeAK = 30;
+	int32 ClipSizeAK = 30;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock: Ammo");
-	int AmmoGlock = 15;
+	int32 AmmoGlock = 15;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock: MaxAmmo");
-	int MaxAmmoGlock = 45;
+	int32 MaxAmmoGlock = 45;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock: ClipSize");
-	int ClipSizeGlock = 15;
+	int32 ClipSizeGlock = 15;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK: AmmoDiff");
-	int AmmoDiffAk = 0;
+	int32 AmmoDiffAk = 0;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock: AmmoDiff");
-	int AmmoDiffGlock = 0;
+	int32 AmmoDiffGlock = 0;
 
 private:
 

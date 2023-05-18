@@ -13,15 +13,5 @@ UCLASS()
 class LABTIMEIMERSIONTEST_API AMainPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
-public:
-	/** Setup the player controller inputs */
-	virtual void SetupInputComponent() override;
-
-private:
-	/** Request the main HUD to open the scoreboard widget */
-	void RequestOpenScoreBoard();
-
-	/** Request the main HUD to close the scoreboard widget */
-	void RequestCloseScoreBoard();
 };
+
