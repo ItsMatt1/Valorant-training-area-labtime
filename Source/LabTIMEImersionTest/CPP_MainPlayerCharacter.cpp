@@ -4,6 +4,7 @@
 #include "CPP_MainPlayerCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "LabTIMEImersionTest/Interface/MainHUD.h"
 
 // Sets default values
 ACPP_MainPlayerCharacter::ACPP_MainPlayerCharacter()
