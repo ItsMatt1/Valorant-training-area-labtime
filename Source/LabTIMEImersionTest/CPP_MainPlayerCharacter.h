@@ -26,13 +26,15 @@ public:
 	/**
 	* This fuction disables the AimDownSight camera.
 	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "DeactivateAds"))
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = 
+		"DeactivateAds"))
 	void DeactivateAds_Cpp();
 
 	/**
 	* This fuction enables the AimDownSight camera.
 	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "ActivateAds"))
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName 
+		= "ActivateAds"))
 	void ActivateAds_Cpp();
 
 	/**
@@ -61,12 +63,23 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
 	void FireGlock_CPP();
 
+	/**
+	* This Function call the GameOverWidget.
+	*/
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "GameOver"))
+		void GameOver();
+
+	/**
+	* This fuction calls makes the player take 15% of damage.
+	* It reduces its health and/or armor.
+	* Its called on BP_TargetEnemy
+	*/
 	UFUNCTION(BlueprintCallable)
 	void TakeDamage();
 
-	void TakeArmorDamageCallWidget();
 
-	void TakeHealthDamageCallWidget();
+
+
 
 protected:
 
@@ -192,6 +205,16 @@ private:
 	* This fuction is called when stop shooting.
 	*/
 	void StopFiring();
+
+	/**
+	* This Function call the ArmorDamage Widget.
+	*/
+	void TakeArmorDamageCallWidget();
+
+	/**
+	* This Function call the HealthDamage Widget.
+	*/
+	void TakeHealthDamageCallWidget();
 
 public:
 

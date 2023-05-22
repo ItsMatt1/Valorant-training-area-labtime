@@ -20,58 +20,6 @@ ACPP_MainPlayerCharacter::~ACPP_MainPlayerCharacter()
 {
 }
 
-void ACPP_MainPlayerCharacter::TakeDamage()
-{
-	Armor -= 0.15;
-
-	if (Armor < 0)
-	{
-		TakeHealthDamageCallWidget();
-
-		Health += Armor;
-		Armor = 0;
-
-		if (Health < 0)
-		{
-			//GameOver
-		}
-	}
-	else
-	{
-		TakeArmorDamageCallWidget();
-	}
-}
-
-void ACPP_MainPlayerCharacter::TakeArmorDamageCallWidget()
-{
-	AMainHUD* hud = UGameplayStatics::GetPlayerController(this, 0)->GetHUD<AMainHUD>();
-
-	if (!hud)
-	{
-		UE_LOG(LogTemp, Error,
-			TEXT("Could not get main HUD to show HealthDamage."));
-		return;
-	}
-
-	// Request the main HUD to show the HealthDamage widget
-	hud->ToggleArmorDamageWidget(true);
-}
-
-void ACPP_MainPlayerCharacter::TakeHealthDamageCallWidget()
-{
-	AMainHUD* hud = UGameplayStatics::GetPlayerController(this, 0)->GetHUD<AMainHUD>();
-
-	if (!hud)
-	{
-		UE_LOG(LogTemp, Error,
-			TEXT("Could not get main HUD to show ArmorDamage."));
-		return;
-	}
-
-	// Request the main HUD to show the ArmorDamage widget
-	hud->ToggleDamageWidget(true);
-}
-
 // Called when the game starts or when spawned
 void ACPP_MainPlayerCharacter::BeginPlay()
 {
@@ -204,6 +152,7 @@ void ACPP_MainPlayerCharacter::SelectSecondaryWeapon()
 
 void ACPP_MainPlayerCharacter::AimDownSight()
 {
+	//Player cant realod if it is aiming.
 	if (bIsReloading)
 	{
 		return;
@@ -226,10 +175,15 @@ void ACPP_MainPlayerCharacter::StopAiming()
 
 void ACPP_MainPlayerCharacter::PrimaryFire()
 {
+	//Disables firing if the player is sprinting or reloading.
 	if (bIsSprinting || bIsReloading)
 	{
 		return;
 	}
+
+	/* Reminder */
+	//1 for Ak.
+	//2 for Glock.
 
 	switch (WeaponSelected)
 	{
@@ -360,7 +314,8 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 				//Play sound
 
 			}
-			GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this, &ACPP_MainPlayerCharacter::DisableReloadAnim, 2.4f, true);
+			GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this, 
+				&ACPP_MainPlayerCharacter::DisableReloadAnim, 2.4f, true);
 		}
 		else
 		{
@@ -396,7 +351,8 @@ void ACPP_MainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 
 				bIsReloading = true;
 			}
-			GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this, &ACPP_MainPlayerCharacter::DisableReloadAnim, 2.4f, true);
+			GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this, 
+				&ACPP_MainPlayerCharacter::DisableReloadAnim, 2.4f, true);
 		}
 		else
 		{
@@ -412,4 +368,59 @@ void ACPP_MainPlayerCharacter::DisableReloadAnim()
 	bIsReloading = false;
 }
 
+void ACPP_MainPlayerCharacter::TakeDamage()
+{
+	//15% of Damage
+	Armor -= 0.15f;
 
+	if (Armor < 0)
+	{
+		TakeHealthDamageCallWidget();
+
+		Health += Armor;
+		Armor = 0;
+
+		if (Health < 0)
+		{
+			GameOver();
+		}
+	}
+	else
+	{
+		TakeArmorDamageCallWidget();
+	}
+}
+
+void ACPP_MainPlayerCharacter::TakeArmorDamageCallWidget()
+{
+	//Gets Player's Hud
+	AMainHUD* Hud = UGameplayStatics::GetPlayerController(this, 0)->
+		GetHUD<AMainHUD>();
+
+	if (!Hud)
+	{
+		UE_LOG(LogTemp, Error,
+			TEXT("Could not get main HUD to show HealthDamage."));
+		return;
+	}
+
+	// Request the main HUD to show the HealthDamage widget
+	Hud->ToggleArmorDamageWidget(true);
+}
+
+void ACPP_MainPlayerCharacter::TakeHealthDamageCallWidget()
+{
+	//Gets Player's Hud
+	AMainHUD* Hud = UGameplayStatics::GetPlayerController(this, 0)->
+		GetHUD<AMainHUD>();
+
+	if (!Hud)
+	{
+		UE_LOG(LogTemp, Error,
+			TEXT("Could not get main HUD to show ArmorDamage."));
+		return;
+	}
+
+	// Request the main HUD to show the ArmorDamage widget
+	Hud->ToggleDamageWidget(true);
+}
