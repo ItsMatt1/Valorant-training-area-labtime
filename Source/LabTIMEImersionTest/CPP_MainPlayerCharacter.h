@@ -61,6 +61,13 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
 	void FireGlock_CPP();
 
+	UFUNCTION(BlueprintCallable)
+	void TakeDamage();
+
+	void TakeArmorDamageCallWidget();
+
+	void TakeHealthDamageCallWidget();
+
 protected:
 
 	// Called when the game starts or when spawned.

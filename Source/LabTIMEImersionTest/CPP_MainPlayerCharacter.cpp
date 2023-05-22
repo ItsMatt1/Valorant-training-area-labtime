@@ -5,6 +5,8 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "LabTIMEImersionTest/Interface/MainHUD.h"
+#include "CPP_MainPlayerController.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ACPP_MainPlayerCharacter::ACPP_MainPlayerCharacter()
@@ -16,6 +18,58 @@ ACPP_MainPlayerCharacter::ACPP_MainPlayerCharacter()
 
 ACPP_MainPlayerCharacter::~ACPP_MainPlayerCharacter()
 {
+}
+
+void ACPP_MainPlayerCharacter::TakeDamage()
+{
+	Armor -= 0.15;
+
+	if (Armor < 0)
+	{
+		TakeHealthDamageCallWidget();
+
+		Health += Armor;
+		Armor = 0;
+
+		if (Health < 0)
+		{
+			//GameOver
+		}
+	}
+	else
+	{
+		TakeArmorDamageCallWidget();
+	}
+}
+
+void ACPP_MainPlayerCharacter::TakeArmorDamageCallWidget()
+{
+	AMainHUD* hud = UGameplayStatics::GetPlayerController(this, 0)->GetHUD<AMainHUD>();
+
+	if (!hud)
+	{
+		UE_LOG(LogTemp, Error,
+			TEXT("Could not get main HUD to show HealthDamage."));
+		return;
+	}
+
+	// Request the main HUD to show the HealthDamage widget
+	hud->ToggleArmorDamageWidget(true);
+}
+
+void ACPP_MainPlayerCharacter::TakeHealthDamageCallWidget()
+{
+	AMainHUD* hud = UGameplayStatics::GetPlayerController(this, 0)->GetHUD<AMainHUD>();
+
+	if (!hud)
+	{
+		UE_LOG(LogTemp, Error,
+			TEXT("Could not get main HUD to show ArmorDamage."));
+		return;
+	}
+
+	// Request the main HUD to show the ArmorDamage widget
+	hud->ToggleDamageWidget(true);
 }
 
 // Called when the game starts or when spawned
