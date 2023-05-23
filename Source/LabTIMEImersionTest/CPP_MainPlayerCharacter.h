@@ -28,46 +28,46 @@ public:
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = 
 		"DeactivateAds"))
-	void DeactivateAds_Cpp();
+	void DeactivateAdsEvent();
 
 	/**
 	* This fuction enables the AimDownSight camera.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName 
 		= "ActivateAds"))
-	void ActivateAds_Cpp();
+	void ActivateAdsEvent();
 
 	/**
 	* This fuction hides Glock and shows AK-47 on player.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "ShowAK"))
-	void ShowAK_Cpp();
+	void ShowAkEvent();
 
 	/**
 	* This fuction hides AK-47 and shows Glock on player.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "ShowGlock"))
-	void ShowGlock_Cpp();
+	void ShowGlockEvent();
 
 	/**
 	* This fuction calls Fire Event of Weapon_Base on BP_MainPlayerCharacter.
 	* It throws a line tracing between the player and the middle of the screen. 
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
-	void FireAK_CPP();
+	void FireAkEvent();
 
 	/**
 	* This fuction calls Fire Event of Weapon_Glock on BP_MainPlayerCharacter.
 	* It throws a line tracing between the player and the middle of the screen.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
-	void FireGlock_CPP();
+	void FireGlockEvent();
 
 	/**
 	* This Function call the GameOverWidget.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "GameOver"))
-		void GameOver();
+	void GameOver();
 
 	/**
 	* This fuction calls makes the player take 15% of damage.
@@ -76,10 +76,6 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable)
 	void TakeDamage();
-
-
-
-
 
 protected:
 

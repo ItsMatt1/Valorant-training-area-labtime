@@ -139,7 +139,7 @@ void ACPP_MainPlayerCharacter::SelectPrimaryWeapon()
 {
 	WeaponSelected = 1;
 
-	ShowAK_Cpp();
+	ShowAkEvent();
 }
 
 
@@ -147,7 +147,7 @@ void ACPP_MainPlayerCharacter::SelectSecondaryWeapon()
 {
 	WeaponSelected = 2;
 
-	ShowGlock_Cpp();
+	ShowGlockEvent();
 }
 
 void ACPP_MainPlayerCharacter::AimDownSight()
@@ -164,13 +164,13 @@ void ACPP_MainPlayerCharacter::AimDownSight()
 		GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 	}
 	
-	ActivateAds_Cpp();
+	ActivateAdsEvent();
 	bIsAiming = true;
 }
 
 void ACPP_MainPlayerCharacter::StopAiming()
 {
-	DeactivateAds_Cpp();
+	DeactivateAdsEvent();
 }
 
 void ACPP_MainPlayerCharacter::PrimaryFire()
@@ -191,14 +191,14 @@ void ACPP_MainPlayerCharacter::PrimaryFire()
 			if (AmmoAK >= 1)
 			{
 				bIsFiring = true;
-				FireAK_CPP();
+				FireAkEvent();
 			}
 			break;
 		case 2:
 			if (AmmoGlock >= 1)
 			{
 				bIsFiring = true;
-				FireGlock_CPP();
+				FireGlockEvent();
 			}
 			break;
 		default:
@@ -217,7 +217,7 @@ void ACPP_MainPlayerCharacter::Sprint()
 	// the aim.
 	if (bIsAiming)
 	{ 
-		DeactivateAds_Cpp();
+		DeactivateAdsEvent();
 	}
 
 	//If the player is crouching the player cannot sprint, so this deactivates 
