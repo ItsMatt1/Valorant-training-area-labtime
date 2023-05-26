@@ -295,33 +295,35 @@ void AMainPlayerCharacter::ReloadLogic(int CurrentWeapon)
 			return;
 		}
 
-		if (AmmoAK < ClipSizeAK)
-		{
-			bIsReloading = true;
-			if (MaxAmmoAK > (ClipSizeAK - AmmoAK))
-			{
-				AmmoDiffAk = ClipSizeAK - AmmoAK;
-				AmmoAK += AmmoDiffAk;
-				MaxAmmoAK -= AmmoDiffAk;
-				//Play sound
-
-			}
-			else
-			{
-				AmmoDiffAk = ClipSizeAK - AmmoAK;
-				AmmoAK += MaxAmmoAK;
-				MaxAmmoAK = 0;
-				//Play sound
-
-			}
-			GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this,
-				&AMainPlayerCharacter::DisableReloadAnim, 2.4f, true);
-		}
-		else
+		if (AmmoAK >= ClipSizeAK)
 		{
 			//Full ammo already!
 			return;
 		}
+
+		bIsReloading = true;
+
+		//Getting  the current ammount of ammo on ak.
+		AmmoDiffAk = ClipSizeAK - AmmoAK;
+
+		const bool bIsWeaponAbleToReload = (MaxAmmoAK > AmmoDiffAk);
+		 
+		if (bIsWeaponAbleToReload)
+		{
+			AmmoAK += AmmoDiffAk;
+			MaxAmmoAK -= AmmoDiffAk;
+			//Play sound
+		}
+		else
+		{
+			AmmoAK += MaxAmmoAK;
+			MaxAmmoAK = 0;
+			//Play sound
+		}
+
+		GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this,
+			&AMainPlayerCharacter::DisableReloadAnim, 2.4f, true);
+
 	}
 	else if (CurrentWeapon == 2)
 	{

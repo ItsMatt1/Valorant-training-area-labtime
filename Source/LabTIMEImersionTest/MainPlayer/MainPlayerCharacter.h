@@ -12,14 +12,14 @@ class LABTIMEIMERSIONTEST_API AMainPlayerCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties.
+	/** Sets default values for this character's properties. */
 	AMainPlayerCharacter();
 	~AMainPlayerCharacter();
 
-	// Called every frame
+	/** Called every frame */
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
+	/** Called to bind functionality to input */
 	virtual void SetupPlayerInputComponent(class UInputComponent*
 		PlayerInputComponent) override;
 
@@ -79,12 +79,11 @@ public:
 
 protected:
 
-	// Called when the game starts or when spawned.
+	/** Called when the game starts or when spawned. */
 	virtual void BeginPlay() override;
 
 private:
 
-	// Movement Inputs
 	/**
 	* Handles the forward movement of the character.
 	* This method should be binded on a axis input.
@@ -100,8 +99,6 @@ private:
 	* @param AxisValue The axis value of the input
 	*/
 	void MoveRight(float AxisValue);
-
-	//Player Actions
 
 	/**
 	* This fuction is called when player starts sprinting.
@@ -170,7 +167,6 @@ private:
 	*/
 	void LookUpRate(float AxisValue);
 
-	//Weapon Selection
 	/**
 	* This fuction is called when player selects primary weapon.
 	*/
@@ -181,7 +177,6 @@ private:
 	*/
 	void SelectSecondaryWeapon();
 
-	//Camera Manipulation
 	/**
 	* This fuction is called when player aims.
 	*/
@@ -214,112 +209,114 @@ private:
 
 public:
 
-	/* Defining amount of Health, starts with 1 and go until 0 */
+	/** Defining amount of Health, starts with 1 and go until 0 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Info");
 	float Health = 1.f;
 
-	/* Defining amount of Armor, starts with 1 and go until 0 */
+	/** Defining amount of Armor, starts with 1 and go until 0 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Info");
 	float Armor = 1.f;
 
-	/* Defining The speed of the Walking */
+	/** Defining The speed of the Walking */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Movement");
 	float WalkingSpeed = 600.f;
 
-	/* Defining The speed of the Sprint */
+	/** Defining The speed of the Sprint */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Movement");
 	float SprintSpeed = 1000.f;
 
-	/* Defining The speed of the Crouching */
+	/** Defining The speed of the Crouching */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Movement");
 	float CrouchingSpeed = WalkingSpeed / 2;
 
-	/* Boolean which is true whenever player crouchs */
+	/** Boolean which is true whenever player crouchs */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Character Movement");
 	bool bIsCrouching = false;
 
-	/* Boolean which is true whenever player sprints */
+	/** Boolean which is true whenever player sprints */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Character Movement");
 	bool bIsSprinting = false;
 
-	/* Boolean which is true whenever player aims */
+	/** Boolean which is true whenever player aims */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Character Movement");
 	bool bIsAiming = false;
 
-	/* Boolean which is true whenever player fires*/
+	/** Boolean which is true whenever player fires*/
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Character Action");
 	bool bIsFiring = false;
 
-	/* Boolean which is true whenever player is realoding*/
+	/** Boolean which is true whenever player is realoding*/
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Character Action");
 	bool bIsReloading = false;
 
-	/*	1 for AK-47.
+	/**	1 for AK-47.
 		2 for Glock. */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Character Action");
 	int WeaponSelected = 1;
 
-	/* Ammount of AK-47 ammo */
+	/** Ammount of AK-47 ammo */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK");
 	int32 AmmoAK = 30;
 
-	/* AK-47 FireRate */
+	/** AK-47 FireRate */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK");
 	float FireRateAK = 0.1;
 
-	/* Ammount of AK-47 Max Ammo */
+	/** Ammount of AK-47 Max Ammo */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK");
 	int32 MaxAmmoAK = 90;
 
-	/* The size of one clip of the AK-47 */
+	/** The size of one clip of the AK-47 */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK");
 	int32 ClipSizeAK = AmmoAK;
 
-	/* Ammount of Glock ammo */
+	/** Ammount of Glock ammo */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock");
 	int32 AmmoGlock = 15;
 
-	/* Ammount of Glock Max ammo */
+	/** Ammount of Glock Max ammo */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock");
 	int32 MaxAmmoGlock = 45;
 
-	/* The size of one clip of the Glock */
+	/** The size of one clip of the Glock */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock");
 	int32 ClipSizeGlock = AmmoGlock;
 
-	/* Variable to calculate the difference entre current clip - clipsize */
+	/** Variable to calculate the difference entre current clip - clipsize */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK");
 	int32 AmmoDiffAk = 0;
 
-	/* Variable to calculate the difference entre current clip - clipsize */
+	/** Variable to calculate the difference entre current clip - clipsize */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock");
 	int32 AmmoDiffGlock = 0;
 
 private:
 
+	/** Set the turn rate of the controller */
 	UPROPERTY(EditAnywhere)
 	float BaseTurnRate = 45.f;
 
+	/** Set the look up rate of the controller */
 	UPROPERTY(EditAnywhere)
 	float BaseLookUpRate = 45.f;
 
