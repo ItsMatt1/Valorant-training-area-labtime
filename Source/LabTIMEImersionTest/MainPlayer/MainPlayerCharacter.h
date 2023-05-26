@@ -214,91 +214,105 @@ private:
 
 public:
 
-	//Defining amount of Health, starts with 1 and go until 0
+	/* Defining amount of Health, starts with 1 and go until 0 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Info: Health");
+		Category = "Character Info");
 	float Health = 1.f;
 
-	//Defining amount of Armor, starts with 1 and go until 0
+	/* Defining amount of Armor, starts with 1 and go until 0 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Info: Armor");
+		Category = "Character Info");
 	float Armor = 1.f;
 
-	//Defining The speed of the Walking
+	/* Defining The speed of the Walking */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Movement: Walking");
+		Category = "Character Movement");
 	float WalkingSpeed = 600.f;
 
-	//Defining The speed of the Sprint
+	/* Defining The speed of the Sprint */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Movement: Sprinting");
+		Category = "Character Movement");
 	float SprintSpeed = 1000.f;
 
-	//Defining The speed of the Crouching
+	/* Defining The speed of the Crouching */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Movement: Crouching");
+		Category = "Character Movement");
 	float CrouchingSpeed = WalkingSpeed / 2;
 
+	/* Boolean which is true whenever player crouchs */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Movement: Crouching");
+		Category = "Character Movement");
 	bool bIsCrouching = false;
 
+	/* Boolean which is true whenever player sprints */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Movement: Sprinting");
+		Category = "Character Movement");
 	bool bIsSprinting = false;
 
+	/* Boolean which is true whenever player aims */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Movement: Aiming");
+		Category = "Character Movement");
 	bool bIsAiming = false;
 
+	/* Boolean which is true whenever player fires*/
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Action: Firing");
+		Category = "Character Action");
 	bool bIsFiring = false;
 
+	/* Boolean which is true whenever player is realoding*/
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Action: Reloading");
+		Category = "Character Action");
 	bool bIsReloading = false;
 
-	//1 for AK-47.
-	//2 for Glock.
+	/*	1 for AK-47.
+		2 for Glock. */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Action: WeaponSelected");
+		Category = "Character Action");
 	int WeaponSelected = 1;
 
+	/* Ammount of AK-47 ammo */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK: Ammo");
+		Category = "Weapon AK");
 	int32 AmmoAK = 30;
 
+	/* AK-47 FireRate */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK: FireRate");
+		Category = "Weapon AK");
 	float FireRateAK = 0.1;
 
+	/* Ammount of AK-47 Max Ammo */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK: MaxAmmo");
+		Category = "Weapon AK");
 	int32 MaxAmmoAK = 90;
 
+	/* The size of one clip of the AK-47 */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK: ClipSize");
-	int32 ClipSizeAK = 30;
+		Category = "Weapon AK");
+	int32 ClipSizeAK = AmmoAK;
 
+	/* Ammount of Glock ammo */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock: Ammo");
+		Category = "Weapon Glock");
 	int32 AmmoGlock = 15;
 
+	/* Ammount of Glock Max ammo */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock: MaxAmmo");
+		Category = "Weapon Glock");
 	int32 MaxAmmoGlock = 45;
 
+	/* The size of one clip of the Glock */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock: ClipSize");
-	int32 ClipSizeGlock = 15;
+		Category = "Weapon Glock");
+	int32 ClipSizeGlock = AmmoGlock;
 
+	/* Variable to calculate the difference entre current clip - clipsize */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK: AmmoDiff");
+		Category = "Weapon AK");
 	int32 AmmoDiffAk = 0;
 
+	/* Variable to calculate the difference entre current clip - clipsize */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock: AmmoDiff");
+		Category = "Weapon Glock");
 	int32 AmmoDiffGlock = 0;
 
 private:
