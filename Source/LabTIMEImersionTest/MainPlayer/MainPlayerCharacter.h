@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "LabTIMEImersionTest/Weapons/Base/WeaponBase.h"
+#include "LabTIMEImersionTest/Weapons/Base/AutomaticWeapon.h"
 #include "MainPlayerCharacter.generated.h"
 
 UCLASS()
@@ -77,10 +79,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void TakeDamage();
 
+
 protected:
 
 	/** Called when the game starts or when spawned. */
 	virtual void BeginPlay() override;
+
 
 private:
 
@@ -139,8 +143,6 @@ private:
 	* the current animation.
 	*/
 	void DisableReloadAnim();
-
-	//Mouse Inputs
 
 	/**
 	* This fuction makes the player move the camera on X.
@@ -309,6 +311,16 @@ public:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock");
 	int32 AmmoDiffGlock = 0;
+
+	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
+	TSubclassOf<AWeaponBase> AK47 = nullptr;
+
+	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
+	TSubclassOf<AWeaponBase> Glock = nullptr;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Equipped Weapon");
+	AWeaponBase* EquippedWeapon = nullptr;
 
 private:
 

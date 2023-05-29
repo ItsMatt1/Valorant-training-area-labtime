@@ -64,11 +64,22 @@ protected:
 	int32 WeaponCurrentAmmunitionAmount = 0;
 
 	/** Ammount of ammo */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
 	int32 Ammo = 0;
 
 	/** Ammount of Max Ammo */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
 	int32 MaxAmmo = 0;
 
 	/** The size of one clip  */
-	int32 ClipSize = Ammo;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
+	int32 ClipSize = 0;
+
+	/** Variable to calculate the difference entre current clip - clipsize */
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
+	int32 AmmoDiff = 0;
 };

@@ -29,4 +29,10 @@ public:
 
 	/** Reload the automatic weapon. */
 	virtual void ReloadWeapon() override;
+
+protected:
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
+	float FireRate = 0;
 };

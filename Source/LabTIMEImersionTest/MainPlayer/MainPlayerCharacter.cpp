@@ -24,6 +24,15 @@ AMainPlayerCharacter::~AMainPlayerCharacter()
 void AMainPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	const FVector Location = GetActorLocation();
+	const FRotator Rotation = GetActorRotation();
+
+	EquippedWeapon = GetWorld()->SpawnActor<AWeaponBase>(AK47, Location, Rotation);
+	EquippedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
+
+	EquippedWeapon = GetWorld()->SpawnActor<AWeaponBase>(Glock, Location, Rotation);
+	EquippedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
 }
 
 // Called every frame
@@ -271,6 +280,8 @@ void AMainPlayerCharacter::Reload()
 	{
 		return;
 	}
+
+	EquippedWeapon->ReloadWeapon();
 
 	switch (WeaponSelected)
 	{
