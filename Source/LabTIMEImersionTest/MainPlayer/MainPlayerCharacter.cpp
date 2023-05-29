@@ -28,11 +28,17 @@ void AMainPlayerCharacter::BeginPlay()
 	const FVector Location = GetActorLocation();
 	const FRotator Rotation = GetActorRotation();
 
-	EquippedWeapon = GetWorld()->SpawnActor<AWeaponBase>(AK47, Location, Rotation);
-	EquippedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
+	auto SpawnAk = GetWorld()->SpawnActor<AWeaponBase>(AK47, Location, Rotation);
+	SpawnAk->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
 
-	EquippedWeapon = GetWorld()->SpawnActor<AWeaponBase>(Glock, Location, Rotation);
-	EquippedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
+	auto SpawnGlock = GetWorld()->SpawnActor<AWeaponBase>(Glock, Location, Rotation);
+	SpawnGlock->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
+
+	SpawnGlock->GetRootComponent()->SetVisibility(true);
+
+	AvailableWeapons.Add("AK-47", SpawnAk);
+	AvailableWeapons.Add("Glock", SpawnGlock);
+
 }
 
 // Called every frame
@@ -146,17 +152,37 @@ void AMainPlayerCharacter::LookUpRate(float AxisValue)
 
 void AMainPlayerCharacter::SelectPrimaryWeapon()
 {
-	WeaponSelected = 1;
+	if (!AvailableWeapons.Contains("AK-47"))
+	{
+		UE_LOG(LogTemp, Error,
+			TEXT("Gun AK-47 not found."));
+		return;
+	}
 
-	ShowAkEvent();
+	EquippedWeapon = AvailableWeapons["AK-47"];
+
+	AvailableWeapons.Contains("AK-47");
+
+	AvailableWeapons["Glock"]->GetRootComponent()->SetVisibility(false, true);
+
+	EquippedWeapon->GetRootComponent()->SetVisibility(true, true);
 }
 
 
 void AMainPlayerCharacter::SelectSecondaryWeapon()
 {
-	WeaponSelected = 2;
+	if (!AvailableWeapons.Contains("Glock"))
+	{
+		UE_LOG(LogTemp, Error,
+			TEXT("Gun Glock not found."));
+		return;
+	}
 
-	ShowGlockEvent();
+	EquippedWeapon = AvailableWeapons["Glock"];
+
+	AvailableWeapons["AK-47"]->GetRootComponent()->SetVisibility(false, true);
+
+	EquippedWeapon->GetRootComponent()->SetVisibility(true, true);
 }
 
 void AMainPlayerCharacter::AimDownSight()

@@ -40,18 +40,6 @@ public:
 	void ActivateAdsEvent();
 
 	/**
-	* This fuction hides Glock and shows AK-47 on player.
-	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "ShowAK"))
-	void ShowAkEvent();
-
-	/**
-	* This fuction hides AK-47 and shows Glock on player.
-	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "ShowGlock"))
-	void ShowGlockEvent();
-
-	/**
 	* This fuction calls Fire Event of Weapon_Base on BP_MainPlayerCharacter.
 	* It throws a line tracing between the player and the middle of the screen.
 	*/
@@ -313,10 +301,12 @@ public:
 	int32 AmmoDiffGlock = 0;
 
 	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
-	TSubclassOf<AWeaponBase> AK47 = nullptr;
+	TSubclassOf<AWeaponBase> AK47;
 
 	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
-	TSubclassOf<AWeaponBase> Glock = nullptr;
+	TSubclassOf<AWeaponBase> Glock;
+
+	TMap<FString, AWeaponBase*> AvailableWeapons;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Equipped Weapon");
