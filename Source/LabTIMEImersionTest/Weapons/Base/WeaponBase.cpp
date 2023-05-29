@@ -26,3 +26,7 @@ void AWeaponBase::FireWeapon()
 	UE_LOG(LogTemp, Warning, TEXT("PEW"));
 }
 
+void AWeaponBase::ReloadWeapon()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Reloading..."));
+}

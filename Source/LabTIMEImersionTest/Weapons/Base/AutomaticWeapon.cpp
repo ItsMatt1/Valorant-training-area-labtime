@@ -7,3 +7,8 @@ void AAutomaticWeapon::FireWeapon()
 {
 	UE_LOG(LogTemp, Warning, TEXT("PEW from automatic weapon!"));
 }
+
+void AAutomaticWeapon::ReloadWeapon()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Reloading the automatic weapon!"));
+}
