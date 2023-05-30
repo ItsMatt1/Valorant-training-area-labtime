@@ -234,10 +234,6 @@ void AMainPlayerCharacter::PrimaryFire()
 		return;
 	}
 
-	/* Reminder */
-	//1 for Ak.
-	//2 for Glock.
-
 	EquippedWeapon->FireWeapon();
 
 	//switch (WeaponSelected)

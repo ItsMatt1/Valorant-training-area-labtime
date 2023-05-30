@@ -59,6 +59,7 @@ protected:
 		meta=(Tooltip="The weapon's name", AllowPrivateAccess=True))
 	FString WeaponName = FString();
 
+	/** Setting the Skeletal Mesh for the weapons. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	class USkeletalMeshComponent* SkeletalMeshComponent;
 
@@ -81,7 +82,7 @@ protected:
 		Category = "Weapon Characteristics");
 	int32 ClipSize = 0;
 
-	/** Variable to calculate the difference entre current clip - clipsize */
+	/** Variable to calculate the difference entre current clip - clipsize. */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Characteristics");
 	int32 AmmoDiff = 0;
