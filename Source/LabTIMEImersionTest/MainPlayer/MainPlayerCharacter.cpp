@@ -38,13 +38,14 @@ void AMainPlayerCharacter::BeginPlay()
 	const FVector Location = GetActorLocation();
 	const FRotator Rotation = GetActorRotation();
 
-	auto SpawnAk = GetWorld()->SpawnActor<AWeaponBase>(AK47, Location, Rotation);
-	SpawnAk->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
+	auto SpawnAk = GetWorld()->SpawnActor<AWeaponBase>(AK47, FVector::ZeroVector, Rotation);
+	SpawnAk->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "Weapon_Attach");
+
 
 	auto SpawnGlock = GetWorld()->SpawnActor<AWeaponBase>(Glock, Location, Rotation);
 	SpawnGlock->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
 
-	SpawnGlock->GetRootComponent()->SetVisibility(true);
+	SpawnGlock->GetRootComponent()->SetVisibility(false, true);
 
 	AvailableWeapons.Add("AK-47", SpawnAk);
 	AvailableWeapons.Add("Glock", SpawnGlock);
@@ -233,6 +234,7 @@ void AMainPlayerCharacter::PrimaryFire()
 	{
 		return;
 	}
+
 
 	EquippedWeapon->FireWeapon();
 

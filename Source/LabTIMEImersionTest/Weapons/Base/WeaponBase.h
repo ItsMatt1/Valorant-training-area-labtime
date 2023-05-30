@@ -60,8 +60,10 @@ protected:
 	FString WeaponName = FString();
 
 	/** Setting the Skeletal Mesh for the weapons. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
-	class USkeletalMeshComponent* SkeletalMeshComponent;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	class USkeletalMeshComponent* SkeletalMeshComponent = nullptr;
+
+	USceneComponent* WeaponRootComponent = nullptr;
 
 protected:
 	/** The amount of ammunition the weapon still has on it's chamber */

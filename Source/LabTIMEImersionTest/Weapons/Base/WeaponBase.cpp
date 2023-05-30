@@ -7,16 +7,21 @@ AWeaponBase::AWeaponBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	if (!SkeletalMeshComponent)
-	{
-		UE_LOG(LogTemp, Error,
-			TEXT("Skeletal Mesh not setted."));
-		return;
-	}
+	//if (!SkeletalMeshComponent)
+	//{
+	//	UE_LOG(LogTemp, Error,
+	//		TEXT("Skeletal Mesh not setted."));
+	//	return;
+	//}
 
+
+	WeaponRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("WeaponRootComponent"));
+
+	WeaponRootComponent = RootComponent;
 	//Setting the skeletalMeshComponent for each weapon
 	SkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComponent"));
-	SkeletalMeshComponent->SetupAttachment(GetRootComponent());
+	SkeletalMeshComponent->SetupAttachment(WeaponRootComponent);
+	SkeletalMeshComponent->SetRelativeLocation(FVector::ZeroVector);
 }
 
 void AWeaponBase::BeginPlay()
