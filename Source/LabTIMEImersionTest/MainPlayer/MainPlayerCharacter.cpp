@@ -39,6 +39,14 @@ void AMainPlayerCharacter::BeginPlay()
 	AvailableWeapons.Add("AK-47", SpawnAk);
 	AvailableWeapons.Add("Glock", SpawnGlock);
 
+	if (!AvailableWeapons.Contains("AK-47"))
+	{
+		UE_LOG(LogTemp, Error,
+			TEXT("Gun AK-47 not found."));
+		return;
+	}
+
+	EquippedWeapon = AvailableWeapons["AK-47"];
 }
 
 // Called every frame
@@ -220,25 +228,27 @@ void AMainPlayerCharacter::PrimaryFire()
 	//1 for Ak.
 	//2 for Glock.
 
-	switch (WeaponSelected)
-	{
-	case 1:
-		if (AmmoAK >= 1)
-		{
-			bIsFiring = true;
-			FireAkEvent();
-		}
-		break;
-	case 2:
-		if (AmmoGlock >= 1)
-		{
-			bIsFiring = true;
-			FireGlockEvent();
-		}
-		break;
-	default:
-		break;
-	}
+	EquippedWeapon->FireWeapon();
+
+	//switch (WeaponSelected)
+	//{
+	//case 1:
+	//	if (AmmoAK >= 1)
+	//	{
+	//		bIsFiring = true;
+	//		FireAkEvent();
+	//	}
+	//	break;
+	//case 2:
+	//	if (AmmoGlock >= 1)
+	//	{
+	//		bIsFiring = true;
+	//		FireGlockEvent();
+	//	}
+	//	break;
+	//default:
+	//	break;
+	//}
 }
 
 void AMainPlayerCharacter::StopFiring()

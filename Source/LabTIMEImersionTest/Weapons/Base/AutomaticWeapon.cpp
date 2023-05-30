@@ -2,10 +2,23 @@
 
 
 #include "AutomaticWeapon.h"
+#include "DrawDebugHelpers.h"
+#include <LabTIMEImersionTest/MainPlayer/MainPlayerCharacter.h>
 
 void AAutomaticWeapon::FireWeapon()
 {
-	UE_LOG(LogTemp, Warning, TEXT("PEW from automatic weapon!"));
+	if (Ammo < 1)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No more bullets on magazine"));
+		return;
+	}
+
+	FHitResult OutHit;
+
+	//FVector Start = GetWorld()->GetFirstPlayerController()->GetPawn()
+
+	
+	
 }
 
 void AAutomaticWeapon::ReloadWeapon()

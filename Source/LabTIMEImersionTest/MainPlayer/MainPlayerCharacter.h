@@ -40,20 +40,6 @@ public:
 	void ActivateAdsEvent();
 
 	/**
-	* This fuction calls Fire Event of Weapon_Base on BP_MainPlayerCharacter.
-	* It throws a line tracing between the player and the middle of the screen.
-	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
-	void FireAkEvent();
-
-	/**
-	* This fuction calls Fire Event of Weapon_Glock on BP_MainPlayerCharacter.
-	* It throws a line tracing between the player and the middle of the screen.
-	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
-	void FireGlockEvent();
-
-	/**
 	* This Function call the GameOverWidget.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "GameOver"))
@@ -72,7 +58,6 @@ protected:
 
 	/** Called when the game starts or when spawned. */
 	virtual void BeginPlay() override;
-
 
 private:
 
@@ -300,17 +285,21 @@ public:
 		Category = "Weapon Glock");
 	int32 AmmoDiffGlock = 0;
 
+	/** Actor to Spawn AK-47 */
 	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
 	TSubclassOf<AWeaponBase> AK47;
 
+	/** Actor to Spawn Glock */
 	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
 	TSubclassOf<AWeaponBase> Glock;
 
-	TMap<FString, AWeaponBase*> AvailableWeapons;
-
+	/** Variable to keep track of the current weapon equipped */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Equipped Weapon");
 	AWeaponBase* EquippedWeapon = nullptr;
+
+	/** Map to store all the weapons created and spawned*/
+	TMap<FString, AWeaponBase*> AvailableWeapons;
 
 private:
 
