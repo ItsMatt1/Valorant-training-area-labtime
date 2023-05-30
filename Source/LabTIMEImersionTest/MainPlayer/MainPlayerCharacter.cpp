@@ -4,6 +4,7 @@
 #include "MainPlayerCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "LabTIMEImersionTest/Interface/MainHUD.h"
 #include "MainPlayerController.h"
 #include "Kismet/GameplayStatics.h"
@@ -14,6 +15,14 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	// Set this character to call Tick() every frame. You can turn this off to
 	//improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	CameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
+	CameraArm->SetupAttachment(GetMesh());
+	CameraArm->TargetArmLength = 600.f;
+	CameraArm->bUsePawnControlRotation = true;
+
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
+	
 }
 
 AMainPlayerCharacter::~AMainPlayerCharacter()
