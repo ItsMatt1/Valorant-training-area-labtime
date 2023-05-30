@@ -26,3 +26,37 @@ void AWeaponBase::FireWeapon()
 	UE_LOG(LogTemp, Warning, TEXT("PEW"));
 }
 
+void AWeaponBase::ReloadWeapon()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Reloading..."));
+
+	if (MaxAmmo <= 0)
+	{
+		//No more Bullets
+		return;
+	}
+
+	if (Ammo >= ClipSize)
+	{
+		//Full ammo already!
+		return;
+	}
+
+	//Getting  the current ammount of ammo on ak.
+	AmmoDiff = ClipSize - Ammo;
+
+	const bool bIsWeaponAbleToReload = (MaxAmmo > AmmoDiff);
+
+	if (bIsWeaponAbleToReload)
+	{
+		Ammo += AmmoDiff;
+		MaxAmmo -= AmmoDiff;
+		//Play sound
+	}
+	else
+	{
+		Ammo += MaxAmmo;
+		MaxAmmo = 0;
+		//Play sound
+	}
+}

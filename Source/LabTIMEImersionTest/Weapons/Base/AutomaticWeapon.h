@@ -26,4 +26,13 @@ public:
 	* the weapon will keep firing until we have no ammo left.
 	*/
 	virtual void FireWeapon() override;
+
+	/** Reload the automatic weapon. */
+	virtual void ReloadWeapon() override;
+
+protected:
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
+	float FireRate = 0;
 };

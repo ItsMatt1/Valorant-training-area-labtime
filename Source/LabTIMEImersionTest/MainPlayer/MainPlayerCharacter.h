@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "LabTIMEImersionTest/Weapons/Base/WeaponBase.h"
+#include "LabTIMEImersionTest/Weapons/Base/AutomaticWeapon.h"
 #include "MainPlayerCharacter.generated.h"
 
 UCLASS()
@@ -38,32 +40,6 @@ public:
 	void ActivateAdsEvent();
 
 	/**
-	* This fuction hides Glock and shows AK-47 on player.
-	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "ShowAK"))
-	void ShowAkEvent();
-
-	/**
-	* This fuction hides AK-47 and shows Glock on player.
-	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "ShowGlock"))
-	void ShowGlockEvent();
-
-	/**
-	* This fuction calls Fire Event of Weapon_Base on BP_MainPlayerCharacter.
-	* It throws a line tracing between the player and the middle of the screen.
-	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
-	void FireAkEvent();
-
-	/**
-	* This fuction calls Fire Event of Weapon_Glock on BP_MainPlayerCharacter.
-	* It throws a line tracing between the player and the middle of the screen.
-	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Fire"))
-	void FireGlockEvent();
-
-	/**
 	* This Function call the GameOverWidget.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "GameOver"))
@@ -76,6 +52,7 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable)
 	void TakeDamage();
+
 
 protected:
 
@@ -139,8 +116,6 @@ private:
 	* the current animation.
 	*/
 	void DisableReloadAnim();
-
-	//Mouse Inputs
 
 	/**
 	* This fuction makes the player move the camera on X.
@@ -309,6 +284,22 @@ public:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock");
 	int32 AmmoDiffGlock = 0;
+
+	/** Actor to Spawn AK-47 */
+	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
+	TSubclassOf<AWeaponBase> AK47;
+
+	/** Actor to Spawn Glock */
+	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
+	TSubclassOf<AWeaponBase> Glock;
+
+	/** Variable to keep track of the current weapon equipped */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Equipped Weapon");
+	AWeaponBase* EquippedWeapon = nullptr;
+
+	/** Map to store all the weapons created and spawned*/
+	TMap<FString, AWeaponBase*> AvailableWeapons;
 
 private:
 

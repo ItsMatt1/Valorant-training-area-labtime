@@ -27,6 +27,9 @@ public:
 	/** Fires the weapon */
 	virtual void FireWeapon();
 
+	/** Reloads the weapon */
+	virtual void ReloadWeapon();
+
 public:
 	/** Getter to the weapon's current ammunition amount */
 	UFUNCTION(BlueprintCallable, 
@@ -59,4 +62,24 @@ protected:
 protected:
 	/** The amount of ammunition the weapon still has on it's chamber */
 	int32 WeaponCurrentAmmunitionAmount = 0;
+
+	/** Ammount of ammo */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
+	int32 Ammo = 0;
+
+	/** Ammount of Max Ammo */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
+	int32 MaxAmmo = 0;
+
+	/** The size of one clip  */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
+	int32 ClipSize = 0;
+
+	/** Variable to calculate the difference entre current clip - clipsize */
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
+	int32 AmmoDiff = 0;
 };
