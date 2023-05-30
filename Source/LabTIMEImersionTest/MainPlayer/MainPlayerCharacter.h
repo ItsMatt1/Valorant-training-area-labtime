@@ -184,11 +184,14 @@ private:
 
 public:
 
-	UPROPERTY(VisibleAnyWhere, Category = "Camera")
-	class USpringArmComponent* CameraArm;
+	//UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Camera")
+	//class USpringArmComponent* CameraArm;
 
-	UPROPERTY(VisibleAnyWhere, Category = "Camera")
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Camera")
 	class UCameraComponent* FollowCamera;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Camera")
+	class UCameraComponent* ADSCameraT;
 
 
 	/** Defining amount of Health, starts with 1 and go until 0 */

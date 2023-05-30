@@ -59,6 +59,9 @@ protected:
 		meta=(Tooltip="The weapon's name", AllowPrivateAccess=True))
 	FString WeaponName = FString();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	class USkeletalMeshComponent* SkeletalMeshComponent;
+
 protected:
 	/** The amount of ammunition the weapon still has on it's chamber */
 	int32 WeaponCurrentAmmunitionAmount = 0;

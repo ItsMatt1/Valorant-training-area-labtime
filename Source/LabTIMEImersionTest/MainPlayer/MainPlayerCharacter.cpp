@@ -5,9 +5,10 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 #include "LabTIMEImersionTest/Interface/MainHUD.h"
-#include "MainPlayerController.h"
 #include "Kismet/GameplayStatics.h"
+#include "MainPlayerController.h"
 
 // Sets default values
 AMainPlayerCharacter::AMainPlayerCharacter()
@@ -16,13 +17,13 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	//improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	CameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraArm->SetupAttachment(GetMesh());
-	CameraArm->TargetArmLength = 600.f;
-	CameraArm->bUsePawnControlRotation = true;
-
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	
+	FollowCamera->SetupAttachment(GetMesh(), "Head");
+	FollowCamera->bUsePawnControlRotation = true;
+
+	//ADSCameraT = CreateDefaultSubobject<UCameraComponent>(TEXT("ADSCameraT"));
+	//ADSCameraT->SetupAttachment(, "Head");
+	//ADSCameraT->bUsePawnControlRotation = true;
 }
 
 AMainPlayerCharacter::~AMainPlayerCharacter()
