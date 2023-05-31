@@ -20,6 +20,7 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(GetMesh(), "Head");
 	FollowCamera->bUsePawnControlRotation = true;
+
 }
 
 AMainPlayerCharacter::~AMainPlayerCharacter()
@@ -228,6 +229,11 @@ void AMainPlayerCharacter::AimDownSight()
 	EquippedWeapon->EnableCamera();
 
 	GetCharacterMovement()->MaxWalkSpeed = CrouchingSpeed;
+
+	APlayerController* OurPlayerController = UGameplayStatics::GetPlayerController(this, 0);
+
+	//Smoothly transition to our actor on begin play.
+	OurPlayerController->SetViewTargetWithBlend(EquippedWeapon);
 
 	bIsAiming = true;
 }

@@ -87,7 +87,7 @@ void AWeaponBase::EnableCamera()
 {
 	ADSCamera->Activate();
 
-	UE_LOG(LogTemp, Error,
+	UE_LOG(LogTemp, Log,
 		TEXT("ADSCam activted."));
 }
 
@@ -95,6 +95,6 @@ void AWeaponBase::DisableCamera()
 {
 	ADSCamera->Deactivate();
 
-	UE_LOG(LogTemp, Error,
+	UE_LOG(LogTemp, Log,
 		TEXT("ADSCam deactivated."));
 }
