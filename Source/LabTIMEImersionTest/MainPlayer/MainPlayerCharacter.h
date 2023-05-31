@@ -26,20 +26,6 @@ public:
 		PlayerInputComponent) override;
 
 	/**
-	* This fuction disables the AimDownSight camera.
-	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName =
-		"DeactivateAds"))
-	void DeactivateAdsEvent();
-
-	/**
-	* This fuction enables the AimDownSight camera.
-	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName
-		= "ActivateAds"))
-	void ActivateAdsEvent();
-
-	/**
 	* This Function call the GameOverWidget.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "GameOver"))
@@ -187,10 +173,6 @@ public:
 	/** The Camera that follows the player component */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Camera")
 	class UCameraComponent* FollowCamera;
-
-	/** The Camera that follows the gun aimsight component */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Camera")
-	class UCameraComponent* ADSCameraT;
 
 	/** Defining amount of Health, starts with 1 and go until 0 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,

@@ -20,10 +20,6 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(GetMesh(), "Head");
 	FollowCamera->bUsePawnControlRotation = true;
-
-	//ADSCameraT = CreateDefaultSubobject<UCameraComponent>(TEXT("ADSCameraT"));
-	//ADSCameraT->SetupAttachment(, "Head");
-	//ADSCameraT->bUsePawnControlRotation = true;
 }
 
 AMainPlayerCharacter::~AMainPlayerCharacter()
@@ -39,12 +35,18 @@ void AMainPlayerCharacter::BeginPlay()
 	const FRotator Rotation = GetActorRotation();
 
 	//Spawning AK-47
-	auto SpawnAk = GetWorld()->SpawnActor<AWeaponBase>(AK47, Location, Rotation);
-	SpawnAk->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
+	auto SpawnAk = GetWorld()->SpawnActor<AWeaponBase>(AK47,
+		Location, Rotation);
+
+	SpawnAk->AttachToComponent(GetMesh(), FAttachmentTransformRules::
+		SnapToTargetIncludingScale, "Weapon_Attach");
 
 	//Spawning Glock
-	auto SpawnGlock = GetWorld()->SpawnActor<AWeaponBase>(Glock, Location, Rotation);
-	SpawnGlock->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
+	auto SpawnGlock = GetWorld()->SpawnActor<AWeaponBase>(Glock,
+		Location, Rotation);
+
+	SpawnGlock->AttachToComponent(GetMesh(), FAttachmentTransformRules::
+		SnapToTargetIncludingScale, "Weapon_Attach");
 
 	SpawnGlock->GetRootComponent()->SetVisibility(false, true);
 
@@ -208,25 +210,37 @@ void AMainPlayerCharacter::SelectSecondaryWeapon()
 
 void AMainPlayerCharacter::AimDownSight()
 {
-	//Player cant realod if it is aiming.
+	//Player cant reload if it is aiming.
 	if (bIsReloading)
 	{
 		return;
 	}
 
+	//Player cant sprint if it is aiming.
 	if (bIsSprinting)
 	{
 		bIsSprinting = false;
 		GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 	}
 
-	ActivateAdsEvent();
+	FollowCamera->Deactivate();
+
+	EquippedWeapon->EnableCamera();
+
+	GetCharacterMovement()->MaxWalkSpeed = CrouchingSpeed;
+
 	bIsAiming = true;
 }
 
 void AMainPlayerCharacter::StopAiming()
 {
-	DeactivateAdsEvent();
+	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
+
+	FollowCamera->Activate();
+
+	EquippedWeapon->DisableCamera();
+
+	bIsAiming = false;
 }
 
 void AMainPlayerCharacter::PrimaryFire()
@@ -272,7 +286,7 @@ void AMainPlayerCharacter::Sprint()
 	// the aim.
 	if (bIsAiming)
 	{
-		DeactivateAdsEvent();
+		StopAiming();
 	}
 
 	//If the player is crouching the player cannot sprint, so this deactivates 

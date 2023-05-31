@@ -30,6 +30,12 @@ public:
 	/** Reloads the weapon */
 	virtual void ReloadWeapon();
 
+	/** Enables the ADSCamera */
+	virtual void EnableCamera();
+
+	/** Disables the ADSCamera*/
+	virtual void DisableCamera();
+
 public:
 	/** Getter to the weapon's current ammunition amount */
 	UFUNCTION(BlueprintCallable, 
@@ -65,6 +71,10 @@ protected:
 
 	/** Setting A RootComponent for the weapons to attach components. */
 	USceneComponent* WeaponRootComponent = nullptr;
+
+	/** The Camera that follows the gun aimsight component */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Camera")
+	class UCameraComponent* ADSCamera;
 
 protected:
 	/** The amount of ammunition the weapon still has on it's chamber */

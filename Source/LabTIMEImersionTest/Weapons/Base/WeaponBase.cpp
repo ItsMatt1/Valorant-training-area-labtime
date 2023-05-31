@@ -2,6 +2,7 @@
 
 
 #include "WeaponBase.h"
+#include "Camera/CameraComponent.h"
 
 AWeaponBase::AWeaponBase()
 {
@@ -21,6 +22,12 @@ AWeaponBase::AWeaponBase()
 	//Setting Relativate Location to 0,0,0.
 	SkeletalMeshComponent->SetRelativeLocation(FVector::ZeroVector);
 	SkeletalMeshComponent->SetupAttachment(WeaponRootComponent);
+
+
+	ADSCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("ADSCameraT"));
+	ADSCamera->SetupAttachment(SkeletalMeshComponent , "AK_Muzzle");
+	ADSCamera->bUsePawnControlRotation = true;
+	ADSCamera->Deactivate();
 }
 
 void AWeaponBase::BeginPlay()
@@ -74,4 +81,20 @@ void AWeaponBase::ReloadWeapon()
 		MaxAmmo = 0;
 		//Play sound
 	}
+}
+
+void AWeaponBase::EnableCamera()
+{
+	ADSCamera->Activate();
+
+	UE_LOG(LogTemp, Error,
+		TEXT("ADSCam activted."));
+}
+
+void AWeaponBase::DisableCamera()
+{
+	ADSCamera->Deactivate();
+
+	UE_LOG(LogTemp, Error,
+		TEXT("ADSCam deactivated."));
 }
