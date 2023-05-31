@@ -63,6 +63,7 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	class USkeletalMeshComponent* SkeletalMeshComponent = nullptr;
 
+	/** Setting A RootComponent for the weapons to attach components. */
 	USceneComponent* WeaponRootComponent = nullptr;
 
 protected:

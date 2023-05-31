@@ -38,10 +38,11 @@ void AMainPlayerCharacter::BeginPlay()
 	const FVector Location = GetActorLocation();
 	const FRotator Rotation = GetActorRotation();
 
-	auto SpawnAk = GetWorld()->SpawnActor<AWeaponBase>(AK47, FVector::ZeroVector, Rotation);
-	SpawnAk->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "Weapon_Attach");
+	//Spawning AK-47
+	auto SpawnAk = GetWorld()->SpawnActor<AWeaponBase>(AK47, Location, Rotation);
+	SpawnAk->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
 
-
+	//Spawning Glock
 	auto SpawnGlock = GetWorld()->SpawnActor<AWeaponBase>(Glock, Location, Rotation);
 	SpawnGlock->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
 
@@ -57,6 +58,7 @@ void AMainPlayerCharacter::BeginPlay()
 		return;
 	}
 
+	//Player starts with the AK-47
 	EquippedWeapon = AvailableWeapons["AK-47"];
 }
 
