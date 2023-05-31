@@ -32,6 +32,7 @@ public:
 
 protected:
 
+	/** Specifying the fire rate of the automatic weapons. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Characteristics");
 	float FireRate = 0;

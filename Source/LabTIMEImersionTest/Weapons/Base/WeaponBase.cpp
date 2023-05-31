@@ -6,6 +6,21 @@
 AWeaponBase::AWeaponBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	//Creating the root Component.
+	 WeaponRootComponent = CreateDefaultSubobject<USceneComponent>
+		(TEXT("WeaponRootComponent"));
+
+	 //Assign our component to the root of the unreal.
+	RootComponent = WeaponRootComponent;
+
+	//Setting the skeletalMeshComponent for each weapon.
+	SkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>
+		(TEXT("SkeletalMeshComponent"));
+
+	//Setting Relativate Location to 0,0,0.
+	SkeletalMeshComponent->SetRelativeLocation(FVector::ZeroVector);
+	SkeletalMeshComponent->SetupAttachment(WeaponRootComponent);
 }
 
 void AWeaponBase::BeginPlay()

@@ -4,9 +4,11 @@
 #include "MainPlayerCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 #include "LabTIMEImersionTest/Interface/MainHUD.h"
-#include "MainPlayerController.h"
 #include "Kismet/GameplayStatics.h"
+#include "MainPlayerController.h"
 
 // Sets default values
 AMainPlayerCharacter::AMainPlayerCharacter()
@@ -14,6 +16,14 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	// Set this character to call Tick() every frame. You can turn this off to
 	//improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
+	FollowCamera->SetupAttachment(GetMesh(), "Head");
+	FollowCamera->bUsePawnControlRotation = true;
+
+	//ADSCameraT = CreateDefaultSubobject<UCameraComponent>(TEXT("ADSCameraT"));
+	//ADSCameraT->SetupAttachment(, "Head");
+	//ADSCameraT->bUsePawnControlRotation = true;
 }
 
 AMainPlayerCharacter::~AMainPlayerCharacter()
@@ -28,13 +38,15 @@ void AMainPlayerCharacter::BeginPlay()
 	const FVector Location = GetActorLocation();
 	const FRotator Rotation = GetActorRotation();
 
+	//Spawning AK-47
 	auto SpawnAk = GetWorld()->SpawnActor<AWeaponBase>(AK47, Location, Rotation);
 	SpawnAk->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
 
+	//Spawning Glock
 	auto SpawnGlock = GetWorld()->SpawnActor<AWeaponBase>(Glock, Location, Rotation);
 	SpawnGlock->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_Attach");
 
-	SpawnGlock->GetRootComponent()->SetVisibility(true);
+	SpawnGlock->GetRootComponent()->SetVisibility(false, true);
 
 	AvailableWeapons.Add("AK-47", SpawnAk);
 	AvailableWeapons.Add("Glock", SpawnGlock);
@@ -46,6 +58,7 @@ void AMainPlayerCharacter::BeginPlay()
 		return;
 	}
 
+	//Player starts with the AK-47
 	EquippedWeapon = AvailableWeapons["AK-47"];
 }
 
@@ -224,9 +237,6 @@ void AMainPlayerCharacter::PrimaryFire()
 		return;
 	}
 
-	/* Reminder */
-	//1 for Ak.
-	//2 for Glock.
 
 	EquippedWeapon->FireWeapon();
 

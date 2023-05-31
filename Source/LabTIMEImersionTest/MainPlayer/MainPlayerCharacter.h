@@ -184,6 +184,14 @@ private:
 
 public:
 
+	/** The Camera that follows the player component */
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Camera")
+	class UCameraComponent* FollowCamera;
+
+	/** The Camera that follows the gun aimsight component */
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Camera")
+	class UCameraComponent* ADSCameraT;
+
 	/** Defining amount of Health, starts with 1 and go until 0 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Info");
