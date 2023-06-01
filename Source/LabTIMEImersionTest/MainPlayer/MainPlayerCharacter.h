@@ -273,12 +273,12 @@ public:
 		Category = "Weapon Glock");
 	int32 ClipSizeGlock = AmmoGlock;
 
-	/** Variable to calculate the difference entre current clip - clipsize */
+	/** Variable to calculate the difference between current clip - clipsize */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon AK");
 	int32 AmmoDiffAk = 0;
 
-	/** Variable to calculate the difference entre current clip - clipsize */
+	/** Variable to calculate the difference between current clip - clipsize */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock");
 	int32 AmmoDiffGlock = 0;
@@ -296,7 +296,7 @@ public:
 		Category = "Equipped Weapon");
 	AWeaponBase* EquippedWeapon = nullptr;
 
-	/** Map to store all the weapons created and spawned*/
+	/** Map to store all the weapons created and spawned */
 	TMap<FString, AWeaponBase*> AvailableWeapons;
 
 private:
