@@ -24,7 +24,7 @@ public:
 	* In this case, if the player holds the mouse buttom,
 	* the weapon will keep firing until we have no ammo left.
 	*/
-	virtual void FireWeapon() override;
+	virtual void FireWeapon(UCameraComponent* CameraRayCastFireFrom) override;
 
 	/** Reload the automatic weapon. */
 	virtual void ReloadWeapon() override;

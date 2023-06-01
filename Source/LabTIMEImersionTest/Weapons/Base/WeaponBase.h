@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Camera/CameraComponent.h"
 #include "WeaponBase.generated.h"
 
 /** 
@@ -25,7 +26,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	/** Fires the weapon */
-	virtual void FireWeapon();
+	virtual void FireWeapon(UCameraComponent* CameraRayCastFireFrom);
 
 	/** Reloads the weapon */
 	virtual void ReloadWeapon();

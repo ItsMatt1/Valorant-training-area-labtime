@@ -258,8 +258,15 @@ void AMainPlayerCharacter::PrimaryFire()
 		return;
 	}
 
+	if (bIsAiming)
+	{
+		EquippedWeapon->FireWeapon(nullptr);
+	}
+	else
+	{
+		EquippedWeapon->FireWeapon(FollowCamera);
+	}
 
-	EquippedWeapon->FireWeapon();
 
 	//switch (WeaponSelected)
 	//{

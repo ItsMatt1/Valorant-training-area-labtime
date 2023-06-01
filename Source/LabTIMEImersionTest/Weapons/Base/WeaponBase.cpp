@@ -43,7 +43,7 @@ void AWeaponBase::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AWeaponBase::FireWeapon()
+void AWeaponBase::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 {
 	UE_LOG(LogTemp, Warning, TEXT("PEW"));
 }

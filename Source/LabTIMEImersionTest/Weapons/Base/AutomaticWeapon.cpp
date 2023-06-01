@@ -6,8 +6,13 @@
 #include "DrawDebugHelpers.h"
 #include <LabTIMEImersionTest/MainPlayer/MainPlayerCharacter.h>
 
-void AAutomaticWeapon::FireWeapon()
+void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 {
+	if (CameraRayCastFireFrom == nullptr)
+	{
+		CameraRayCastFireFrom = ADSCamera;
+	}
+
 	if (Ammo < 1)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No more bullets on magazine"));
@@ -16,8 +21,8 @@ void AAutomaticWeapon::FireWeapon()
 
 	FHitResult OutHit;
 
-	FVector Start = ADSCamera->GetComponentLocation();
-	FVector ForwardVector = ADSCamera->GetForwardVector();
+	FVector Start = CameraRayCastFireFrom->GetComponentLocation();
+	FVector ForwardVector = CameraRayCastFireFrom->GetForwardVector();
 
 	FCollisionQueryParams CollisionParams;
 	CollisionParams.AddIgnoredActor(this->GetOwner());
@@ -28,14 +33,18 @@ void AAutomaticWeapon::FireWeapon()
 
 	bool isHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams);
 	
-	if (isHit)
+	if (!isHit)
 	{
-		auto foo = OutHit.GetActor()->ActorHasTag("Enemy");
-		if (foo == true)
-		{
-			OutHit.GetActor()->Destroy();
-		}
+		return;
 	}
+
+	auto foo = OutHit.GetActor()->ActorHasTag("Enemy");
+	if (!foo)
+	{
+		return;
+	}
+
+	OutHit.GetActor()->Destroy();
 }
 
 void AAutomaticWeapon::ReloadWeapon()

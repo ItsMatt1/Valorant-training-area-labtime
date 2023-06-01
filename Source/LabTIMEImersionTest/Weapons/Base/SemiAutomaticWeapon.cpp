@@ -3,7 +3,7 @@
 
 #include "SemiAutomaticWeapon.h"
 
-void ASemiAutomaticWeapon::FireWeapon()
+void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 {
 	UE_LOG(LogTemp, Warning, TEXT("PEW from semi-automatic weapon!"));
 }
