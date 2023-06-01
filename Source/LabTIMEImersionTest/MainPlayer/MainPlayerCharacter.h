@@ -26,19 +26,19 @@ public:
 		PlayerInputComponent) override;
 
 	/**
-	* This Function call the GameOverWidget.
+	* This Function call the GameOverWidget and show on screen.
+	* 
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "GameOver"))
 	void GameOver();
 
 	/**
-	* This fuction calls makes the player take 15% of damage.
+	* This function calls makes the player take 15% of damage.
 	* It reduces its health and/or armor.
 	* Its called on BP_TargetEnemy
 	*/
 	UFUNCTION(BlueprintCallable)
-	void TakeDamage();
-
+	void TakeDamageFromEnemy();
 
 protected:
 
@@ -64,32 +64,37 @@ private:
 	void MoveRight(float AxisValue);
 
 	/**
-	* This fuction is called when player starts sprinting.
+	* This function is called when the player starts sprinting and will do this
+	* by changing the character movement max walk speed.
 	*/
 	void Sprint();
 
 	/**
-	* This fuction is called when player stops sprinting.
+	* This function is called when player stops sprinting and will decrease the
+	* character movement max walk speed.
 	*/
 	void StopSprinting();
 
 	/**
-	* This fuction is called when player starts crouching.
+	* This function is called when player starts crouching and will call the
+	* Crouch function from Unreal.
 	*/
-	void Crouch();
+	void RequestCrouch();
 
 	/**
-	* This fuction is called when player stops crouching.
+	* This function is called when player stops crouching and will call the
+	* Uncrouch function from Unreal.
 	*/
 	void StopCrouching();
 
 	/**
-	* This fuction is called when player start reloading.
+	* This function is called when the player starts reloading and will request
+	the current equipped weapon to reload it’s ammunition.
 	*/
 	void Reload();
 
 	/**
-	* This fuction is called to calculate and update the magazines given
+	* This function is called to calculate and update the magazines given
 	* the weapon.
 	* @param CurrentWeapon is a int which is always 1 or 2.
 	* 1 for AK-47.
@@ -98,73 +103,76 @@ private:
 	void ReloadLogic(int CurrentWeapon);
 
 	/**
-	* This fuction is called to set bIsReloading to false in order to stop
+	* This function is called to set bIsReloading to false in order to stop
 	* the current animation.
 	*/
 	void DisableReloadAnim();
 
 	/**
-	* This fuction makes the player move the camera on X.
+	* This function makes the player move the camera on X.
 	* @param AxisValue
 	*/
 	void Turn(float AxisValue);
 
 	/**
-	* This fuction makes the player move the camera on Y.
+	* This function makes the player move the camera on Y.
 	* @param AxisValue
 	*/
 	void LookUp(float AxisValue);
 
-	//Gamepad Look Inputs
 	/**
-	* This fuction sooths the camera movement on Y given the fps.
+	* This function sooths the camera movement on Y given the fps.
 	* @param AxisValue
 	*/
 	void TurnRate(float AxisValue);
 
 	/**
-	* This fuction sooths the camera movement on X given the fps.
+	* This function sooths the camera movement on X given the fps.
 	* @param AxisValue
 	*/
 	void LookUpRate(float AxisValue);
 
 	/**
-	* This fuction is called when player selects primary weapon.
+	* This function is called when player selects primary weapon and will
+	* change the current weapon to the AK-47.
 	*/
 	void SelectPrimaryWeapon();
 
 	/**
-	* This fuction is called when player selects secondary weapon.
+	* This function is called when player selects secondary weapon and will
+	* change the current weapon to the Glock.
 	*/
 	void SelectSecondaryWeapon();
 
 	/**
-	* This fuction is called when player aims.
+	* This function is called when player aims.
 	*/
 	void AimDownSight();
 
 	/**
-	* This fuction is called when player stops aiming.
+	* This function is called when player stops aiming.
 	*/
 	void StopAiming();
 
 	/**
-	* This fuction is called when player shoots.
+	* This function is called when player shoots and will call the function
+	* FireWeapon from current equipped weapon.
 	*/
 	void PrimaryFire();
 
 	/**
-	* This fuction is called when stop shooting.
+	* This function is called when stop shooting and will set bIsFiring to 
+	* false.
 	*/
 	void StopFiring();
 
 	/**
-	* This Function call the ArmorDamage Widget.
+	* This Function call the ArmorDamage Widget and show it on screen.
 	*/
 	void TakeArmorDamageCallWidget();
 
 	/**
-	* This Function call the HealthDamage Widget.
+	* This Function call the HealthDamage Widget and show it on screen.
 	*/
 	void TakeHealthDamageCallWidget();
 

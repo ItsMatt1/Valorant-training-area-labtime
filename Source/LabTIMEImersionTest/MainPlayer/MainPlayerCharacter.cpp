@@ -109,7 +109,7 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent*
 		&AMainPlayerCharacter::SelectSecondaryWeapon);
 
 	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Pressed,
-		this, &AMainPlayerCharacter::Crouch);
+		this, &AMainPlayerCharacter::RequestCrouch);
 	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Released,
 		this, &AMainPlayerCharacter::StopCrouching);
 
@@ -314,7 +314,7 @@ void AMainPlayerCharacter::StopSprinting()
 	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 }
 
-void AMainPlayerCharacter::Crouch()
+void AMainPlayerCharacter::RequestCrouch()
 {
 	//If the player is sprinting the player cannot crouch, so this deactivates 
 	// the sprint.
@@ -447,7 +447,7 @@ void AMainPlayerCharacter::DisableReloadAnim()
 	bIsReloading = false;
 }
 
-void AMainPlayerCharacter::TakeDamage()
+void AMainPlayerCharacter::TakeDamageFromEnemy()
 {
 	//15% of Damage
 	Armor -= 0.15f;
