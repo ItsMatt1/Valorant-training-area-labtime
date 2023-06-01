@@ -74,7 +74,7 @@ protected:
 
 	/** The Camera that follows the gun aimsight component */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Camera")
-	class UCameraComponent* ADSCamera;
+	class UCameraComponent* ADSCamera = nullptr;
 
 protected:
 	/** The amount of ammunition the weapon still has on it's chamber */

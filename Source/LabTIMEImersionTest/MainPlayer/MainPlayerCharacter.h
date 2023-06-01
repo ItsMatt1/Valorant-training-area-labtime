@@ -180,7 +180,7 @@ public:
 
 	/** The Camera that follows the player component */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Camera")
-	class UCameraComponent* FollowCamera;
+	class UCameraComponent* FollowCamera = nullptr;
 
 	/** Defining amount of Health, starts with 1 and go until 0 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
