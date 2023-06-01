@@ -21,6 +21,7 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	FollowCamera->SetupAttachment(GetMesh(), "Head");
 	FollowCamera->bUsePawnControlRotation = true;
 
+	OurPlayerController = UGameplayStatics::GetPlayerController(this, 0);
 }
 
 AMainPlayerCharacter::~AMainPlayerCharacter()
@@ -230,12 +231,10 @@ void AMainPlayerCharacter::AimDownSight()
 
 	GetCharacterMovement()->MaxWalkSpeed = CrouchingSpeed;
 
-	APlayerController* OurPlayerController = UGameplayStatics::GetPlayerController(this, 0);
-
-	//Smoothly transition to our actor on begin play.
-	OurPlayerController->SetViewTargetWithBlend(EquippedWeapon);
-
 	bIsAiming = true;
+
+
+	OurPlayerController->SetViewTargetWithBlend(EquippedWeapon);
 }
 
 void AMainPlayerCharacter::StopAiming()
@@ -247,6 +246,8 @@ void AMainPlayerCharacter::StopAiming()
 	EquippedWeapon->DisableCamera();
 
 	bIsAiming = false;
+
+	OurPlayerController->SetViewTargetWithBlend(this);
 }
 
 void AMainPlayerCharacter::PrimaryFire()

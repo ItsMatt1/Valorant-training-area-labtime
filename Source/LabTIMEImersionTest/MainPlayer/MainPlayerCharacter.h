@@ -313,4 +313,7 @@ private:
 	* Its a simple FTimer Handle to distinguish timers and finish animation.
 	*/
 	FTimerHandle TriggerStopAnim;
+
+	/** Create a reference to Player Controller */
+	APlayerController* OurPlayerController = nullptr;
 };
