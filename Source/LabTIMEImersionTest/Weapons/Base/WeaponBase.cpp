@@ -41,6 +41,11 @@ void AWeaponBase::BeginPlay()
 void AWeaponBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (bIsFiring)
+	{
+		FireWeapon(nullptr);
+	}
 }
 
 void AWeaponBase::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
