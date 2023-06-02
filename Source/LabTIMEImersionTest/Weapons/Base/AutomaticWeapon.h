@@ -28,9 +28,6 @@ public:
 	*/
 	virtual void FireWeapon(UCameraComponent* CameraRayCastFireFrom) override;
 
-	/** Reload the automatic weapon. */
-	virtual void ReloadWeapon() override;
-
 protected:
 
 	/** Specifying the fire rate of the automatic weapons. */

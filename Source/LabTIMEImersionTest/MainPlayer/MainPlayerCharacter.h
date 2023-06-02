@@ -228,9 +228,9 @@ public:
 	bool bIsFiring = false;
 
 	/** Boolean which is true whenever player is realoding*/
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Action");
-	bool bIsReloading = false;
+	//UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
+	//	Category = "Character Action");
+	//bool bIsReloading = false;
 
 	/**	1 for AK-47.
 		2 for Glock. */

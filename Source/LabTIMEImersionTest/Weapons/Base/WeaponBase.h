@@ -49,6 +49,11 @@ public:
 		meta = (Tooltip = "Getter to the weapon's name"))
 	FString GetWeaponName() { return WeaponName; }
 
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Weapon Characteristics");
+	bool bIsReloading = false;
+
 protected:
 	/** Called when the game starts or when spawned */
 	virtual void BeginPlay() override;
@@ -105,4 +110,5 @@ protected:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Characteristics");
 	int32 AmmoDiff = 0;
+
 };

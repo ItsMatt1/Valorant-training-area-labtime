@@ -19,6 +19,10 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 		return;
 	}
 
+	//Play Sound
+
+	Ammo--;
+
 	FHitResult OutHit;
 
 	FVector Start = CameraRayCastFireFrom->GetComponentLocation();
@@ -44,9 +48,4 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 			//Enemy->EnemyHitByBulletEvent();
 		}
 	}
-}
-
-void AAutomaticWeapon::ReloadWeapon()
-{
-	UE_LOG(LogTemp, Warning, TEXT("Reloading the automatic weapon!"));
 }

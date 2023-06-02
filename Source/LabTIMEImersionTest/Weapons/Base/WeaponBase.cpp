@@ -1,8 +1,8 @@
 // 2023 Labverso, Brazil. Imersion Test.
 
 
-#include "WeaponBase.h"
 #include "Camera/CameraComponent.h"
+#include "WeaponBase.h"
 
 AWeaponBase::AWeaponBase()
 {
@@ -63,6 +63,8 @@ void AWeaponBase::ReloadWeapon()
 		//Full ammo already!
 		return;
 	}
+
+	bIsReloading = true;
 
 	//Getting  the current ammount of ammo on ak.
 	AmmoDiff = ClipSize - Ammo;
