@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "LabTIMEImersionTest/Enemies/Base/EnemyCharacterBase.h"
 #include "Camera/CameraComponent.h"
 #include "WeaponBase.generated.h"
 
@@ -76,6 +77,10 @@ protected:
 	/** The Camera that follows the gun aimsight component */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Camera")
 	class UCameraComponent* ADSCamera = nullptr;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Enemy");
+	AEnemyCharacterBase* Enemy = nullptr;
 
 protected:
 	/** The amount of ammunition the weapon still has on it's chamber */

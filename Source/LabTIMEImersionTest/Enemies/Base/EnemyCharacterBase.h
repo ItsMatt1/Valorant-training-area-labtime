@@ -23,6 +23,12 @@ public:
 	/** Called every frame */
 	virtual void Tick(float DeltaTime) override;
 
+public:
+
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "EnemyHitByBulletEvent"))
+	void EnemyHitByBulletEvent();
+
+
 protected:
 	/** Called when the game starts or when spawned */
 	virtual void BeginPlay() override;

@@ -33,18 +33,17 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 
 	bool isHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams);
 	
-	if (!isHit)
+	if (isHit)
 	{
-		return;
-	}
+		bool foo = OutHit.GetActor()->ActorHasTag("Enemy");
 
-	auto foo = OutHit.GetActor()->ActorHasTag("Enemy");
-	if (!foo)
-	{
-		return;
-	}
+		if (foo)
+		{
+			OutHit.GetActor()->Destroy();
 
-	OutHit.GetActor()->Destroy();
+			//Enemy->EnemyHitByBulletEvent();
+		}
+	}
 }
 
 void AAutomaticWeapon::ReloadWeapon()
