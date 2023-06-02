@@ -18,6 +18,17 @@ UCLASS()
 class LABTIMEIMERSIONTEST_API AWeaponBase : public AActor
 {
 	GENERATED_BODY()
+
+public:
+	/** Getter to the weapon's current ammunition amount */
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip = "Getter to the weapon's current ammo"))
+		int32 GetWeaponCurrentAmmo() { return WeaponAmmunitionAmount; }
+
+	/** Getter to the weapon's name */
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip = "Getter to the weapon's name"))
+		FString GetWeaponName() { return WeaponName; }
 	
 public:	
 	/** Sets default values for this actor's properties */
@@ -39,26 +50,24 @@ public:
 	virtual void DisableCamera();
 
 public:
-	/** Getter to the weapon's current ammunition amount */
-	UFUNCTION(BlueprintCallable, 
-		meta=(Tooltip="Getter to the weapon's current ammo"))
-	int32 GetWeaponCurrentAmmo() { return WeaponAmmunitionAmount; }
 
-	/** Getter to the weapon's name */
-	UFUNCTION(BlueprintCallable, 
-		meta = (Tooltip = "Getter to the weapon's name"))
-	FString GetWeaponName() { return WeaponName; }
-
-
+	/** Boolean which is true whenever player reloads. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Characteristics");
 	bool bIsReloading = false;
 
+	/** Boolean which is true whenever player fires. */
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
+		Category = "Character Action");
+	bool bIsFiring = false;
+
 protected:
-	/** Called when the game starts or when spawned */
+
+	/** Called when the game starts or when spawned. */
 	virtual void BeginPlay() override;
 
 protected:
+
 	/** 
 	* The weapon ammunition amount. 
 	* The bullet rounds amount it can fire in a row 
@@ -83,14 +92,6 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Camera")
 	class UCameraComponent* ADSCamera = nullptr;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
-		Category = "Enemy");
-	AEnemyCharacterBase* Enemy = nullptr;
-
-protected:
-	/** The amount of ammunition the weapon still has on it's chamber */
-	int32 WeaponCurrentAmmunitionAmount = 0;
-
 	/** Ammount of ammo */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Characteristics");
@@ -106,9 +107,15 @@ protected:
 		Category = "Weapon Characteristics");
 	int32 ClipSize = 0;
 
-	/** Variable to calculate the difference entre current clip - clipsize. */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Characteristics");
-	int32 AmmoDiff = 0;
 
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Enemy");
+	AEnemyCharacterBase* Enemy = nullptr;
+
+protected:
+	/** The amount of ammunition the weapon still has on it's chamber */
+	int32 WeaponCurrentAmmunitionAmount = 0;
+
+	/** Variable to calculate the difference between current clip - clipsize. */
+	int32 AmmoDiff = 0;
 };

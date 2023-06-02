@@ -257,6 +257,9 @@ void AMainPlayerCharacter::PrimaryFire()
 		return;
 	}
 
+	AddControllerPitchInput(-0.3);
+	AddControllerYawInput(-0.15);
+
 	if (bIsAiming)
 	{
 		EquippedWeapon->FireWeapon(nullptr);
@@ -265,32 +268,11 @@ void AMainPlayerCharacter::PrimaryFire()
 	{
 		EquippedWeapon->FireWeapon(FollowCamera);
 	}
-
-
-	//switch (WeaponSelected)
-	//{
-	//case 1:
-	//	if (AmmoAK >= 1)
-	//	{
-	//		bIsFiring = true;
-	//		FireAkEvent();
-	//	}
-	//	break;
-	//case 2:
-	//	if (AmmoGlock >= 1)
-	//	{
-	//		bIsFiring = true;
-	//		FireGlockEvent();
-	//	}
-	//	break;
-	//default:
-	//	break;
-	//}
 }
 
 void AMainPlayerCharacter::StopFiring()
 {
-	bIsFiring = false;
+	EquippedWeapon->bIsFiring = false;
 }
 
 void AMainPlayerCharacter::Sprint()
@@ -349,7 +331,7 @@ void AMainPlayerCharacter::StopCrouching()
 
 void AMainPlayerCharacter::Reload()
 {
-	if (bIsAiming || bIsFiring)
+	if (bIsAiming || EquippedWeapon->bIsFiring)
 	{
 		return;
 	}
@@ -358,97 +340,6 @@ void AMainPlayerCharacter::Reload()
 
 	GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this,
 		&AMainPlayerCharacter::DisableReloadAnim, 2.4f, true);
-
-	//switch (WeaponSelected)
-	//{
-	//case 1:
-	//	ReloadLogic(1);
-	//	break;
-	//case 2:
-	//	ReloadLogic(2);
-	//	break;
-	//default:
-	//	break;
-	//}
-}
-
-void AMainPlayerCharacter::ReloadLogic(int CurrentWeapon)
-{
-	if (CurrentWeapon == 1)
-	{
-		if (MaxAmmoAK <= 0)
-		{
-			//No more Bullets
-			return;
-		}
-
-		if (AmmoAK >= ClipSizeAK)
-		{
-			//Full ammo already!
-			return;
-		}
-
-		//bIsReloading = true;
-
-		//Getting  the current ammount of ammo on ak.
-		AmmoDiffAk = ClipSizeAK - AmmoAK;
-
-		const bool bIsWeaponAbleToReload = (MaxAmmoAK > AmmoDiffAk);
-		 
-		if (bIsWeaponAbleToReload)
-		{
-			AmmoAK += AmmoDiffAk;
-			MaxAmmoAK -= AmmoDiffAk;
-			//Play sound
-		}
-		else
-		{
-			AmmoAK += MaxAmmoAK;
-			MaxAmmoAK = 0;
-			//Play sound
-		}
-
-
-
-	}
-	//else if (CurrentWeapon == 2)
-	//{
-	//	if (MaxAmmoGlock <= 0)
-	//	{
-	//		//No more Bullets
-	//		return;
-	//	}
-
-	//	if (AmmoGlock < ClipSizeGlock)
-	//	{
-	//		if (MaxAmmoGlock > (ClipSizeGlock - AmmoGlock))
-	//		{
-	//			AmmoDiffGlock = ClipSizeGlock - AmmoGlock;
-	//			AmmoGlock += AmmoDiffGlock;
-	//			MaxAmmoGlock -= AmmoDiffGlock;
-	//			//Play sound
-
-	//			bIsReloading = true;
-	//		}
-	//		else
-	//		{
-	//			AmmoDiffGlock = ClipSizeGlock - AmmoGlock;
-	//			AmmoGlock += MaxAmmoGlock;
-	//			MaxAmmoGlock = 0;
-	//			//Play sound
-
-	//			bIsReloading = true;
-	//		}
-	//		GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this,
-	//			&AMainPlayerCharacter::DisableReloadAnim, 2.4f, true);
-	//	}
-	//	else
-	//	{
-	//		//Full ammo already!
-	//		return;
-	//	}
-	//}
-
 }
 
 void AMainPlayerCharacter::DisableReloadAnim()

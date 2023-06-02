@@ -94,15 +94,6 @@ private:
 	void Reload();
 
 	/**
-	* This function is called to calculate and update the magazines given
-	* the weapon.
-	* @param CurrentWeapon is a int which is always 1 or 2.
-	* 1 for AK-47.
-	* 2 for Glock.
-	*/
-	void ReloadLogic(int CurrentWeapon);
-
-	/**
 	* This function is called to set bIsReloading to false in order to stop
 	* the current animation.
 	*/
@@ -222,11 +213,6 @@ public:
 		Category = "Character Movement");
 	bool bIsAiming = false;
 
-	/** Boolean which is true whenever player fires*/
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Action");
-	bool bIsFiring = false;
-
 	/** Boolean which is true whenever player is realoding*/
 	//UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 	//	Category = "Character Action");
@@ -272,16 +258,6 @@ public:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Glock");
 	int32 ClipSizeGlock = AmmoGlock;
-
-	/** Variable to calculate the difference between current clip - clipsize */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK");
-	int32 AmmoDiffAk = 0;
-
-	/** Variable to calculate the difference between current clip - clipsize */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock");
-	int32 AmmoDiffGlock = 0;
 
 	/** Actor to Spawn AK-47 */
 	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
