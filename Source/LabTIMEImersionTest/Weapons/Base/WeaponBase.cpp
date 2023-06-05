@@ -42,10 +42,12 @@ void AWeaponBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (bIsFiring)
-	{
-		FireWeapon(nullptr);
-	}
+
+
+	//if (bIsFiring)
+	//{
+	//	bIsStillFiring = true;
+	//}
 }
 
 void AWeaponBase::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
@@ -104,4 +106,9 @@ void AWeaponBase::DisableCamera()
 
 	UE_LOG(LogTemp, Log,
 		TEXT("ADSCam deactivated."));
+}
+
+void AWeaponBase::VerifyStillShooting()
+{
+	UE_LOG(LogTemp, Warning, TEXT("CHAMOU"));
 }

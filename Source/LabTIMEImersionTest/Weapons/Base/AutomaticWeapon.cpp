@@ -3,11 +3,18 @@
 
 #include "AutomaticWeapon.h"
 #include "Camera/CameraComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include <LabTIMEImersionTest/MainPlayer/MainPlayerCharacter.h>
+
+void AAutomaticWeapon::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
 
 void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 {
-	//If MainPlayerCharacter passes a camera then use its camera
+	//If MainPlayerCharacter passes a camera as a param then use its camera
 	//If not, use our own ADSCamera.
 	if (CameraRayCastFireFrom == nullptr)
 	{
@@ -24,6 +31,14 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 
 	//Play Sound
 
+	// Getting the muzzle position.
+	FVector EffectSpawnLocation = SkeletalMeshComponent->GetSocketLocation("AK_FlashFX");
+	FRotator EffectSpawnRotation = SkeletalMeshComponent->GetSocketRotation("AK_FlashFX");
+
+	// Spawn the emitter at the specified location.
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), EmitterTemplate, EffectSpawnLocation, EffectSpawnRotation, FVector(0.1), true);
+
+	//As it fired, decreased the ammo amount.
 	Ammo--;
 
 	FHitResult OutHit;

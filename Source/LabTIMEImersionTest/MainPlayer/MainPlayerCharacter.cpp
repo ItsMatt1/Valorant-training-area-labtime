@@ -4,7 +4,6 @@
 #include "MainPlayerCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "LabTIMEImersionTest/Interface/MainHUD.h"
 #include "Kismet/GameplayStatics.h"
@@ -257,17 +256,20 @@ void AMainPlayerCharacter::PrimaryFire()
 		return;
 	}
 
-	AddControllerPitchInput(-0.3);
-	AddControllerYawInput(-0.15);
+	//while (EquippedWeapon->bIsStillFiring)
+	//{
+		AddControllerPitchInput(-0.3);
+		AddControllerYawInput(-0.15);
 
-	if (bIsAiming)
-	{
-		EquippedWeapon->FireWeapon(nullptr);
-	}
-	else
-	{
-		EquippedWeapon->FireWeapon(FollowCamera);
-	}
+		if (bIsAiming)
+		{
+			EquippedWeapon->FireWeapon(nullptr);
+		}
+		else
+		{
+			EquippedWeapon->FireWeapon(FollowCamera);
+		}
+	//}
 }
 
 void AMainPlayerCharacter::StopFiring()

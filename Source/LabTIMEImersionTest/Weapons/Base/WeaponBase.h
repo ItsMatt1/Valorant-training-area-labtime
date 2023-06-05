@@ -49,6 +49,8 @@ public:
 	/** Disables the ADSCamera*/
 	virtual void DisableCamera();
 
+	virtual void VerifyStillShooting();
+
 public:
 
 	/** Boolean which is true whenever player reloads. */
@@ -60,6 +62,18 @@ public:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
 		Category = "Character Action");
 	bool bIsFiring = false;
+
+	bool bIsStillFiring = false;
+
+	/**
+	* Its a simple FTimer Handle to distinguish timers and finish animation.
+	*/
+	FTimerHandle Firerate;
+
+	/** A template effect to be set at gun's blueprint. */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Emmiter");
+	UParticleSystem* EmitterTemplate = nullptr;
 
 protected:
 
