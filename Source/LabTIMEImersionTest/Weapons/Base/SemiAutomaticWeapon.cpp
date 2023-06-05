@@ -23,14 +23,14 @@ void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 
 	//Play Sound
 
-	// Getting the muzzle position.
+	// Getting the gun's muzzle position.
 	FVector EffectSpawnLocation = SkeletalMeshComponent->GetSocketLocation("Glock_Muzzle");
 	FRotator EffectSpawnRotation = SkeletalMeshComponent->GetSocketRotation("Glock_Muzzle");
 
 	// Spawn the emitter at the specified location.
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), EmitterTemplate, EffectSpawnLocation, EffectSpawnRotation, FVector(0.1), true);
 
-	//As it fired, decreased the ammo amount.
+	//As it is fired, decreased the ammo amount.
 	Ammo--;
 
 	FHitResult OutHit;

@@ -1,8 +1,8 @@
 // 2023 Labverso, Brazil. Imersion Test.
 
 
-#include "Camera/CameraComponent.h"
 #include "WeaponBase.h"
+#include "Camera/CameraComponent.h"
 
 AWeaponBase::AWeaponBase()
 {
