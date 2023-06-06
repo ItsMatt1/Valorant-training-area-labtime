@@ -25,7 +25,7 @@ public:
 	* Fires the automatic weapon. 
 	* In this case, if the player holds the mouse buttom, 
 	* the weapon will keep firing until we have no ammo left.
-	* @param Which Camera is the raycast starting from.
+	* @param CameraRayCastFireFrom, which Camera is the raycast starting from.
 	*/
 	virtual void FireWeapon(UCameraComponent* CameraRayCastFireFrom) override;
 

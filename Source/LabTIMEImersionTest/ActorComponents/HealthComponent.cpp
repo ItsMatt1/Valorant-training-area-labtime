@@ -1,7 +1,7 @@
 // 2023 Labverso, Brazil. Imersion Test.
 
-#include "GameFramework/Actor.h"
 #include "HealthComponent.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -12,7 +12,6 @@ UHealthComponent::UHealthComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 }
-
 
 // Called when the game starts
 void UHealthComponent::BeginPlay()
@@ -29,7 +28,6 @@ void UHealthComponent::BeginPlay()
 	MyOwner->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::TakeDamage);
 	
 }
-
 
 void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage,
 	const class UDamageType* DamageType, class AController* InstigatedBy,

@@ -42,9 +42,7 @@ protected:
 	
 	/** The health that the actor is currently at. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Health")
-	float Health = DefaultHealth;
-
-
+	float Health = 1;
 
 public:	
 	// Called every frame

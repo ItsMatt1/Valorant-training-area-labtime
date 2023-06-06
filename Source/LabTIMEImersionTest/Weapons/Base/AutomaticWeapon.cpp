@@ -89,6 +89,9 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 	UE_LOG(LogTemp, Warning,
 		TEXT("Fired and Hit an Enemy!"));
 
+	UGameplayStatics::ApplyDamage(Cast<AEnemyCharacterBase>(OutHit.GetActor()), 0.1f, GetWorld()->GetFirstPlayerController(), this, nullptr);
+
 	//Letting Target_Enemy handles the damage.
 	Cast<AEnemyCharacterBase>(OutHit.GetActor())->EnemyHitByBulletEvent();
+
 }

@@ -129,7 +129,4 @@ protected:
 protected:
 	/** The amount of ammunition the weapon still has on it's chamber */
 	int32 WeaponCurrentAmmunitionAmount = 0;
-
-	/** Variable to calculate the difference between current clip - clipsize.*/
-	int32 AmmoDiff = 0;
 };

@@ -2,12 +2,12 @@
 
 
 #include "MainPlayerCharacter.h"
+#include "MainPlayerController.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
 #include "LabTIMEImersionTest/Interface/MainHUD.h"
 #include "Kismet/GameplayStatics.h"
-#include "MainPlayerController.h"
 
 // Sets default values
 AMainPlayerCharacter::AMainPlayerCharacter()
@@ -327,7 +327,7 @@ void AMainPlayerCharacter::StopCrouching()
 
 	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 
-	UnCrouch();
+	ACharacter::UnCrouch();
 }
 
 
@@ -338,7 +338,11 @@ void AMainPlayerCharacter::Reload()
 		return;
 	}
 
+
+
 	EquippedWeapon->ReloadWeapon();
+
+	UGameplayStatics::PlaySound2D(GetWorld(), ReloadSound);
 
 	GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this,
 		&AMainPlayerCharacter::DisableReloadAnim, 2.4f, true);
@@ -354,21 +358,24 @@ void AMainPlayerCharacter::TakeDamageFromEnemy()
 	//15% of Damage
 	Armor -= 0.15f;
 
-	if (Armor < 0)
+	if (Armor >= 0)
+	{
+		TakeArmorDamageCallWidget();
+	}
+	else
 	{
 		TakeHealthDamageCallWidget();
 
 		Health += Armor;
 		Armor = 0;
 
-		if (Health < 0)
+		if (Health >= 0)
 		{
-			GameOver();
+			UE_LOG(LogTemp, Warning, TEXT("Player with enough health."))
+			return;
 		}
-	}
-	else
-	{
-		TakeArmorDamageCallWidget();
+
+		GameOver();
 	}
 }
 

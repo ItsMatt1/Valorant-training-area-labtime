@@ -51,6 +51,7 @@ void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 	const float RayCastRange = 5000.f;
 	FVector End = Start + (ForwardVector * RayCastRange);
 
+	//Check if Shoot hit something.
 	const bool bIsHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start,
 		End, ECC_Visibility, CollisionParams);
 
@@ -60,6 +61,7 @@ void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 		return;
 	}
 
+	//Check if Shoot hit an actor.
 	const bool bIsAnActor = OutHit.Actor.IsValid();
 
 	if (!bIsAnActor)
@@ -69,6 +71,7 @@ void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 		return;
 	}
 
+	//Check if Shoot hit an enemy.
 	const bool bIsActorEnemy = OutHit.GetActor()->ActorHasTag("Enemy");
 
 	if (!bIsActorEnemy)

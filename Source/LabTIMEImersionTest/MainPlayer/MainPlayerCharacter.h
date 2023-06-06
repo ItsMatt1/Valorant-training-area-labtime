@@ -199,65 +199,19 @@ public:
 	float CrouchingSpeed = WalkingSpeed / 2;
 
 	/** Boolean which is true whenever player crouchs */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
+	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
 		Category = "Character Movement");
 	bool bIsCrouching = false;
 
 	/** Boolean which is true whenever player sprints */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
+	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
 		Category = "Character Movement");
 	bool bIsSprinting = false;
 
 	/** Boolean which is true whenever player aims */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
+	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
 		Category = "Character Movement");
 	bool bIsAiming = false;
-
-	/** Boolean which is true whenever player is realoding*/
-	//UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-	//	Category = "Character Action");
-	//bool bIsReloading = false;
-
-	/**	1 for AK-47.
-		2 for Glock. */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Action");
-	int WeaponSelected = 1;
-
-	/** Ammount of AK-47 ammo */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK");
-	int32 AmmoAK = 30;
-
-	/** AK-47 FireRate */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK");
-	float FireRateAK = 0.1;
-
-	/** Ammount of AK-47 Max Ammo */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK");
-	int32 MaxAmmoAK = 90;
-
-	/** The size of one clip of the AK-47 */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK");
-	int32 ClipSizeAK = AmmoAK;
-
-	/** Ammount of Glock ammo */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock");
-	int32 AmmoGlock = 15;
-
-	/** Ammount of Glock Max ammo */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock");
-	int32 MaxAmmoGlock = 45;
-
-	/** The size of one clip of the Glock */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock");
-	int32 ClipSizeGlock = AmmoGlock;
 
 	/** Actor to Spawn AK-47 */
 	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
@@ -274,6 +228,11 @@ public:
 
 	/** Map to store all the weapons created and spawned */
 	TMap<FString, AWeaponBase*> AvailableWeapons;
+
+	/** A reload sound to be set at blueprint. */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Sounds");
+	USoundBase* ReloadSound = nullptr;
 
 private:
 

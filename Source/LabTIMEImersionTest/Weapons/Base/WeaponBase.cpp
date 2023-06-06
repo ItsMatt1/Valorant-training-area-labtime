@@ -74,7 +74,7 @@ void AWeaponBase::ReloadWeapon()
 	bIsReloading = true;
 
 	//Getting  the current ammount of ammo on ak.
-	AmmoDiff = ClipSize - Ammo;
+	int32 AmmoDiff = ClipSize - Ammo;
 
 	const bool bIsWeaponAbleToReload = (MaxAmmo > AmmoDiff);
 
@@ -95,17 +95,11 @@ void AWeaponBase::ReloadWeapon()
 void AWeaponBase::EnableCamera()
 {
 	ADSCamera->Activate();
-
-	UE_LOG(LogTemp, Log,
-		TEXT("ADSCam activted."));
 }
 
 void AWeaponBase::DisableCamera()
 {
 	ADSCamera->Deactivate();
-
-	UE_LOG(LogTemp, Log,
-		TEXT("ADSCam deactivated."));
 }
 
 void AWeaponBase::VerifyStillShooting()
