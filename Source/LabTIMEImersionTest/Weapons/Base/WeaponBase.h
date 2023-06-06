@@ -70,10 +70,15 @@ public:
 	*/
 	FTimerHandle Firerate;
 
-	/** A template effect to be set at gun's blueprint. */
+	/** A effect template to be set at gun's blueprint. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Emmiter");
 	UParticleSystem* EmitterTemplate = nullptr;
+
+	/** A sound template to be set at gun's blueprint. */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Sounds");
+	USoundBase* ShootSound = nullptr;
 
 protected:
 
@@ -121,15 +126,10 @@ protected:
 		Category = "Weapon Characteristics");
 	int32 ClipSize = 0;
 
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
-		Category = "Enemy");
-	AEnemyCharacterBase* Enemy = nullptr;
-
 protected:
 	/** The amount of ammunition the weapon still has on it's chamber */
 	int32 WeaponCurrentAmmunitionAmount = 0;
 
-	/** Variable to calculate the difference between current clip - clipsize. */
+	/** Variable to calculate the difference between current clip - clipsize.*/
 	int32 AmmoDiff = 0;
 };

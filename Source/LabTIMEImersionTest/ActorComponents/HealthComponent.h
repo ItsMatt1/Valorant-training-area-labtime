@@ -17,23 +17,37 @@ public:
 	UHealthComponent();
 
 protected:
+
+	/** Override of the TakeAnyDamage function of unreal, its called when you
+	want to make the actor take damage.
+	* @param DamagedActor, Actor that will be damaged.
+	* @param Damage, the amount of damage that will be taken.
+	* @param InstigatedBy, Controller that was responsible for causing this
+		damage (e.g. player who shot the weapon).
+	* @param DamageType, Class that describes the damage that was done.
+	* @param DamageCauser, Actor that directly caused the damage.
+	*/
+	UFUNCTION()
+	void TakeDamage(AActor* DamagedActor, float Damage, 
+		const class UDamageType* DamageType, class AController* InstigatedBy, 
+		AActor* DamageCauser);
+
+protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	/** The health that the actor starts. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Health")
 	float DefaultHealth = 1;
 	
-	UPROPERTY(BlueprintReadOnly)
+	/** The health that the actor is currently at. */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Health")
 	float Health = DefaultHealth;
 
-	UFUNCTION()
-	void TakeDamage(AActor* DamagedActor, float Damage,
-		const class UDamageType* DamageType, class AController* InstigatedBy,
-		AActor* DamageCauser);
+
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 		FActorComponentTickFunction* ThisTickFunction) override;
-
 };

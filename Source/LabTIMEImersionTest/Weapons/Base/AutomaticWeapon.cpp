@@ -30,13 +30,17 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 	bIsFiring = true;
 
 	//Play Sound
+	UGameplayStatics::PlaySound2D(GetWorld(), ShootSound);
 
 	// Getting the muzzle position.
-	FVector EffectSpawnLocation = SkeletalMeshComponent->GetSocketLocation("AK_FlashFX");
-	FRotator EffectSpawnRotation = SkeletalMeshComponent->GetSocketRotation("AK_FlashFX");
+	FVector EffectSpawnLocation = SkeletalMeshComponent->
+		GetSocketLocation("AK_FlashFX");
+	FRotator EffectSpawnRotation = SkeletalMeshComponent->
+		GetSocketRotation("AK_FlashFX");
 
 	// Spawn the emitter at the specified location.
-	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), EmitterTemplate, EffectSpawnLocation, EffectSpawnRotation, FVector(0.1), true);
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), EmitterTemplate, 
+		EffectSpawnLocation, EffectSpawnRotation, FVector(0.1), true);
 
 	//As it fired, decreased the ammo amount.
 	Ammo--;
@@ -55,7 +59,8 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 	const float RayCastRange = 5000.f;
 	FVector End = Start + (ForwardVector * RayCastRange);
 
-	const bool bIsHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams);
+	const bool bIsHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start,
+		End, ECC_Visibility, CollisionParams);
 	
 	if (!bIsHit)
 	{
