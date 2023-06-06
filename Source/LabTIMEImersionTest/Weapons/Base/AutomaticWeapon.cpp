@@ -27,6 +27,9 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 		return;
 	}
 
+	GetWorld()->GetFirstPlayerController()->GetPawn()->AddControllerPitchInput(-0.3);
+	GetWorld()->GetFirstPlayerController()->GetPawn()->AddControllerYawInput(-0.15);
+
 	bIsFiring = true;
 
 	//Play Sound

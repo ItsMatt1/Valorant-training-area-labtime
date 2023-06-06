@@ -31,5 +31,5 @@ public:
 
 private:
 	/** The amount of enemies killed by the player on the current round. */
-	int32 EnemiesKilledAmount = 0;
+	int32 EnemiesKilledAmount = -1;
 };

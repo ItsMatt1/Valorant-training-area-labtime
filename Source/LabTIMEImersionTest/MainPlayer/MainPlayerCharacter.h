@@ -198,7 +198,7 @@ public:
 		Category = "Character Movement");
 	float CrouchingSpeed = WalkingSpeed / 2;
 
-	/** Boolean which is true whenever player crouchs */
+	/** Boolean which is true whenever player crouches */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
 		Category = "Character Movement");
 	bool bIsCrouching = false;
@@ -233,6 +233,10 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Sounds");
 	USoundBase* ReloadSound = nullptr;
+
+	/** Creating Health Component on Player. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	class UHealthComponent* HealthComponent = nullptr;
 
 private:
 

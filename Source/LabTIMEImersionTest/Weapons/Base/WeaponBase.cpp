@@ -73,7 +73,7 @@ void AWeaponBase::ReloadWeapon()
 
 	bIsReloading = true;
 
-	//Getting  the current ammount of ammo on ak.
+	//Getting  the current amount of ammo on ak.
 	int32 AmmoDiff = ClipSize - Ammo;
 
 	const bool bIsWeaponAbleToReload = (MaxAmmo > AmmoDiff);

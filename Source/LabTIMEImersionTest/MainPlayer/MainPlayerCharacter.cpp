@@ -3,6 +3,7 @@
 
 #include "MainPlayerCharacter.h"
 #include "MainPlayerController.h"
+#include "LabTIMEImersionTest/ActorComponents/HealthComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
@@ -16,7 +17,13 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	//improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
+	//Adding the health component on editor
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>
+		(TEXT("HealthComponent"));
+
+	//Adding the camera component on editor
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>
+		(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(GetMesh(), "Head");
 	FollowCamera->bUsePawnControlRotation = true;
 
@@ -256,20 +263,15 @@ void AMainPlayerCharacter::PrimaryFire()
 		return;
 	}
 
-	//while (EquippedWeapon->bIsStillFiring)
-	//{
-		AddControllerPitchInput(-0.3);
-		AddControllerYawInput(-0.15);
+	if (bIsAiming)
+	{
+		EquippedWeapon->FireWeapon(nullptr);
+	}
+	else
+	{
+		EquippedWeapon->FireWeapon(FollowCamera);
+	}
 
-		if (bIsAiming)
-		{
-			EquippedWeapon->FireWeapon(nullptr);
-		}
-		else
-		{
-			EquippedWeapon->FireWeapon(FollowCamera);
-		}
-	//}
 }
 
 void AMainPlayerCharacter::StopFiring()
@@ -337,8 +339,6 @@ void AMainPlayerCharacter::Reload()
 	{
 		return;
 	}
-
-
 
 	EquippedWeapon->ReloadWeapon();
 
