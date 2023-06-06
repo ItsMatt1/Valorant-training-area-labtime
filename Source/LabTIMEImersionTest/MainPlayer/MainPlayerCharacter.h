@@ -238,6 +238,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class UHealthComponent* HealthComponent = nullptr;
 
+	/** Creating Armor Component on Player. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	class UArmorComponent* ArmorComponent = nullptr;
+
 private:
 
 	/** Set the turn rate of the controller */

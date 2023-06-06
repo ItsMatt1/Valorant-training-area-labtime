@@ -4,6 +4,7 @@
 #include "MainPlayerCharacter.h"
 #include "MainPlayerController.h"
 #include "LabTIMEImersionTest/ActorComponents/HealthComponent.h"
+#include "LabTIMEImersionTest/ActorComponents/ArmorComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
@@ -20,6 +21,10 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	//Adding the health component on editor
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>
 		(TEXT("HealthComponent"));
+
+	//Adding the armor component on editor
+	ArmorComponent = CreateDefaultSubobject<UArmorComponent>
+		(TEXT("ArmorComponent"));
 
 	//Adding the camera component on editor
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>

@@ -29,6 +29,10 @@ public:
 		meta=(Tooltip="Get the amount of enemies killed by the player"))
 	int32 GetEnemiesKilledAmount() { return EnemiesKilledAmount; }
 
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip = "Get the amount of enemies killed by the player"))
+		int32 UpdateEnemiesKilledAmount() { EnemiesKilledAmount++; return EnemiesKilledAmount; }
+
 private:
 	/** The amount of enemies killed by the player on the current round. */
 	int32 EnemiesKilledAmount = -1;
