@@ -363,6 +363,8 @@ void AMainPlayerCharacter::TakeDamageFromEnemy()
 	//15% of Damage
 	Armor -= 0.15f;
 
+	//HealthComponent->DefaultHealth;
+
 	if (Armor >= 0)
 	{
 		TakeArmorDamageCallWidget();

@@ -36,6 +36,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+public:
+
 	/** The health that the actor starts. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Health")
 	float DefaultHealth = 1;

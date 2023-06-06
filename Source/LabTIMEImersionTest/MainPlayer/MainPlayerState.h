@@ -23,15 +23,21 @@ public:
 	* Getter to the enemies killed amount. The amount of enemies 
 	* killed by the player.
 	* 
-	* @return The amount of enemies the player has killed since last reset
+	* @return The amount of enemies the player has killed since last reset.
 	*/
 	UFUNCTION(BlueprintCallable, 
 		meta=(Tooltip="Get the amount of enemies killed by the player"))
 	int32 GetEnemiesKilledAmount() { return EnemiesKilledAmount; }
 
+	/**
+	* Increment the EnemiesKilledAmount in one unit.
+	* its called when player kills an enemy.
+	* @return The amount of enemies the player has killed since last reset.
+	*/
 	UFUNCTION(BlueprintCallable,
-		meta = (Tooltip = "Get the amount of enemies killed by the player"))
-		int32 UpdateEnemiesKilledAmount() { EnemiesKilledAmount++; return EnemiesKilledAmount; }
+		meta = (Tooltip = "Increment the amount of kills."))
+	int32 UpdateEnemiesKilledAmount() { EnemiesKilledAmount++;
+		return EnemiesKilledAmount; }
 
 private:
 	/** The amount of enemies killed by the player on the current round. */
