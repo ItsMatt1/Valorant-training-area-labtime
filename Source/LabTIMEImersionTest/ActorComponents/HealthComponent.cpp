@@ -10,7 +10,6 @@ UHealthComponent::UHealthComponent()
 	// ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
-
 }
 
 // Called when the game starts
@@ -38,15 +37,6 @@ void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage,
 		return;
 	}
 
+	//Receive damage, not let it pass 0.
 	Health = FMath::Clamp(Health - Damage, 0.0f, DefaultHealth);
 }
-
-// Called every frame
-void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-	FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-

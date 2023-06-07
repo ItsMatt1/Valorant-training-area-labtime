@@ -22,14 +22,6 @@ void UArmorComponent::BeginPlay()
 	
 }
 
-// Called every frame
-void UArmorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
 void UArmorComponent::TakeDamage(AActor* DamagedActor, float Damage,
 	const class UDamageType* DamageType, class AController* InstigatedBy,
 	AActor* DamageCauser)
@@ -39,5 +31,6 @@ void UArmorComponent::TakeDamage(AActor* DamagedActor, float Damage,
 		return;
 	}
 
+	//Receive armor damage, not let it pass 0.
 	Armor = FMath::Clamp(Armor - Damage, 0.0f, DefaultArmor);
 }

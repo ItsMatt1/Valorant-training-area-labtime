@@ -24,18 +24,21 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 public:
-
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "EnemyHitByBulletEvent"))
+	/* Everytime the bullet hit an enemy this function is called,
+	* this function verify if the health is equal to 0, if it is, call
+	* EnemyKilled event and destroy its actor.
+	* @note plans to implement it on cpp.
+	*/
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = 
+		"EnemyHitByBulletEvent"))
 	void EnemyHitByBulletEvent();
-
-public:
-
-	/** Creating Health Component on Enemy. */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	class UHealthComponent* HealthComponent = nullptr;
 
 protected:
 	/** Called when the game starts or when spawned */
 	virtual void BeginPlay() override;
 
+public:
+	/** Creating Health Component on Enemy. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	class UHealthComponent* HealthComponent = nullptr;
 };

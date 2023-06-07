@@ -33,7 +33,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-
 	/** Specifying the fire rate of the automatic weapons. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Characteristics");

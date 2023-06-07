@@ -16,10 +16,7 @@ public:
 	// Sets default values for this component's properties
 	UArmorComponent();
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
+public:
 	/** Override of the TakeAnyDamage function of unreal, its called when you
 		want to make the actor take damage.
 	* @param DamagedActor, Actor that will be damaged.
@@ -35,6 +32,10 @@ protected:
 			AActor* DamageCauser);
 
 protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
+
+protected:
 	/** The health that the actor starts. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Armor")
 	float DefaultArmor = 1;
@@ -42,10 +43,4 @@ protected:
 	/** The health that the actor is currently at. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Armor")
 	float Armor = 1;
-
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
 };

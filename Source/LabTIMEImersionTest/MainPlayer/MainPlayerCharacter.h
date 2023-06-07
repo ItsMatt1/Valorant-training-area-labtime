@@ -151,6 +151,8 @@ private:
 	*/
 	void PrimaryFire();
 
+	void oloko();
+
 	/**
 	* This function is called when stop shooting and will set bIsFiring to 
 	* false.
@@ -241,6 +243,15 @@ public:
 	/** Creating Armor Component on Player. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class UArmorComponent* ArmorComponent = nullptr;
+
+	bool teste = false;
+
+	bool keepfiring = false;
+
+	/**
+	* Its a simple FTimer Handle to distinguish timers and finish animation.
+	*/
+	FTimerHandle Firerate;
 
 private:
 
