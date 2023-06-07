@@ -268,7 +268,6 @@ void AMainPlayerCharacter::PrimaryFire()
 		return;
 	}
 
-	keepFiring = true;
 	VerifyFiring();
 
 	GetWorld()->GetTimerManager().SetTimer(FireRate, this,
@@ -287,6 +286,9 @@ void AMainPlayerCharacter::VerifyFiring()
 		{
 			EquippedWeapon->FireWeapon(FollowCamera);
 		}
+
+		UE_LOG(LogTemp, Warning, TEXT("This is the data: %s"), *FString(EquippedWeapon->GetWeaponName()));
+
 	}
 	else
 	{

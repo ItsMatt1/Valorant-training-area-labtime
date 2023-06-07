@@ -99,5 +99,4 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 
 	//Letting Target_Enemy handles the damage.
 	Cast<AEnemyCharacterBase>(OutHit.GetActor())->EnemyHitByBulletEvent();
-
 }

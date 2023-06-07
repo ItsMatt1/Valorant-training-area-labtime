@@ -19,22 +19,27 @@ void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 		return;
 	}
 
+	GetWorld()->GetFirstPlayerController()->GetPawn()->
+		AddControllerPitchInput(-0.1);
+	GetWorld()->GetFirstPlayerController()->GetPawn()->
+		AddControllerYawInput(-0.1);
+
 	bIsFiring = true;
 
 	//Play Sound
 	UGameplayStatics::PlaySound2D(GetWorld(), ShootSound, 0.5f);
 
-	// Getting the gun's muzzle position.
+	// Getting the muzzle position.
 	FVector EffectSpawnLocation = SkeletalMeshComponent->
-		GetSocketLocation("Glock_Muzzle");
+		GetSocketLocation("AK_FlashFX");
 	FRotator EffectSpawnRotation = SkeletalMeshComponent->
-		GetSocketRotation("Glock_Muzzle");
+		GetSocketRotation("AK_FlashFX");
 
 	// Spawn the emitter at the specified location.
-	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), EmitterTemplate, 
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), EmitterTemplate,
 		EffectSpawnLocation, EffectSpawnRotation, FVector(0.1), true);
 
-	//As it is fired, decreased the ammo amount.
+	//As it fired, decreased the ammo amount.
 	Ammo--;
 
 	FHitResult OutHit;
@@ -51,7 +56,6 @@ void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 	const float RayCastRange = 5000.f;
 	FVector End = Start + (ForwardVector * RayCastRange);
 
-	//Check if Shoot hit something.
 	const bool bIsHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start,
 		End, ECC_Visibility, CollisionParams);
 
@@ -61,7 +65,6 @@ void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 		return;
 	}
 
-	//Check if Shoot hit an actor.
 	const bool bIsAnActor = OutHit.Actor.IsValid();
 
 	if (!bIsAnActor)
@@ -71,7 +74,6 @@ void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 		return;
 	}
 
-	//Check if Shoot hit an enemy.
 	const bool bIsActorEnemy = OutHit.GetActor()->ActorHasTag("Enemy");
 
 	if (!bIsActorEnemy)
@@ -83,6 +85,9 @@ void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 
 	UE_LOG(LogTemp, Warning,
 		TEXT("Fired and Hit an Enemy!"));
+
+	UGameplayStatics::ApplyDamage(Cast<AEnemyCharacterBase>(OutHit.GetActor()),
+		0.1f, GetWorld()->GetFirstPlayerController(), this, nullptr);
 
 	//Letting Target_Enemy handles the damage.
 	Cast<AEnemyCharacterBase>(OutHit.GetActor())->EnemyHitByBulletEvent();

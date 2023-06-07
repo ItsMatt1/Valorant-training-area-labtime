@@ -63,13 +63,6 @@ public:
 		Category = "Character Action");
 	bool bIsFiring = false;
 
-	bool bIsStillFiring = false;
-
-	/**
-	* Its a simple FTimer Handle to distinguish timers and finish animation.
-	*/
-	FTimerHandle Firerate;
-
 	/** A effect template to be set at gun's blueprint. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Emmiter");
