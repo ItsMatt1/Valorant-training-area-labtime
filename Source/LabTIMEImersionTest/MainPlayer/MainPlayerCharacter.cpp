@@ -81,11 +81,6 @@ void AMainPlayerCharacter::BeginPlay()
 void AMainPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (teste == true)
-	{
-		keepfiring = true;
-	}
 }
 
 // Called to bind functionality to input
@@ -273,39 +268,36 @@ void AMainPlayerCharacter::PrimaryFire()
 		return;
 	}
 
-	teste = true;
+	keepFiring = true;
+	VerifyFiring();
 
-	oi:
-	if (bIsAiming)
+	GetWorld()->GetTimerManager().SetTimer(FireRate, this,
+		&AMainPlayerCharacter::VerifyFiring, 0.1f, true);
+}
+
+void AMainPlayerCharacter::VerifyFiring()
+{
+	if (keepFiring)
 	{
-		EquippedWeapon->FireWeapon(nullptr);
+		if (bIsAiming)
+		{
+			EquippedWeapon->FireWeapon(nullptr);
+		}
+		else
+		{
+			EquippedWeapon->FireWeapon(FollowCamera);
+		}
 	}
 	else
 	{
-		EquippedWeapon->FireWeapon(FollowCamera);
+		GetWorld()->GetTimerManager().ClearTimer(FireRate);
 	}
-
-	GetWorld()->GetTimerManager().SetTimer(Firerate, this,
-		&AMainPlayerCharacter::oloko, 0.5f, true);
-
-	if (keepfiring == true)
-	{
-		goto oi;
-	}
-}
-
-void AMainPlayerCharacter::oloko()
-{
-	if (keepfiring == false)
-	{
-		teste = false;
-	}
-
 }
 
 void AMainPlayerCharacter::StopFiring()
 {
 	EquippedWeapon->bIsFiring = false;
+	keepFiring = false;
 }
 
 void AMainPlayerCharacter::Sprint()

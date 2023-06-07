@@ -147,11 +147,15 @@ private:
 
 	/**
 	* This function is called when player shoots and will call the function
-	* FireWeapon from current equipped weapon.
+	* VerifyFiring .
 	*/
 	void PrimaryFire();
 
-	void oloko();
+	/**
+	* This function is called when player is still holding Primary Fire Button
+	* and will call the function FireWeapon from current equipped weapon.
+	*/
+	void VerifyFiring();
 
 	/**
 	* This function is called when stop shooting and will set bIsFiring to 
@@ -244,14 +248,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class UArmorComponent* ArmorComponent = nullptr;
 
-	bool teste = false;
 
-	bool keepfiring = false;
-
-	/**
-	* Its a simple FTimer Handle to distinguish timers and finish animation.
-	*/
-	FTimerHandle Firerate;
 
 private:
 
@@ -263,10 +260,20 @@ private:
 	UPROPERTY(EditAnywhere)
 	float BaseLookUpRate = 45.f;
 
+	/** Keep track if player is still holding PrimaryFire Button (left mouse
+		click) */
+	bool keepFiring = false;
+
 	/**
 	* Its a simple FTimer Handle to distinguish timers and finish animation.
 	*/
 	FTimerHandle TriggerStopAnim;
+
+	/**
+	* Its a simple FTimer Handle to distinguish timers and set FireRate of 
+		automatic weapons.
+	*/
+	FTimerHandle FireRate;
 
 	/** Create a reference to Player Controller */
 	APlayerController* OurPlayerController = nullptr;
