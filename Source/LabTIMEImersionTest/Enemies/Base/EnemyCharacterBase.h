@@ -28,6 +28,11 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "EnemyHitByBulletEvent"))
 	void EnemyHitByBulletEvent();
 
+public:
+
+	/** Creating Health Component on Enemy. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	class UHealthComponent* HealthComponent = nullptr;
 
 protected:
 	/** Called when the game starts or when spawned */

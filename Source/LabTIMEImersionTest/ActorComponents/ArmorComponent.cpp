@@ -13,7 +13,6 @@ UArmorComponent::UArmorComponent()
 	// ...
 }
 
-
 // Called when the game starts
 void UArmorComponent::BeginPlay()
 {
@@ -23,7 +22,6 @@ void UArmorComponent::BeginPlay()
 	
 }
 
-
 // Called every frame
 void UArmorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -32,3 +30,14 @@ void UArmorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	// ...
 }
 
+void UArmorComponent::TakeDamage(AActor* DamagedActor, float Damage,
+	const class UDamageType* DamageType, class AController* InstigatedBy,
+	AActor* DamageCauser)
+{
+	if (Damage <= 0)
+	{
+		return;
+	}
+
+	Armor = FMath::Clamp(Armor - Damage, 0.0f, DefaultArmor);
+}

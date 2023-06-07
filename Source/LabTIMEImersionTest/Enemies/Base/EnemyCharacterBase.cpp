@@ -2,11 +2,16 @@
 
 
 #include "EnemyCharacterBase.h"
+#include "LabTIMEImersionTest/ActorComponents/HealthComponent.h"
 
 // Sets default values
 AEnemyCharacterBase::AEnemyCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	//Adding the health component on editor
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>
+		(TEXT("HealthComponent"));
 }
 
 void AEnemyCharacterBase::BeginPlay()
