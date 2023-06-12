@@ -25,7 +25,6 @@ void UHealthComponent::BeginPlay()
 	}
 
 	MyOwner->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::TakeDamage);
-	
 }
 
 void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage,
@@ -37,6 +36,14 @@ void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage,
 		return;
 	}
 
-	//Receive damage, not let it pass 0.
+	if (Armor > 0)
+	{
+		//Receive armor damage, not let it pass 0.
+		Armor = FMath::Clamp(Armor - Damage, 0.0f, DefaultArmor);
+		UE_LOG(LogTemp, Error, TEXT("TOOK ARMOR DAMAGE"));
+		return;
+	}
+
+	UE_LOG(LogTemp, Error, TEXT("TOOK HEALTH DAMAGE"));
 	Health = FMath::Clamp(Health - Damage, 0.0f, DefaultHealth);
 }

@@ -4,7 +4,6 @@
 #include "MainPlayerCharacter.h"
 #include "MainPlayerController.h"
 #include "LabTIMEImersionTest/ActorComponents/HealthComponent.h"
-#include "LabTIMEImersionTest/ActorComponents/ArmorComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
@@ -21,11 +20,7 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	//Adding the health component on editor
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>
 		(TEXT("HealthComponent"));
-
-	//Adding the armor component on editor
-	ArmorComponent = CreateDefaultSubobject<UArmorComponent>
-		(TEXT("ArmorComponent"));
-
+	
 	//Adding the camera component on editor
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>
 		(TEXT("FollowCamera"));
@@ -277,29 +272,27 @@ void AMainPlayerCharacter::PrimaryFire()
 
 void AMainPlayerCharacter::VerifyFiring()
 {
-	if (keepFiring)
+	if (!keepFiring)
 	{
-		if (bIsAiming)
+		GetWorld()->GetTimerManager().ClearTimer(FireRate);
+		return;
+	}
+
+	if (!bIsAiming)
+	{
+		if (FString(EquippedWeapon->GetWeaponName()).Equals("Glock"))
 		{
-			EquippedWeapon->FireWeapon(nullptr);
+			EquippedWeapon->FireWeapon(FollowCamera);
+			keepFiring = false; // Stop firing after one shot for Glock.
 		}
 		else
 		{
-			if (FString(EquippedWeapon->GetWeaponName()).Equals("Glock"))
-			{
-				EquippedWeapon->FireWeapon(FollowCamera);
-				keepFiring = false; // Stop firing after one shot for "Glock"
-			}
-			else
-			{
-				EquippedWeapon->FireWeapon(FollowCamera);
-			}
+			EquippedWeapon->FireWeapon(FollowCamera);
 		}
+		return;
 	}
-	else
-	{
-		GetWorld()->GetTimerManager().ClearTimer(FireRate);
-	}
+
+	EquippedWeapon->FireWeapon(nullptr);
 }
 
 void AMainPlayerCharacter::StopFiring()
@@ -384,28 +377,16 @@ void AMainPlayerCharacter::DisableReloadAnim()
 
 void AMainPlayerCharacter::TakeDamageFromEnemy()
 {
-	//15% of Damage
-	Armor -= 0.15f;
-
-	
-
-	if (Armor >= 0)
+	if (HealthComponent->Armor > 0)
 	{
 		TakeArmorDamageCallWidget();
+		return;
 	}
-	else
+
+	TakeHealthDamageCallWidget();
+
+	if (HealthComponent->Health <= 0)
 	{
-		TakeHealthDamageCallWidget();
-
-		Health += Armor;
-		Armor = 0;
-
-		if (Health >= 0)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Player with enough health."))
-			return;
-		}
-
 		GameOver();
 	}
 }
@@ -419,11 +400,11 @@ void AMainPlayerCharacter::TakeArmorDamageCallWidget()
 	if (!Hud)
 	{
 		UE_LOG(LogTemp, Error,
-			TEXT("Could not get main HUD to show HealthDamage."));
+			TEXT("Could not get main HUD to show ArmorDamage."));
 		return;
 	}
 
-	// Request the main HUD to show the HealthDamage widget
+	// Request the main HUD to show the Armor Damage widget.
 	Hud->ToggleArmorDamageWidget(true);
 }
 
@@ -436,10 +417,10 @@ void AMainPlayerCharacter::TakeHealthDamageCallWidget()
 	if (!Hud)
 	{
 		UE_LOG(LogTemp, Error,
-			TEXT("Could not get main HUD to show ArmorDamage."));
+			TEXT("Could not get main HUD to show HealthDamage."));
 		return;
 	}
 
-	// Request the main HUD to show the ArmorDamage widget
+	// Request the main HUD to show the Health Damage Widget.
 	Hud->ToggleDamageWidget(true);
 }
