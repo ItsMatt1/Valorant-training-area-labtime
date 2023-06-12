@@ -268,6 +268,7 @@ void AMainPlayerCharacter::PrimaryFire()
 		return;
 	}
 
+	keepFiring = true;
 	VerifyFiring();
 
 	GetWorld()->GetTimerManager().SetTimer(FireRate, this,
@@ -284,11 +285,16 @@ void AMainPlayerCharacter::VerifyFiring()
 		}
 		else
 		{
-			EquippedWeapon->FireWeapon(FollowCamera);
+			if (FString(EquippedWeapon->GetWeaponName()).Equals("Glock"))
+			{
+				EquippedWeapon->FireWeapon(FollowCamera);
+				keepFiring = false; // Stop firing after one shot for "Glock"
+			}
+			else
+			{
+				EquippedWeapon->FireWeapon(FollowCamera);
+			}
 		}
-
-		UE_LOG(LogTemp, Warning, TEXT("This is the data: %s"), *FString(EquippedWeapon->GetWeaponName()));
-
 	}
 	else
 	{
