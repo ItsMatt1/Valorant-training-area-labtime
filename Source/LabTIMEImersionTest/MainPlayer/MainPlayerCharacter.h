@@ -53,7 +53,7 @@ private:
 	*
 	* @param AxisValue The axis value of the input
 	*/
-	void MoveForward(float AxisValue);
+	inline void MoveForward(float AxisValue);
 
 	/**
 	* Handles the right movement of the character.
@@ -61,7 +61,7 @@ private:
 	*
 	* @param AxisValue The axis value of the input
 	*/
-	void MoveRight(float AxisValue);
+	inline void MoveRight(float AxisValue);
 
 	/**
 	* This function is called when the player starts sprinting and will do this
@@ -103,25 +103,25 @@ private:
 	* This function makes the player move the camera on X.
 	* @param AxisValue
 	*/
-	void Turn(float AxisValue);
+	inline void Turn(float AxisValue);
 
 	/**
 	* This function makes the player move the camera on Y.
 	* @param AxisValue
 	*/
-	void LookUp(float AxisValue);
+	inline void LookUp(float AxisValue);
 
 	/**
 	* This function sooths the camera movement on Y given the fps.
 	* @param AxisValue
 	*/
-	void TurnRate(float AxisValue);
+	inline void TurnRate(float AxisValue);
 
 	/**
 	* This function sooths the camera movement on X given the fps.
 	* @param AxisValue
 	*/
-	void LookUpRate(float AxisValue);
+	inline void LookUpRate(float AxisValue);
 
 	/**
 	* This function is called when player selects primary weapon and will
@@ -149,13 +149,13 @@ private:
 	* This function is called when player shoots and will call the function
 	* VerifyFiring .
 	*/
-	void PrimaryFire();
+	inline void PrimaryFire();
 
 	/**
 	* This function is called when player is still holding Primary Fire Button
 	* and will call the function FireWeapon from current equipped weapon.
 	*/
-	void VerifyFiring();
+	inline void VerifyFiring();
 
 	/**
 	* This function is called when stop shooting and will set bIsFiring to 
@@ -178,16 +178,6 @@ public:
 	/** The Camera that follows the player component */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Camera")
 	class UCameraComponent* FollowCamera = nullptr;
-
-	/** Defining amount of Health, starts with 1 and go until 0 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Info");
-	float Health = 1.f;
-
-	/** Defining amount of Armor, starts with 1 and go until 0 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Info");
-	float Armor = 1.f;
 
 	/** Defining The speed of the Walking */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
