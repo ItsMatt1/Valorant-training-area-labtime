@@ -44,11 +44,11 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Health")
 	float Health = 1;
 
-	/** The health that the actor starts. */
+	/** The armor that the actor starts. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Armor")
 	float DefaultArmor = 1;
 
-	/** The health that the actor is currently at. */
+	/** The armor that the actor is currently at. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Armor")
 	float Armor = 1;
 };

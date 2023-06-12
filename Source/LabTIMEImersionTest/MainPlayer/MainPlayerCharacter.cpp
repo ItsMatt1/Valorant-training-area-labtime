@@ -266,6 +266,7 @@ void AMainPlayerCharacter::PrimaryFire()
 	keepFiring = true;
 	VerifyFiring();
 
+	//Activating a "delay" for the automatic weapon.
 	GetWorld()->GetTimerManager().SetTimer(FireRate, this,
 		&AMainPlayerCharacter::VerifyFiring, 0.1f, true);
 }
@@ -278,21 +279,22 @@ void AMainPlayerCharacter::VerifyFiring()
 		return;
 	}
 
-	if (!bIsAiming)
+	//If the Equipped Weapon is a glock it cannot keep firing.
+	if (FString(EquippedWeapon->GetWeaponName()).Equals("Glock"))
 	{
-		if (FString(EquippedWeapon->GetWeaponName()).Equals("Glock"))
+		if (!bIsAiming)
 		{
 			EquippedWeapon->FireWeapon(FollowCamera);
 			keepFiring = false; // Stop firing after one shot for Glock.
+			return;
 		}
-		else
-		{
-			EquippedWeapon->FireWeapon(FollowCamera);
-		}
+
+		EquippedWeapon->FireWeapon(nullptr);
+		keepFiring = false; // Stop firing after one shot for Glock.
 		return;
 	}
 
-	EquippedWeapon->FireWeapon(nullptr);
+	EquippedWeapon->FireWeapon(FollowCamera);
 }
 
 void AMainPlayerCharacter::StopFiring()
@@ -375,7 +377,7 @@ void AMainPlayerCharacter::DisableReloadAnim()
 	EquippedWeapon->bIsReloading = false;
 }
 
-void AMainPlayerCharacter::TakeDamageFromEnemy()
+void AMainPlayerCharacter::HandleDamageWidget()
 {
 	if (HealthComponent->Armor > 0)
 	{

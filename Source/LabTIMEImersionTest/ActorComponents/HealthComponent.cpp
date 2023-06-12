@@ -40,10 +40,9 @@ void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage,
 	{
 		//Receive armor damage, not let it pass 0.
 		Armor = FMath::Clamp(Armor - Damage, 0.0f, DefaultArmor);
-		UE_LOG(LogTemp, Error, TEXT("TOOK ARMOR DAMAGE"));
 		return;
 	}
 
-	UE_LOG(LogTemp, Error, TEXT("TOOK HEALTH DAMAGE"));
+	//Receive health damage, not let it pass 0.
 	Health = FMath::Clamp(Health - Damage, 0.0f, DefaultHealth);
 }

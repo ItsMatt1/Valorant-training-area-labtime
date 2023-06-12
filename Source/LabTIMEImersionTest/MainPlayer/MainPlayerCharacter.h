@@ -38,7 +38,7 @@ public:
 	* Its called on BP_TargetEnemy
 	*/
 	UFUNCTION(BlueprintCallable)
-	void TakeDamageFromEnemy();
+	void HandleDamageWidget();
 
 protected:
 

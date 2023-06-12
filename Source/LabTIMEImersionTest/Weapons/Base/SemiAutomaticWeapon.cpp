@@ -31,9 +31,9 @@ void ASemiAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 
 	// Getting the muzzle position.
 	FVector EffectSpawnLocation = SkeletalMeshComponent->
-		GetSocketLocation("AK_FlashFX");
+		GetSocketLocation("Glock_Muzzle");
 	FRotator EffectSpawnRotation = SkeletalMeshComponent->
-		GetSocketRotation("AK_FlashFX");
+		GetSocketRotation("Glock_Muzzle");
 
 	// Spawn the emitter at the specified location.
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), EmitterTemplate,
