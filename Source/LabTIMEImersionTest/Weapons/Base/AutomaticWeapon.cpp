@@ -5,7 +5,6 @@
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include <LabTIMEImersionTest/MainPlayer/MainPlayerCharacter.h>
-#include <DrawDebugHelpers.h>
 
 void AAutomaticWeapon::Tick(float DeltaTime)
 {
@@ -27,6 +26,7 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 		UE_LOG(LogTemp, Warning, TEXT("No more bullets on magazine"));
 		return;
 	}
+
 
 	GetWorld()->GetFirstPlayerController()->GetPawn()->
 		AddControllerPitchInput(-0.3);
@@ -68,8 +68,6 @@ void AAutomaticWeapon::FireWeapon(UCameraComponent* CameraRayCastFireFrom)
 	const bool bIsHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start,
 		End, ECC_Visibility, CollisionParams);
 	
-	DrawDebugLine(GetWorld(), Start, End, FColor::Green, true);
-
 	if (!bIsHit)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Fired and Hit Nothing!"));

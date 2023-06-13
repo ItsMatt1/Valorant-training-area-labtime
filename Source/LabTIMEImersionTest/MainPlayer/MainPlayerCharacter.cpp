@@ -279,23 +279,16 @@ void AMainPlayerCharacter::VerifyFiring()
 		return;
 	}
 
-	//If the Equipped Weapon is a glock it cannot keep firing.
 	if (FString(EquippedWeapon->GetWeaponName()).Equals("Glock"))
 	{
-		if (!bIsAiming)
-		{
-			EquippedWeapon->FireWeapon(FollowCamera);
-			keepFiring = false; // Stop firing after one shot for Glock.
-			return;
-		}
-
-		EquippedWeapon->FireWeapon(nullptr);
+		EquippedWeapon->FireWeapon(bIsAiming ? nullptr : FollowCamera);
 		keepFiring = false; // Stop firing after one shot for Glock.
 		return;
 	}
 
-	EquippedWeapon->FireWeapon(FollowCamera);
+	EquippedWeapon->FireWeapon(bIsAiming ? nullptr : FollowCamera);
 }
+
 
 void AMainPlayerCharacter::StopFiring()
 {

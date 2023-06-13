@@ -49,8 +49,6 @@ public:
 	/** Disables the ADSCamera*/
 	virtual void DisableCamera();
 
-	virtual void VerifyStillShooting();
-
 public:
 
 	/** Boolean which is true whenever player reloads. */
@@ -74,7 +72,6 @@ public:
 	USoundBase* ShootSound = nullptr;
 
 protected:
-
 	/** Called when the game starts or when spawned. */
 	virtual void BeginPlay() override;
 
@@ -118,8 +115,4 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Characteristics");
 	int32 ClipSize = 0;
-
-protected:
-	/** The amount of ammunition the weapon still has on it's chamber */
-	int32 WeaponCurrentAmmunitionAmount = 0;
 };
