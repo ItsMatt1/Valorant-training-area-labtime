@@ -27,15 +27,14 @@ public:
 
 	/**
 	* This Function call the GameOverWidget and show on screen.
-	* 
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "GameOver"))
 	void GameOver();
 
 	/**
-	* This function calls makes the player take 15% of damage.
-	* It reduces its health and/or armor.
-	* Its called on BP_TargetEnemy
+	* This function its called when enemy damaged the player.
+	* It handles which type of damage he'll take armor or straight health.
+	* @note Its called on BP_TargetEnemy.
 	*/
 	UFUNCTION(BlueprintCallable)
 	void HandleDamageWidget();
@@ -173,6 +172,22 @@ private:
 	*/
 	void TakeHealthDamageCallWidget();
 
+
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip =
+			"Get bIsCrouching value and return"))
+	inline bool GetIsCrouching() { return bIsCrouching; }
+
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip =
+			"Get bIsSprinting value and return"))
+	inline bool GetIsSprinting() { return bIsSprinting; }
+
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip =
+			"Get bIsAiming value and return"))
+	inline bool GetIsAiming() { return bIsAiming; }
+
 public:
 
 	/** The Camera that follows the player component */
@@ -193,21 +208,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Movement");
 	float CrouchingSpeed = WalkingSpeed / 2;
-
-	/** Boolean which is true whenever player crouches */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
-		Category = "Character Movement");
-	bool bIsCrouching = false;
-
-	/** Boolean which is true whenever player sprints */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
-		Category = "Character Movement");
-	bool bIsSprinting = false;
-
-	/** Boolean which is true whenever player aims */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly,
-		Category = "Character Movement");
-	bool bIsAiming = false;
 
 	/** Actor to Spawn AK-47 */
 	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
@@ -243,6 +243,15 @@ private:
 	/** Set the look up rate of the controller */
 	UPROPERTY(EditAnywhere)
 	float BaseLookUpRate = 45.f;
+
+	/** Boolean which is true whenever player crouches */
+	bool bIsCrouching = false;
+
+	/** Boolean which is true whenever player sprints */
+	bool bIsSprinting = false;
+
+	/** Boolean which is true whenever player aims */
+	bool bIsAiming = false;
 
 	/** Keep track if player is still holding PrimaryFire Button (left mouse
 		click) */
