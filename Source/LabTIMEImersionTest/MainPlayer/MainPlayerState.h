@@ -39,7 +39,21 @@ public:
 	int32 UpdateEnemiesKilledAmount() { EnemiesKilledAmount++;
 		return EnemiesKilledAmount; }
 
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip = 
+			"Get the highest amount of enemies killed by the player"))
+	int32 GetHighScore() { return PlayerHighScore; }
+
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip =
+			"Set the highest amount of enemies killed by the player"))
+	int32 SetHighScore(int NewHighScore) { PlayerHighScore = NewHighScore;
+		return PlayerHighScore; }
+
 private:
 	/** The amount of enemies killed by the player on the current round. */
 	int32 EnemiesKilledAmount = -1;
+
+	/** The amount of enemies killed by the player on the current round. */
+	int32 PlayerHighScore = 0;
 };
