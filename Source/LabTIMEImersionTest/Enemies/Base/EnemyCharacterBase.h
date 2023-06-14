@@ -27,7 +27,9 @@ public:
 	/* Everytime the bullet hit an enemy this function is called,
 	* this function verify if the health is equal to 0, if it is, call
 	* EnemyKilled event and destroy its actor.
-	* @note plans to implement it on cpp.
+	* 
+	* @note plans to implement it on cpp but for now it is probably the
+	* most complex blueprint.
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = 
 		"EnemyHitByBulletEvent"))

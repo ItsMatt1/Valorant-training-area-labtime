@@ -34,6 +34,7 @@ public:
 	/**
 	* This function its called when enemy damaged the player.
 	* It handles which type of damage he'll take armor or straight health.
+	* 
 	* @note Its called on BP_TargetEnemy.
 	*/
 	UFUNCTION(BlueprintCallable)
@@ -100,24 +101,28 @@ private:
 
 	/**
 	* This function makes the player move the camera on X.
+	* 
 	* @param AxisValue
 	*/
 	inline void Turn(float AxisValue);
 
 	/**
 	* This function makes the player move the camera on Y.
+	* 
 	* @param AxisValue
 	*/
 	inline void LookUp(float AxisValue);
 
 	/**
 	* This function sooths the camera movement on Y given the fps.
+	* 
 	* @param AxisValue
 	*/
 	inline void TurnRate(float AxisValue);
 
 	/**
 	* This function sooths the camera movement on X given the fps.
+	* 
 	* @param AxisValue
 	*/
 	inline void LookUpRate(float AxisValue);
@@ -172,17 +177,31 @@ private:
 	*/
 	void TakeHealthDamageCallWidget();
 
-
+	/**
+	* A getter for boolean bIsCrouching.
+	*/
 	UFUNCTION(BlueprintCallable,
 		meta = (Tooltip =
 			"Get bIsCrouching value and return"))
 	inline bool GetIsCrouching() { return bIsCrouching; }
 
+	/**
+	* A getter for boolean bIsSprinting.
+	* that it is used mainly for animation purposes.
+	* 
+	* @return bIsSprinting.
+	*/
 	UFUNCTION(BlueprintCallable,
 		meta = (Tooltip =
 			"Get bIsSprinting value and return"))
 	inline bool GetIsSprinting() { return bIsSprinting; }
 
+	/**
+	* A getter for boolean bIsAiming.
+	* that it is used mainly for animation purposes.
+	* 
+	* @return bIsAiming.
+	*/
 	UFUNCTION(BlueprintCallable,
 		meta = (Tooltip =
 			"Get bIsAiming value and return"))

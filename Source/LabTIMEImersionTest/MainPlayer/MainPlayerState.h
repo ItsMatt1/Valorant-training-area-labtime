@@ -31,6 +31,7 @@ public:
 
 	/**
 	* Increment the EnemiesKilledAmount in one unit.
+	* 
 	* its called when player kills an enemy.
 	* @return The amount of enemies the player has killed since last reset.
 	*/
@@ -39,11 +40,23 @@ public:
 	int32 UpdateEnemiesKilledAmount() { EnemiesKilledAmount++;
 		return EnemiesKilledAmount; }
 
+	/**
+	* Getter to the highest score of the player.
+	* 
+	* @note stored at \Saved\SaveGames\High Score Slot.sav
+	* @return PlayerHighScore.
+	*/
 	UFUNCTION(BlueprintCallable,
 		meta = (Tooltip = 
 			"Get the highest amount of enemies killed by the player"))
 	int32 GetHighScore() { return PlayerHighScore; }
 
+	/**
+	* Setter to the highest score of the player.
+	* 
+	* @note stored at \Saved\SaveGames\High Score Slot.sav
+	* @return PlayerHighScore.
+	*/
 	UFUNCTION(BlueprintCallable,
 		meta = (Tooltip =
 			"Set the highest amount of enemies killed by the player"))

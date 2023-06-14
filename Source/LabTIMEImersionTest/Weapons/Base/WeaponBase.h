@@ -79,7 +79,7 @@ protected:
 
 	/** 
 	* The weapon ammunition amount. 
-	* The bullet rounds amount it can fire in a row 
+	* The bullet rounds amount it can fire in a row.
 	*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, 
 		meta=(Tooltip="The weapon ammunition amount", AllowPrivateAccess=True))

@@ -19,6 +19,7 @@ public:
 protected:
 	/** Override of the TakeAnyDamage function of unreal, its called when you
 	want to make the actor take damage.
+	*
 	* @param DamagedActor, Actor that will be damaged.
 	* @param Damage, the amount of damage that will be taken.
 	* @param InstigatedBy, Controller that was responsible for causing this
@@ -32,7 +33,7 @@ protected:
 		AActor* DamageCauser);
 
 protected:
-	// Called when the game starts
+	/** Called when the game starts */
 	virtual void BeginPlay() override;
 
 public:
