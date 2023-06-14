@@ -23,13 +23,50 @@ public:
 	* Getter to the enemies killed amount. The amount of enemies 
 	* killed by the player.
 	* 
-	* @return The amount of enemies the player has killed since last reset
+	* @return The amount of enemies the player has killed since last reset.
 	*/
 	UFUNCTION(BlueprintCallable, 
 		meta=(Tooltip="Get the amount of enemies killed by the player"))
 	int32 GetEnemiesKilledAmount() { return EnemiesKilledAmount; }
 
+	/**
+	* Increment the EnemiesKilledAmount in one unit.
+	* 
+	* its called when player kills an enemy.
+	* @return The amount of enemies the player has killed since last reset.
+	*/
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip = "Increment the amount of kills."))
+	int32 UpdateEnemiesKilledAmount() { EnemiesKilledAmount++;
+		return EnemiesKilledAmount; }
+
+	/**
+	* Getter to the highest score of the player.
+	* 
+	* @note stored at \Saved\SaveGames\High Score Slot.sav
+	* @return PlayerHighScore.
+	*/
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip = 
+			"Get the highest amount of enemies killed by the player"))
+	int32 GetHighScore() { return PlayerHighScore; }
+
+	/**
+	* Setter to the highest score of the player.
+	* 
+	* @note stored at \Saved\SaveGames\High Score Slot.sav
+	* @return PlayerHighScore.
+	*/
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip =
+			"Set the highest amount of enemies killed by the player"))
+	int32 SetHighScore(int NewHighScore) { PlayerHighScore = NewHighScore;
+		return PlayerHighScore; }
+
 private:
 	/** The amount of enemies killed by the player on the current round. */
-	int32 EnemiesKilledAmount = 0;
+	int32 EnemiesKilledAmount = -1;
+
+	/** The amount of enemies killed by the player on the current round. */
+	int32 PlayerHighScore = 0;
 };

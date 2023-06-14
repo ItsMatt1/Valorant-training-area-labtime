@@ -2,13 +2,13 @@
 
 
 #include "MainPlayerCharacter.h"
+#include "MainPlayerController.h"
+#include "LabTIMEImersionTest/ActorComponents/HealthComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "LabTIMEImersionTest/Interface/MainHUD.h"
 #include "Kismet/GameplayStatics.h"
-#include "MainPlayerController.h"
 
 // Sets default values
 AMainPlayerCharacter::AMainPlayerCharacter()
@@ -17,7 +17,13 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	//improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
+	//Adding the health component on editor
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>
+		(TEXT("HealthComponent"));
+	
+	//Adding the camera component on editor
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>
+		(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(GetMesh(), "Head");
 	FollowCamera->bUsePawnControlRotation = true;
 
@@ -213,7 +219,7 @@ void AMainPlayerCharacter::SelectSecondaryWeapon()
 void AMainPlayerCharacter::AimDownSight()
 {
 	//Player cant reload if it is aiming.
-	if (bIsReloading)
+	if (EquippedWeapon->bIsReloading)
 	{
 		return;
 	}
@@ -232,7 +238,6 @@ void AMainPlayerCharacter::AimDownSight()
 	GetCharacterMovement()->MaxWalkSpeed = CrouchingSpeed;
 
 	bIsAiming = true;
-
 
 	OurPlayerController->SetViewTargetWithBlend(EquippedWeapon);
 }
@@ -253,45 +258,42 @@ void AMainPlayerCharacter::StopAiming()
 void AMainPlayerCharacter::PrimaryFire()
 {
 	//Disables firing if the player is sprinting or reloading.
-	if (bIsSprinting || bIsReloading)
+	if (bIsSprinting || EquippedWeapon->bIsReloading)
 	{
 		return;
 	}
 
-	if (bIsAiming)
-	{
-		EquippedWeapon->FireWeapon(nullptr);
-	}
-	else
-	{
-		EquippedWeapon->FireWeapon(FollowCamera);
-	}
+	keepFiring = true;
+	VerifyFiring();
 
-
-	//switch (WeaponSelected)
-	//{
-	//case 1:
-	//	if (AmmoAK >= 1)
-	//	{
-	//		bIsFiring = true;
-	//		FireAkEvent();
-	//	}
-	//	break;
-	//case 2:
-	//	if (AmmoGlock >= 1)
-	//	{
-	//		bIsFiring = true;
-	//		FireGlockEvent();
-	//	}
-	//	break;
-	//default:
-	//	break;
-	//}
+	//Activating a "delay" for the automatic weapon.
+	GetWorld()->GetTimerManager().SetTimer(FireRate, this,
+		&AMainPlayerCharacter::VerifyFiring, 0.1f, true);
 }
+
+void AMainPlayerCharacter::VerifyFiring()
+{
+	if (!keepFiring)
+	{
+		GetWorld()->GetTimerManager().ClearTimer(FireRate);
+		return;
+	}
+
+	if (FString(EquippedWeapon->GetWeaponName()).Equals("Glock"))
+	{
+		EquippedWeapon->FireWeapon(bIsAiming ? nullptr : FollowCamera);
+		keepFiring = false; // Stop firing after one shot for Glock.
+		return;
+	}
+
+	EquippedWeapon->FireWeapon(bIsAiming ? nullptr : FollowCamera);
+}
+
 
 void AMainPlayerCharacter::StopFiring()
 {
-	bIsFiring = false;
+	EquippedWeapon->bIsFiring = false;
+	keepFiring = false;
 }
 
 void AMainPlayerCharacter::Sprint()
@@ -344,137 +346,43 @@ void AMainPlayerCharacter::StopCrouching()
 
 	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 
-	UnCrouch();
+	ACharacter::UnCrouch();
 }
 
 
 void AMainPlayerCharacter::Reload()
 {
-	if (bIsAiming || bIsFiring)
+	if (bIsAiming || EquippedWeapon->bIsFiring)
 	{
 		return;
 	}
 
 	EquippedWeapon->ReloadWeapon();
 
-	switch (WeaponSelected)
-	{
-	case 1:
-		ReloadLogic(1);
-		break;
-	case 2:
-		ReloadLogic(2);
-		break;
-	default:
-		break;
-	}
-}
+	UGameplayStatics::PlaySound2D(GetWorld(), ReloadSound);
 
-void AMainPlayerCharacter::ReloadLogic(int CurrentWeapon)
-{
-	if (CurrentWeapon == 1)
-	{
-		if (MaxAmmoAK <= 0)
-		{
-			//No more Bullets
-			return;
-		}
-
-		if (AmmoAK >= ClipSizeAK)
-		{
-			//Full ammo already!
-			return;
-		}
-
-		bIsReloading = true;
-
-		//Getting  the current ammount of ammo on ak.
-		AmmoDiffAk = ClipSizeAK - AmmoAK;
-
-		const bool bIsWeaponAbleToReload = (MaxAmmoAK > AmmoDiffAk);
-		 
-		if (bIsWeaponAbleToReload)
-		{
-			AmmoAK += AmmoDiffAk;
-			MaxAmmoAK -= AmmoDiffAk;
-			//Play sound
-		}
-		else
-		{
-			AmmoAK += MaxAmmoAK;
-			MaxAmmoAK = 0;
-			//Play sound
-		}
-
-		GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this,
-			&AMainPlayerCharacter::DisableReloadAnim, 2.4f, true);
-
-	}
-	else if (CurrentWeapon == 2)
-	{
-		if (MaxAmmoGlock <= 0)
-		{
-			//No more Bullets
-			return;
-		}
-
-		if (AmmoGlock < ClipSizeGlock)
-		{
-			if (MaxAmmoGlock > (ClipSizeGlock - AmmoGlock))
-			{
-				AmmoDiffGlock = ClipSizeGlock - AmmoGlock;
-				AmmoGlock += AmmoDiffGlock;
-				MaxAmmoGlock -= AmmoDiffGlock;
-				//Play sound
-
-				bIsReloading = true;
-			}
-			else
-			{
-				AmmoDiffGlock = ClipSizeGlock - AmmoGlock;
-				AmmoGlock += MaxAmmoGlock;
-				MaxAmmoGlock = 0;
-				//Play sound
-
-				bIsReloading = true;
-			}
-			GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this,
-				&AMainPlayerCharacter::DisableReloadAnim, 2.4f, true);
-		}
-		else
-		{
-			//Full ammo already!
-			return;
-		}
-	}
-
+	GetWorld()->GetTimerManager().SetTimer(TriggerStopAnim, this,
+		&AMainPlayerCharacter::DisableReloadAnim, 2.4f, true);
 }
 
 void AMainPlayerCharacter::DisableReloadAnim()
 {
-	bIsReloading = false;
+	EquippedWeapon->bIsReloading = false;
 }
 
-void AMainPlayerCharacter::TakeDamageFromEnemy()
+void AMainPlayerCharacter::HandleDamageWidget()
 {
-	//15% of Damage
-	Armor -= 0.15f;
-
-	if (Armor < 0)
-	{
-		TakeHealthDamageCallWidget();
-
-		Health += Armor;
-		Armor = 0;
-
-		if (Health < 0)
-		{
-			GameOver();
-		}
-	}
-	else
+	if (HealthComponent->Armor > 0)
 	{
 		TakeArmorDamageCallWidget();
+		return;
+	}
+
+	TakeHealthDamageCallWidget();
+
+	if (HealthComponent->Health <= 0)
+	{
+		GameOver();
 	}
 }
 
@@ -487,11 +395,11 @@ void AMainPlayerCharacter::TakeArmorDamageCallWidget()
 	if (!Hud)
 	{
 		UE_LOG(LogTemp, Error,
-			TEXT("Could not get main HUD to show HealthDamage."));
+			TEXT("Could not get main HUD to show ArmorDamage."));
 		return;
 	}
 
-	// Request the main HUD to show the HealthDamage widget
+	// Request the main HUD to show the Armor Damage widget.
 	Hud->ToggleArmorDamageWidget(true);
 }
 
@@ -504,10 +412,10 @@ void AMainPlayerCharacter::TakeHealthDamageCallWidget()
 	if (!Hud)
 	{
 		UE_LOG(LogTemp, Error,
-			TEXT("Could not get main HUD to show ArmorDamage."));
+			TEXT("Could not get main HUD to show HealthDamage."));
 		return;
 	}
 
-	// Request the main HUD to show the ArmorDamage widget
+	// Request the main HUD to show the Health Damage Widget.
 	Hud->ToggleDamageWidget(true);
 }

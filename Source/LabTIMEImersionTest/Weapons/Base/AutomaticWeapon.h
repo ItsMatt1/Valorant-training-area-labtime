@@ -25,16 +25,17 @@ public:
 	* Fires the automatic weapon. 
 	* In this case, if the player holds the mouse buttom, 
 	* the weapon will keep firing until we have no ammo left.
+	* 
+	* @param CameraRayCastFireFrom, which Camera is the raycast starting from.
 	*/
 	virtual void FireWeapon(UCameraComponent* CameraRayCastFireFrom) override;
 
-	/** Reload the automatic weapon. */
-	virtual void ReloadWeapon() override;
+	/** Called every frame */
+	virtual void Tick(float DeltaTime) override;
 
 protected:
-
 	/** Specifying the fire rate of the automatic weapons. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
 		Category = "Weapon Characteristics");
-	float FireRate = 0;
+	float FireRate = 0.5f;
 };

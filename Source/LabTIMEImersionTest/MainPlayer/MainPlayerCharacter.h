@@ -27,18 +27,18 @@ public:
 
 	/**
 	* This Function call the GameOverWidget and show on screen.
-	* 
 	*/
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "GameOver"))
 	void GameOver();
 
 	/**
-	* This function calls makes the player take 15% of damage.
-	* It reduces its health and/or armor.
-	* Its called on BP_TargetEnemy
+	* This function its called when enemy damaged the player.
+	* It handles which type of damage he'll take armor or straight health.
+	* 
+	* @note Its called on BP_TargetEnemy.
 	*/
 	UFUNCTION(BlueprintCallable)
-	void TakeDamageFromEnemy();
+	void HandleDamageWidget();
 
 protected:
 
@@ -53,7 +53,7 @@ private:
 	*
 	* @param AxisValue The axis value of the input
 	*/
-	void MoveForward(float AxisValue);
+	inline void MoveForward(float AxisValue);
 
 	/**
 	* Handles the right movement of the character.
@@ -61,7 +61,7 @@ private:
 	*
 	* @param AxisValue The axis value of the input
 	*/
-	void MoveRight(float AxisValue);
+	inline void MoveRight(float AxisValue);
 
 	/**
 	* This function is called when the player starts sprinting and will do this
@@ -94,15 +94,6 @@ private:
 	void Reload();
 
 	/**
-	* This function is called to calculate and update the magazines given
-	* the weapon.
-	* @param CurrentWeapon is a int which is always 1 or 2.
-	* 1 for AK-47.
-	* 2 for Glock.
-	*/
-	void ReloadLogic(int CurrentWeapon);
-
-	/**
 	* This function is called to set bIsReloading to false in order to stop
 	* the current animation.
 	*/
@@ -110,27 +101,31 @@ private:
 
 	/**
 	* This function makes the player move the camera on X.
+	* 
 	* @param AxisValue
 	*/
-	void Turn(float AxisValue);
+	inline void Turn(float AxisValue);
 
 	/**
 	* This function makes the player move the camera on Y.
+	* 
 	* @param AxisValue
 	*/
-	void LookUp(float AxisValue);
+	inline void LookUp(float AxisValue);
 
 	/**
 	* This function sooths the camera movement on Y given the fps.
+	* 
 	* @param AxisValue
 	*/
-	void TurnRate(float AxisValue);
+	inline void TurnRate(float AxisValue);
 
 	/**
 	* This function sooths the camera movement on X given the fps.
+	* 
 	* @param AxisValue
 	*/
-	void LookUpRate(float AxisValue);
+	inline void LookUpRate(float AxisValue);
 
 	/**
 	* This function is called when player selects primary weapon and will
@@ -156,9 +151,15 @@ private:
 
 	/**
 	* This function is called when player shoots and will call the function
-	* FireWeapon from current equipped weapon.
+	* VerifyFiring .
 	*/
-	void PrimaryFire();
+	inline void PrimaryFire();
+
+	/**
+	* This function is called when player is still holding Primary Fire Button
+	* and will call the function FireWeapon from current equipped weapon.
+	*/
+	inline void VerifyFiring();
 
 	/**
 	* This function is called when stop shooting and will set bIsFiring to 
@@ -176,21 +177,41 @@ private:
 	*/
 	void TakeHealthDamageCallWidget();
 
+	/**
+	* A getter for boolean bIsCrouching.
+	*/
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip =
+			"Get bIsCrouching value and return"))
+	inline bool GetIsCrouching() { return bIsCrouching; }
+
+	/**
+	* A getter for boolean bIsSprinting.
+	* that it is used mainly for animation purposes.
+	* 
+	* @return bIsSprinting.
+	*/
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip =
+			"Get bIsSprinting value and return"))
+	inline bool GetIsSprinting() { return bIsSprinting; }
+
+	/**
+	* A getter for boolean bIsAiming.
+	* that it is used mainly for animation purposes.
+	* 
+	* @return bIsAiming.
+	*/
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip =
+			"Get bIsAiming value and return"))
+	inline bool GetIsAiming() { return bIsAiming; }
+
 public:
 
 	/** The Camera that follows the player component */
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Camera")
 	class UCameraComponent* FollowCamera = nullptr;
-
-	/** Defining amount of Health, starts with 1 and go until 0 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Info");
-	float Health = 1.f;
-
-	/** Defining amount of Armor, starts with 1 and go until 0 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Info");
-	float Armor = 1.f;
 
 	/** Defining The speed of the Walking */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
@@ -206,82 +227,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
 		Category = "Character Movement");
 	float CrouchingSpeed = WalkingSpeed / 2;
-
-	/** Boolean which is true whenever player crouchs */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Movement");
-	bool bIsCrouching = false;
-
-	/** Boolean which is true whenever player sprints */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Movement");
-	bool bIsSprinting = false;
-
-	/** Boolean which is true whenever player aims */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Movement");
-	bool bIsAiming = false;
-
-	/** Boolean which is true whenever player fires*/
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Action");
-	bool bIsFiring = false;
-
-	/** Boolean which is true whenever player is realoding*/
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Action");
-	bool bIsReloading = false;
-
-	/**	1 for AK-47.
-		2 for Glock. */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Character Action");
-	int WeaponSelected = 1;
-
-	/** Ammount of AK-47 ammo */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK");
-	int32 AmmoAK = 30;
-
-	/** AK-47 FireRate */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK");
-	float FireRateAK = 0.1;
-
-	/** Ammount of AK-47 Max Ammo */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK");
-	int32 MaxAmmoAK = 90;
-
-	/** The size of one clip of the AK-47 */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK");
-	int32 ClipSizeAK = AmmoAK;
-
-	/** Ammount of Glock ammo */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock");
-	int32 AmmoGlock = 15;
-
-	/** Ammount of Glock Max ammo */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock");
-	int32 MaxAmmoGlock = 45;
-
-	/** The size of one clip of the Glock */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock");
-	int32 ClipSizeGlock = AmmoGlock;
-
-	/** Variable to calculate the difference between current clip - clipsize */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon AK");
-	int32 AmmoDiffAk = 0;
-
-	/** Variable to calculate the difference between current clip - clipsize */
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite,
-		Category = "Weapon Glock");
-	int32 AmmoDiffGlock = 0;
 
 	/** Actor to Spawn AK-47 */
 	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
@@ -299,6 +244,15 @@ public:
 	/** Map to store all the weapons created and spawned */
 	TMap<FString, AWeaponBase*> AvailableWeapons;
 
+	/** A reload sound to be set at blueprint. */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
+		Category = "Sounds");
+	USoundBase* ReloadSound = nullptr;
+
+	/** Creating Health Component on Player. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	class UHealthComponent* HealthComponent = nullptr;
+
 private:
 
 	/** Set the turn rate of the controller */
@@ -309,10 +263,29 @@ private:
 	UPROPERTY(EditAnywhere)
 	float BaseLookUpRate = 45.f;
 
+	/** Boolean which is true whenever player crouches */
+	bool bIsCrouching = false;
+
+	/** Boolean which is true whenever player sprints */
+	bool bIsSprinting = false;
+
+	/** Boolean which is true whenever player aims */
+	bool bIsAiming = false;
+
+	/** Keep track if player is still holding PrimaryFire Button (left mouse
+		click) */
+	bool keepFiring = false;
+
 	/**
 	* Its a simple FTimer Handle to distinguish timers and finish animation.
 	*/
 	FTimerHandle TriggerStopAnim;
+
+	/**
+	* Its a simple FTimer Handle to distinguish timers and set FireRate of 
+		automatic weapons.
+	*/
+	FTimerHandle FireRate;
 
 	/** Create a reference to Player Controller */
 	APlayerController* OurPlayerController = nullptr;

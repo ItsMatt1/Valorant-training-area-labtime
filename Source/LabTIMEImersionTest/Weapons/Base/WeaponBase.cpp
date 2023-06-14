@@ -23,7 +23,6 @@ AWeaponBase::AWeaponBase()
 	SkeletalMeshComponent->SetRelativeLocation(FVector::ZeroVector);
 	SkeletalMeshComponent->SetupAttachment(WeaponRootComponent);
 
-
 	ADSCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("ADSCameraT"));
 	ADSCamera->SetupAttachment(SkeletalMeshComponent , "AK_Muzzle");
 	ADSCamera->bUsePawnControlRotation = true;
@@ -33,9 +32,6 @@ AWeaponBase::AWeaponBase()
 void AWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// Set the current ammunition amount as we start the game with full ammo
-	WeaponCurrentAmmunitionAmount = WeaponAmmunitionAmount;
 }
 
 void AWeaponBase::Tick(float DeltaTime)
@@ -52,20 +48,16 @@ void AWeaponBase::ReloadWeapon()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Reloading..."));
 
-	if (MaxAmmo <= 0)
+	if (MaxAmmo <= 0 || Ammo >= ClipSize)
 	{
-		//No more Bullets
+		// No need to reload
 		return;
 	}
 
-	if (Ammo >= ClipSize)
-	{
-		//Full ammo already!
-		return;
-	}
+	bIsReloading = true;
 
-	//Getting  the current ammount of ammo on ak.
-	AmmoDiff = ClipSize - Ammo;
+	//Getting  the current amount of ammo on ak.
+	int32 AmmoDiff = ClipSize - Ammo;
 
 	const bool bIsWeaponAbleToReload = (MaxAmmo > AmmoDiff);
 
@@ -86,15 +78,9 @@ void AWeaponBase::ReloadWeapon()
 void AWeaponBase::EnableCamera()
 {
 	ADSCamera->Activate();
-
-	UE_LOG(LogTemp, Log,
-		TEXT("ADSCam activted."));
 }
 
 void AWeaponBase::DisableCamera()
 {
 	ADSCamera->Deactivate();
-
-	UE_LOG(LogTemp, Log,
-		TEXT("ADSCam deactivated."));
 }
