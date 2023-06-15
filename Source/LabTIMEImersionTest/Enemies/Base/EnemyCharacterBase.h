@@ -31,8 +31,7 @@ public:
 	* @note plans to implement it on cpp but for now it is probably the
 	* most complex blueprint.
 	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = 
-		"EnemyHitByBulletEvent"))
+	UFUNCTION(BlueprintImplementableEvent)
 	void EnemyHitByBulletEvent();
 
 protected:
