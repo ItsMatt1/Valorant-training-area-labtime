@@ -33,6 +33,10 @@ void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage,
 {
 	if (Damage <= 0)
 	{
+		UE_LOG(LogTemp,
+			Warning,
+			TEXT("%s received strangedamage amount: \"%f\". Maybe check damage dealer? (%s)"),
+			*GetOwner()->GetName(), Damage, *DamageCauser->GetName());
 		return;
 	}
 

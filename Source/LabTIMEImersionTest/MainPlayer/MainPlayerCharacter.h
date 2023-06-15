@@ -28,7 +28,7 @@ public:
 	/**
 	* This Function call the GameOverWidget and show on screen.
 	*/
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "GameOver"))
+	UFUNCTION(BlueprintImplementableEvent)
 	void GameOver();
 
 	/**
@@ -47,6 +47,36 @@ protected:
 
 private:
 
+	/**
+	* A getter for boolean bIsCrouching.
+	* that it is used mainly for animation purposes.
+	* 
+	* @return bIsSprinting.
+	*/
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip = "Get bIsCrouching value and return"))
+	inline bool GetIsCrouching() { return bIsCrouching; }
+
+	/**
+	* A getter for boolean bIsSprinting.
+	* that it is used mainly for animation purposes.
+	*
+	* @return bIsSprinting.
+	*/
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip = "Get bIsSprinting value and return"))
+	inline bool GetIsSprinting() { return bIsSprinting; }
+
+	/**
+	* A getter for boolean bIsAiming.
+	*
+	* @return bIsAiming.
+	*/
+	UFUNCTION(BlueprintCallable,
+		meta = (Tooltip = "Get bIsAiming value and return"))
+	inline bool GetIsAiming() { return bIsAiming; }
+
+private:
 	/**
 	* Handles the forward movement of the character.
 	* This method should be binded on a axis input.
@@ -177,36 +207,6 @@ private:
 	*/
 	void TakeHealthDamageCallWidget();
 
-	/**
-	* A getter for boolean bIsCrouching.
-	*/
-	UFUNCTION(BlueprintCallable,
-		meta = (Tooltip =
-			"Get bIsCrouching value and return"))
-	inline bool GetIsCrouching() { return bIsCrouching; }
-
-	/**
-	* A getter for boolean bIsSprinting.
-	* that it is used mainly for animation purposes.
-	* 
-	* @return bIsSprinting.
-	*/
-	UFUNCTION(BlueprintCallable,
-		meta = (Tooltip =
-			"Get bIsSprinting value and return"))
-	inline bool GetIsSprinting() { return bIsSprinting; }
-
-	/**
-	* A getter for boolean bIsAiming.
-	* that it is used mainly for animation purposes.
-	* 
-	* @return bIsAiming.
-	*/
-	UFUNCTION(BlueprintCallable,
-		meta = (Tooltip =
-			"Get bIsAiming value and return"))
-	inline bool GetIsAiming() { return bIsAiming; }
-
 public:
 
 	/** The Camera that follows the player component */
@@ -215,30 +215,30 @@ public:
 
 	/** Defining The speed of the Walking */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Movement");
+		Category = "Character Movement")
 	float WalkingSpeed = 600.f;
 
 	/** Defining The speed of the Sprint */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Movement");
+		Category = "Character Movement")
 	float SprintSpeed = 1000.f;
 
 	/** Defining The speed of the Crouching */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Character Movement");
+		Category = "Character Movement")
 	float CrouchingSpeed = WalkingSpeed / 2;
 
 	/** Actor to Spawn AK-47 */
-	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
+	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AWeaponBase> AK47;
 
 	/** Actor to Spawn Glock */
-	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"));
+	UPROPERTY(EditAnyWhere, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AWeaponBase> Glock;
 
 	/** Variable to keep track of the current weapon equipped */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
-		Category = "Equipped Weapon");
+		Category = "Equipped Weapon")
 	AWeaponBase* EquippedWeapon = nullptr;
 
 	/** Map to store all the weapons created and spawned */
@@ -246,7 +246,7 @@ public:
 
 	/** A reload sound to be set at blueprint. */
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite,
-		Category = "Sounds");
+		Category = "Sounds")
 	USoundBase* ReloadSound = nullptr;
 
 	/** Creating Health Component on Player. */

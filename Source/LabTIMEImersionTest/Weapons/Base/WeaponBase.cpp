@@ -23,6 +23,7 @@ AWeaponBase::AWeaponBase()
 	SkeletalMeshComponent->SetRelativeLocation(FVector::ZeroVector);
 	SkeletalMeshComponent->SetupAttachment(WeaponRootComponent);
 
+	//Setting the ADSCamera for each weapon.
 	ADSCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("ADSCameraT"));
 	ADSCamera->SetupAttachment(SkeletalMeshComponent , "AK_Muzzle");
 	ADSCamera->bUsePawnControlRotation = true;
@@ -56,9 +57,13 @@ void AWeaponBase::ReloadWeapon()
 
 	bIsReloading = true;
 
-	//Getting  the current amount of ammo on ak.
-	int32 AmmoDiff = ClipSize - Ammo;
+	// Calculting how much ammo the player has spent of the max clip.
+	// This is needed as when reloading, we only have to inscrese the amount
+	// of bullets that were fired from the weapon, as also decreasing it from
+	// the max available ammo (which will be consumed)
+	const int32 AmmoDiff = ClipSize - Ammo;
 
+	// Checking whether the weapon have ammo to reload.
 	const bool bIsWeaponAbleToReload = (MaxAmmo > AmmoDiff);
 
 	if (bIsWeaponAbleToReload)
