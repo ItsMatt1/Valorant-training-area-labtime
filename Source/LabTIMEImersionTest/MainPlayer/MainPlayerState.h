@@ -63,21 +63,6 @@ public:
 	int32 SetHighScore(int NewHighScore) { PlayerHighScore = NewHighScore;
 		return PlayerHighScore; }
 
-	/** Player defined the playtime. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Settings");
-	int32 SecondsDefined = 0;
-
-	/** Player defined the kill limit. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Settings");
-	int32 KillsDefined = 0;
-
-	/** Player defined if the enemies will have armor or not. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,
-		Category = "Settings");
-	bool ArmorDefined = false;
-
 private:
 	/** The amount of enemies killed by the player on the current round. */
 	int32 EnemiesKilledAmount = -1;
