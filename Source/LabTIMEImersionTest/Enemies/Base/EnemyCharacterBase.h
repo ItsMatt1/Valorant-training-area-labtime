@@ -42,4 +42,17 @@ public:
 	/** Creating Health Component on Enemy. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class UHealthComponent* HealthComponent = nullptr;
+
+
+private:
+
+	//class USaveGame* SaveGameObject = nullptr;
+
+	//FString SlotName = "High Score Slot";
+
+	//bool bNewHighScoreReached = false;
+
+	//UGameInstance* GameInstance = nullptr;
+
+
 };

@@ -370,7 +370,7 @@ void AMainPlayerCharacter::DisableReloadAnim()
 	EquippedWeapon->bIsReloading = false;
 }
 
-void AMainPlayerCharacter::HandleDamageWidget()
+void AMainPlayerCharacter::CallDamageWidget()
 {
 	if (HealthComponent->Armor > 0)
 	{
